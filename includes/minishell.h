@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 13:06:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:00:04 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
-# include <pthread.h>
 # include <sys/time.h>
 # include <stdio.h>
+# include <editline/readline.h>
 
-// int			main(int argc, char **argv);
+int		main(void);
 
 #endif

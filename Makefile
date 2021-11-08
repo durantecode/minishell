@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
+#    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/08 13:05:52 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/08 14:47:30 by dpavon-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 MAKE = make
 DEBUG = -g3 -fsanitize=address
-
+READLINE = -lreadline
 # COLORS #
 
 RED = \033[0;31m
@@ -41,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME) $(READLINE)
 	@echo "$(GREY) Minishell compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all
