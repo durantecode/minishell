@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 15:00:04 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:47:26 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <editline/readline.h>
+# include <signal.h>
 
-int		main(void);
+int		main(int argc, char **argv, char **envp);
 
 #endif
