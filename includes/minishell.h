@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 18:47:26 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:55:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 # include <editline/readline.h>
 # include <signal.h>
 
-int		main(int argc, char **argv, char **envp);
+extern char **environ;
+
+typedef struct s_input
+{
+	char	*user_input;
+	char	**split_path;
+	char	**split_input;
+	char	*cmd_path;
+	char	**envp;
+}	t_input;
+
+int		main(void);
+void	get_builtins(t_input *input);
+void	builtins(t_input *input);
 
 #endif

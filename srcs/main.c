@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 18:48:07 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/08 21:09:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,28 @@ void	leaks()
 	system("leaks minishell");
 }
 
-void	get_builtin(char *cmd, char **split_path)
+void	to_read(t_input *input)
 {
-	int i;
-	char *aux;
-	char *path;
-	char *cmd_path;		//Esta es temporal hasta que creemos la estructura
-	
-	i = 0;
-	while (split_path[i])
-	{
-		aux = ft_strjoin(split_path[i], "/");
-		path = ft_strjoin(aux, cmd);
-		if ((access(path, F_OK)) == 0)
-			cmd_path = ft_strdup(path);
-		free(aux);
-		free(path);
-		i++;
-	}
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		char* argv[] = { cmd, NULL };
-  		char* envp[] = { "some", "environment", NULL };
-		execve(cmd_path, argv, envp);
-	}
-	waitpid(pid, NULL, 0);
-	// printf("%s\n", cmd_path);
-}
-
-void	to_read(char **split_path)
-{
-	char	*string;
 	char	*prompt;
 
-	prompt = ft_strjoin(getenv("USER"), "@minishell% ");
-	string = readline(prompt);
+	prompt = ft_strjoin(getenv("USER"), "@minishell$ ");
+	input->user_input = readline(prompt);
+	input->split_input = ft_split(input->user_input, ' ');
 	free(prompt);
-	get_builtin(string, split_path);
+	builtins(input);
+	// get_builtins(input);
 }
 
-int		main(int argc, char **argv, char **envp)
+int		main(void)
 {
-	char **split_path;
-
+	t_input input;
+	int i;
 	//atexit(leaks);
-	split_path = ft_split(getenv("PATH"), ':');
+	i = -1;
+	input.split_path = ft_split(getenv("PATH"), ':');
 	while (1)
 	{
-		to_read(split_path);
+		to_read(&input);
 	}
-	(void)argc;
-	(void)argv;
 	return (0);
 }
