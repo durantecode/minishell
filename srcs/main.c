@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 18:28:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:49:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ void	read_input(t_input *input)
 	free(prompt);
 	if (input->split_input[0] != NULL)
 		builtins(input);
-}
-
-void	catch_signal(int signal, siginfo_t *info, void *context)
-{
-	(void)signal;
-	(void)context;
-	(void)info;
 }
 
 int		main(void)
