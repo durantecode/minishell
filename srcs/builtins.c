@@ -6,42 +6,55 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 21:09:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/09 01:41:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	pwd(void)
+void	pwd(t_input *input)
 {
 	char *pwd;
 	
 	pwd = NULL;
 	printf("%s\n", getcwd(pwd, 0));
+	input->builtin_executed = 1;
 	free(pwd);
 }
 
-void	env(void)
+void	env(t_input *input)
 {
-	while (environ)
+	int i;
+
+	i = 0;
+	while (environ[i] != '\0')
 	{
-		printf("%s\n", *environ++);
+		printf("%s\n", environ[i]);
+		i++;
 	}
+	input->builtin_executed = 1;
+}
+
+void	cd(t_input *input)
+{
+	chdir(input->split_input[1]);
+	input->builtin_executed = 1;
 }
 
 void	builtins(t_input *input)
 {
 	if (!(ft_strncmp(input->split_input[0], "pwd", 3)))
-		pwd();
+		pwd(input);
 	if (!(ft_strncmp(input->split_input[0], "env", 3)))
-		env();
-	// if (input->split_input[0] == "cd")
+		env(input);
+	if (!(ft_strncmp(input->split_input[0], "cd", 2)))
+		cd(input);
 	// if (input->split_input[0] == "echo")
 	// if (input->split_input[0] == "export")
 	// if (input->split_input[0] == "unset")
 }
 
-void	get_builtins(t_input *input)
+void	exec_cmd(t_input *input)
 {
 	int i;
 	char *aux;
@@ -60,7 +73,7 @@ void	get_builtins(t_input *input)
 		i++;
 	}
 	pid = fork();
-	if (pid == 0)
+	if (pid == 0 && input->builtin_executed == 0)
 	{
 		execve(input->cmd_path, input->split_input, environ);
 	}

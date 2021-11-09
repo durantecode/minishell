@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/08 21:09:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/09 01:41:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	leaks()
 	system("leaks minishell");
 }
 
-void	to_read(t_input *input)
+void	read_input(t_input *input)
 {
 	char	*prompt;
 
@@ -26,19 +26,19 @@ void	to_read(t_input *input)
 	input->split_input = ft_split(input->user_input, ' ');
 	free(prompt);
 	builtins(input);
-	// get_builtins(input);
+	exec_cmd(input);
 }
 
 int		main(void)
 {
 	t_input input;
-	int i;
+
 	//atexit(leaks);
-	i = -1;
 	input.split_path = ft_split(getenv("PATH"), ':');
 	while (1)
 	{
-		to_read(&input);
+		input.builtin_executed = 0;
+		read_input(&input);
 	}
 	return (0);
 }
