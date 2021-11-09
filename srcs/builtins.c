@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 15:50:15 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:14:30 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	builtins(t_input *input)
 	else if (!(ft_strncmp(input->split_input[0], "exit", 4)))
 	{
 		printf("%s\n", "exit");
-		exit(0);
+		exit(2);
 	}
 	else
 		exec_cmd(input);
@@ -92,5 +92,5 @@ void	exec_cmd(t_input *input)
 		waitpid(pid, NULL, 0);
 	}
 	else
-		printf("Error");
+		printf("minishell: %s: command not found\n", input->split_input[0]);
 }
