@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 18:49:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/09 21:29:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ void	env(t_input *input)
 	(void)input;
 }
 
+void	expand_var(char *str)
+{
+	char	*var;
+
+	var = getenv(str);
+	if (var)
+		printf("%s ", var);
+}
+
 void	echo(t_input *input)
 {
 	int i;
@@ -48,14 +57,24 @@ void	echo(t_input *input)
 		{
 			i = 1;
 			while (input->split_input[++i])
-				printf("%s ", input->split_input[i]);
+			{
+				if (input->split_input[i][0] == '$')
+					expand_var(input->split_input[i] + 1);
+				else
+					printf("%s ", input->split_input[i]);
+			}
 		}
 	}
 	else
 	{
 		i = 0;
 		while (input->split_input[++i])
-			printf("%s ", input->split_input[i]);
+		{
+			if (input->split_input[i][0] == '$')
+				expand_var(input->split_input[i] + 1);
+			else
+				printf("%s ", input->split_input[i]);
+		}
 		printf("\n");
 	}
 }
