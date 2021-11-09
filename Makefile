@@ -6,7 +6,7 @@
 #    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/09 13:18:17 by dpavon-g         ###   ########.fr        #
+#    Updated: 2021/11/09 17:05:29 by dpavon-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 MAKE = make
+READLINE = -L ~/.brew/opt/readline/lib -lreadline
+CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include
 DEBUG = -g3 -fsanitize=address
-READLINE = -lreadline
 # COLORS #
 
 RED = \033[0;31m
@@ -31,7 +31,9 @@ NO_COLOR = \033[0m
 
 # SOURCES & OBJECTS #
 
-SRCS = srcs/main.c srcs/builtins.c
+SRCS =	srcs/main.c\
+		srcs/builtins.c\
+		srcs/signal.c\
 
 OBJS = $(SRCS:.c=.o)
 
@@ -41,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME) $(READLINE)
+	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a $(READLINE) -o $(NAME)
 	@echo "$(GREY) Minishell compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all
