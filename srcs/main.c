@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 16:01:46 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/09 16:02:11 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_input(t_input *input)
 		builtins(input);
 }
 
-void	catch_signal2(int signal, siginfo_t *info, void *context)
+void	catch_signal(int signal, siginfo_t *info, void *context)
 {
 	(void)signal;
 	(void)context;
@@ -42,7 +42,7 @@ int		main(void)
 	struct	sigaction	sa;
 	
 	atexit(leaks);
-	sa.sa_sigaction = catch_signal2;
+	sa.sa_sigaction = catch_signal;
 	input.split_path = ft_split(getenv("PATH"), ':');
 	while (1)
 	{
