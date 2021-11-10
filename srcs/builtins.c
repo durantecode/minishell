@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 18:14:30 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/09 21:29:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	exec_cmd(t_input *input)
 	char	*aux;
 	char	*path;
 	pid_t	pid;
-
 	i = -1;
 	input->cmd_path = NULL;
 	while (input->split_path[++i])
