@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_new_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 17:13:13 by ldurante         ###   ########.fr       */
+/*   Created: 2021/11/10 18:00:12 by ldurante          #+#    #+#             */
+/*   Updated: 2021/11/10 18:03:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	export(t_input *in)
+t_list	*ft_new_node(void *content, size_t size)
 {
-	
-	(void)in;
+	t_list	*stack;
+	void	*aux;
+
+	stack = malloc(sizeof(t_list));
+	if (!stack)
+		return (NULL);
+	aux = malloc(size);
+	if (!aux)
+	{
+		free(stack);
+		stack = NULL;
+	}
+	ft_memcpy(aux, content, size);
+	stack->content = aux;
+	stack->next = NULL;
+	return (stack);
 }

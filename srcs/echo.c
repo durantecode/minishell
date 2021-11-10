@@ -6,17 +6,17 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 13:00:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:31:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	expand_var(char *str)
+void	expand_var(char *str, t_input *in)
 {
 	char	*var;
 
-	var = getenv(str);
+	var = ft_getenv(str, in);
 	if (var)
 		printf("%s ", var);
 }
@@ -36,7 +36,7 @@ void	echo(t_input *in)
 			while (in->split_input[++i])
 			{
 				if (in->split_input[i][0] == '$')
-					expand_var(in->split_input[i] + 1);
+					expand_var(in->split_input[i] + 1, in);
 				else
 					printf("%s ", in->split_input[i]);
 			}
@@ -48,7 +48,7 @@ void	echo(t_input *in)
 		while (in->split_input[++i])
 		{
 			if (in->split_input[i][0] == '$')
-				expand_var(in->split_input[i] + 1);
+				expand_var(in->split_input[i] + 1, in);
 			else
 				printf("%s ", in->split_input[i]);
 		}
