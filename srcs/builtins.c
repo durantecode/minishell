@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-#include "../includes/minishell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
