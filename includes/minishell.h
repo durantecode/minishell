@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/09 18:49:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:56:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
-# include <sys/time.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -34,9 +33,10 @@ typedef struct s_input
 }	t_input;
 
 int		main(void);
-void	exec_cmd(t_input *input);
-void	builtins(t_input *input);
-void	free_matrix(char **matrix);
+void	read_input(t_input *in);
+void	builtins(t_input *in);
+void	echo(t_input *in);
+void	exec_cmd(t_input *in);
 void	catch_signal(int signal, siginfo_t *info, void *context);
 
 #endif

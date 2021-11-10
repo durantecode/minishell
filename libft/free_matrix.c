@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 13:03:03 by ldurante         ###   ########.fr       */
+/*   Created: 2021/11/10 12:35:10 by ldurante          #+#    #+#             */
+/*   Updated: 2021/11/10 12:37:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	catch_signal(int signal, siginfo_t *info, void *context)
+void	free_matrix(char **matrix)
 {
-    if (signal == SIGINT)
-    {
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-        // kill(info->si_pid, SIGKILL);
-    }
-	(void)signal;
-	(void)context;
-	(void)info;
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
 }

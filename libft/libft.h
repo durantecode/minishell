@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:06:51 by ldurante          #+#    #+#             */
-/*   Updated: 2021/10/19 20:58:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:36:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 int		get_next_line(int fd, char **line);
+void	free_matrix(char **matrix);
 
 #endif
