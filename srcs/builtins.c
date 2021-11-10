@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	pwd(t_input *input)
 {
-	char *pwd;
-	
+	char	*pwd;
+
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	free(pwd);
@@ -24,10 +26,10 @@ void	pwd(t_input *input)
 
 void	env(t_input *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (environ[i] != '\0')
+	while (environ[i] != NULL)
 	{
 		printf("%s\n", environ[i]);
 		i++;
@@ -46,7 +48,7 @@ void	expand_var(char *str)
 
 void	echo(t_input *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (input->split_input[1] == NULL)
@@ -85,7 +87,7 @@ void	cd(t_input *input)
 		chdir(getenv("HOME"));
 	else if (chdir(input->split_input[1]) != 0)
 		printf("minishell: cd: %s: No such file or directory\n", 
-				input->split_input[1]);
+			input->split_input[1]);
 }
 
 void	builtins(t_input *input)
@@ -116,11 +118,11 @@ void	builtins(t_input *input)
 
 void	exec_cmd(t_input *input)
 {
-	int i;
-	char *aux;
-	char *path;
+	int		i;
+	char	*aux;
+	char	*path;
 	pid_t	pid;
-	
+
 	i = -1;
 	input->cmd_path = NULL;
 	while (input->split_path[++i])

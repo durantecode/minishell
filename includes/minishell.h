@@ -23,7 +23,7 @@
 # include <readline/history.h>
 # include <signal.h>
 
-extern char **environ;
+extern	char **environ;
 
 typedef struct s_input
 {
