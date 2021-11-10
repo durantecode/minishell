@@ -83,8 +83,28 @@ void	echo(t_input *input)
 
 void	cd(t_input *input)
 {
+	char	*path;
+	char	*aux;
+	char	*totalpath;
+
+	path = getenv("HOME");
 	if (input->split_input[1] == NULL)
-		chdir(getenv("HOME"));
+		chdir(path);
+	else if (input->split_input[1][0] == '~')
+	{
+		if (input->split_input[1][1] == '\0')
+			chdir(path);
+		else
+		{
+			aux = input->split_input[1];
+			aux++;
+			totalpath = ft_strjoin(path, aux);
+			free(input->split_input[1]);
+			input->split_input[1] = ft_strdup(totalpath);
+			cd(input);
+			free(totalpath);
+		}
+	}
 	else if (chdir(input->split_input[1]) != 0)
 		printf("minishell: cd: %s: No such file or directory\n", 
 			input->split_input[1]);

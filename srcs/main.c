@@ -64,12 +64,12 @@ void	read_input(t_input *input)
 		builtins(input);
 }
 
-int		main(void)
+int	main(void)
 {
-	t_input	input;
-	struct	sigaction	sa;
-	
-	// atexit(leaks);
+	t_input				input;
+	struct sigaction	sa;
+
+	atexit(leaks);
 	sa.sa_sigaction = catch_signal;
 	input.split_path = ft_split(getenv("PATH"), ':');
 	while (1)
