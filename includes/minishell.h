@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 13:14:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 13:39:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		main(void);
 void	read_input(t_input *in);
 void	builtins(t_input *in);
 void	echo(t_input *in);
+void	export(t_input *in);
+void	unset(t_input *in);
 void	exec_cmd(t_input *in);
 void	catch_signal(int signal, siginfo_t *info, void *context);
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 13:14:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 13:35:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void	builtins(t_input *in)
 		cd(in);
 	else if (!(ft_strncmp(in->split_input[0], "echo", 5)))
 		echo(in);
+	else if (!(ft_strncmp(in->split_input[0], "export", 7)))
+		export(in);
+	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
+		unset(in);
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");
@@ -86,6 +90,4 @@ void	builtins(t_input *in)
 		exec_cmd(in);
 	free_matrix(in->split_input);
 	free(in->user_input);
-	// if (in->split_input[0] == "export")
-	// if (in->split_input[0] == "unset")
 }
