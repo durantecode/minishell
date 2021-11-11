@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 13:39:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/10 15:49:22 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ int	main(void)
 	struct	sigaction	sa;
 	
 	// atexit(leaks);
-	init_structs(&in);
-	sa.sa_sigaction = catch_signal;
-	while (1)
+	if (*environ)
 	{
-		sigaction(SIGINT, &sa, NULL);
-		read_input(&in);
+		init_structs(&in);
+		sa.sa_sigaction = catch_signal;
+		while (1)
+		{
+			sigaction(SIGINT, &sa, NULL);
+			read_input(&in);
+		}
+		return (0);
 	}
-	return (0);
+	else
+		printf("No environment values\n");
 }
