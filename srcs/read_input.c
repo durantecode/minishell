@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 17:43:34 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:48:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ char	**check_quotes(char **user_input)
 			user_input[i] = string;
 		}
 		i++;
-		// len = ft_strlen(user_input[i]);
-		// last = len - 1;
-		// if (user_input[i][0] == '"' && user_input[i][last] == '"')
-		// 	user_input[i] = ft_substr(user_input[i], 1, len - 2);
-		// if (user_input[i][0] == '\'' && user_input[i][last] == '\'')
-		// 	user_input[i] = ft_substr(user_input[i], 1, len - 2);
 	}
 	return (user_input);
 }
@@ -87,8 +81,12 @@ char	**check_quotes(char **user_input)
 void	read_input(t_input *in)
 {
 	char	*prompt;
+	char	*user;
 
-	prompt = ft_strjoin(getenv("USER"), "@minishell$ ");
+	user = ft_getenv("USER", in);
+	if (!user)
+		user = ft_strdup("guest");
+	prompt = ft_strjoin(user, "@minishell$ ");
 	in->user_input = readline(prompt);
 	add_history(in->user_input);
 	in->split_input = ft_split(in->user_input, ' ');

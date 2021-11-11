@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 14:48:20 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:49:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_cmd(t_input *in)
 		free(aux);
 		free(path);
 	}
-	if (in->cmd_path)
+	if (in->cmd_path && in->path_unset == 0)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -38,5 +38,10 @@ void	exec_cmd(t_input *in)
 		free(in->cmd_path);
 	}
 	else
-		printf("minishell: %s: command not found\n", in->split_input[0]);
+	{
+		if (in->path_unset == 0)
+			printf("minishell: %s: command not found\n", in->split_input[0]);
+		else
+			printf("minishell: %s: No such file or directory\n", in->split_input[0]);
+	}
 }

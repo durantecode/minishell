@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/11 13:49:00 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:48:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ void	pwd(t_input *in)
 
 void	env(t_input *in)
 {
-	int	i;
+	t_list *aux;
 
-	i = 0;
-	while (environ[i] != NULL)
+	aux = *in->env_list;
+	while (aux)
 	{
-		printf("%s\n", environ[i]);
-		i++;
+		printf("%s\n", aux->content);
+		aux = aux->next;
 	}
-	(void)in;
 }
 
 void	cd(t_input *in)
@@ -41,7 +40,7 @@ void	cd(t_input *in)
 	char	*aux;
 	char	*full_path;
 
-	home_path = getenv("HOME");
+	home_path = ft_getenv("HOME", in);
 	if (in->split_input[1] == NULL)
 		chdir(home_path);
 	else if (in->split_input[1][0] == '~')
