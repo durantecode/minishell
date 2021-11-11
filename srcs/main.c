@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 18:26:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/11 12:56:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,34 @@ void	leaks(void)
 
 void	init_structs(t_input *in, t_list **envp)
 {
+	in->path_unset = 0;
+	in->env_list = envp;
+	in->split_path = ft_split(ft_getenv("PATH", in), ':');
+	if (!in->split_path)
+	{
+		in->path_unset = 1;
+		in->split_path = ft_split(" . ", '.');
+	}
 	in->user_input = NULL;
-	in->split_path = ft_split(getenv("PATH"), ':');
 	in->split_input = NULL;
 	in->cmd_path = NULL;
-	in->env_list = envp;
 }
 
 char	*ft_getenv(const char *str, t_input *in)
 {
 	t_list	*aux;
+	char	*var;
 	int		size_var;
 	int		total_size;
 
 	aux = *in->env_list;
+	var = ft_strjoin(str, "=");
 	while (aux)
 	{
-		size_var = ft_strlen(str);
+		size_var = ft_strlen(var);
 		total_size = ft_strlen(aux->content);
-		if (!(ft_strncmp(str, aux->content, size_var)))
-			return (ft_substr(aux->content, size_var + 1, total_size - size_var));
+		if (!(ft_strncmp(var, aux->content, size_var)))
+			return (ft_substr(aux->content, size_var, total_size - size_var));
 		aux = aux->next;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 18:24:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/11 11:24:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ extern	char **environ;
 
 typedef struct s_input
 {
+	int		path_unset;
 	char	*user_input;
 	char	**split_path;
 	char	**split_input;
