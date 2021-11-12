@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/11 15:48:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/12 13:29:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ char	**check_quotes(char **user_input)
 	}
 	return (user_input);
 }
+
+// void	expand_vars(t_input *in)
+// {
+	
+// }
+
+
 
 void	read_input(t_input *in)
 {

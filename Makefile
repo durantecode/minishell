@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/10 13:39:22 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/12 00:05:17 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ MAKE = make
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
 CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include
 DEBUG = -g3 -fsanitize=address
+
 # COLORS #
 
 RED = \033[0;31m
