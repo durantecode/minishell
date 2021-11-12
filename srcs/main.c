@@ -35,11 +35,11 @@ int	main(void)
 	{
 		init_structs(&in);
 		sa.sa_sigaction = catch_signal;
-		while (1)
-		{
+		//while (1)
+		//{
 			sigaction(SIGINT, &sa, NULL);
 			read_input(&in);
-		}
+		//}
 		return (0);
 	}
 	else

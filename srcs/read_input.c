@@ -91,7 +91,7 @@ void	read_input(t_input *in)
 	prompt = ft_strjoin(getenv("USER"), "@minishell$ ");
 	in->user_input = readline(prompt);
 	add_history(in->user_input);
-	in->split_input = ft_split(in->user_input, ' ');
+	in->split_input = cut_arg(in->user_input);
 	check_quotes(in->split_input);
 	free(prompt);
 	if (in->split_input[0] != NULL)
