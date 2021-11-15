@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/15 16:11:16 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:59:08 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,42 +126,53 @@ static int		count_string(const char *s)
 	flag = 0;
 	while (s[i])
 	{
-		// if (s[i] == '"' || s[i] == '\'' || s[i] == ' ')
-		// {
-		// 	c = s[i];
-		// 	count++;
-		// 	while (s[i] == c)
-		// 		i++;
-		// 	while (s[i] != c && s[i])
-		// 		i++;
-		// 	if (!s[i])
-		// 		flag = 1;
-		// }
-		// else
-		// {
-			if (s[i] == '\'')
+		if (s[i] == '\'' && double_flag == 0)
+			simple_flag = 1;
+		else if (s[i] == '"' && simple_flag == 0)
+			double_flag = 1;
+		else if (double_flag == 1 || simple_flag == 1)
+		{
+			if (double_flag == 1)
 			{
-				while (s[i] == '\'')
+				while (s[i] != '"')
 					i++;
+				double_flag = 0;
+				if (double_flag == 0 && s[i+1] != ' ')
+				{
+					while (s[i] && s[i] != ' ')
+						i++;
+					count++;
+				}
+				else
+					count++;
+			}
+			if (simple_flag == 1)
+			{
+				while (s[i] != '\'')
+					i++;
+				simple_flag = 0;
+				if (simple_flag == 0 && s[i+1] != ' ')
+				{
+					while (s[i] && s[i] != ' ')
+						i++;
+					count++;
+				}
+				else
+					count++;
+			}
+		}
+		else
+		{
+			if (s[i] != ' ')
+			{
 				count++;
-				while (s[i] != '\'' && (s[i+1] != ' ' || s[i+1] != '\0') && s[i])
+				while (s[i] != ' ' && s[i])
 					i++;
 			}
-			if (s[i] == '"')
-			{
-				while (s[i] == '"')
-					i++;
-				count++;
-				while (s[i] != '"' && (s[i+1] != ' ' || s[i+1] != '\0') && s[i])
-					i++;
-			}
-		// }
+		}
 		i++;
 	}
-	if (flag == 0)
-		return (count);
-	return (0);	
-	printf("Error. Value not valid\n");
+	return (count);
 }
 
 char	**cut_arg(const char *s)
