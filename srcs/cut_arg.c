@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cut_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/15 16:11:16 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:51:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,17 +143,19 @@ static int		count_string(const char *s)
 			{
 				while (s[i] == '\'')
 					i++;
-				count++;
 				while (s[i] != '\'' && (s[i+1] != ' ' || s[i+1] != '\0') && s[i])
 					i++;
+				if (s[i] == '\'' && s[i+1] != '\0')
+					count++;
 			}
-			if (s[i] == '"')
+			else if (s[i] == '"')
 			{
 				while (s[i] == '"')
 					i++;
-				count++;
 				while (s[i] != '"' && (s[i+1] != ' ' || s[i+1] != '\0') && s[i])
 					i++;
+				if (s[i] == '"' && s[i+1] != '\0')
+					count++;
 			}
 		// }
 		i++;
