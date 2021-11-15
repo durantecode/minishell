@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/12 13:29:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/15 21:34:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ void	read_input(t_input *in)
 	prompt = ft_strjoin(user, "@minishell$ ");
 	in->user_input = readline(prompt);
 	add_history(in->user_input);
-	in->split_input = ft_split(in->user_input, ' ');
-	check_quotes(in->split_input);
+	in->split_input = cut_arg(in->user_input);
+	//check_quotes(in->split_input);
 	free(prompt);
-	if (in->split_input[0] != NULL)
-		builtins(in);
+	//if (in->split_input[0] != NULL)
+	//	builtins(in);
 }
