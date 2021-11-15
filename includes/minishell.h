@@ -47,5 +47,5 @@ void	unset(t_input *in);
 void	exec_cmd(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
-
+char	**cut_arg(char const *s);
 #endif

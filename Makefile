@@ -39,6 +39,7 @@ SRCS =	srcs/main.c \
 		srcs/unset.c \
 		srcs/signal.c \
 		srcs/exec_cmd.c \
+		srcs/cut_arg.c\
 
 OBJS = $(SRCS:.c=.o)
 
