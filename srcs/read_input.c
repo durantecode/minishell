@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/15 18:40:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:08:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	read_input(t_input *in)
 {
 	char	*prompt;
 	char	*user;
-	// char	*token;
 
 	user = ft_getenv("USER", in);
 	if (!user)
@@ -103,17 +102,7 @@ void	read_input(t_input *in)
 	in->user_input = readline(prompt);
 	add_history(in->user_input);
 	// in->split_input = cut_arg(in->user_input);
-	// int j = 0;
-	// printf("%s\n", in->user_input);
-	in->split_input = ft_split(in->user_input, ' ');
-	in->split_input[0] = strtok(in->user_input, "\'\"");
-	int i = 1;
-	while (in->split_input[i] != NULL)
-	{
-		in->split_input[i] = strtok(NULL, "\'\"");
-		// printf("%s\n", in->split_input[i]);
-		i++;
-	}
+
 	// printf("%s\n", token);
 	print_matrix(in->split_input);
 	//check_quotes(in->split_input);
