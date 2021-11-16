@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/16 21:29:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:51:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,6 @@ void	single_quotes(t_input *in, const char *s)
 		in->flags.global_count = 1;
 	}
 }
-
-// void	check_quotes(t_input *in, const char *s)
-// {
-// 	if (s[in->flags.i] == '\'' && in->flags.double_q == 0)
-// 	{
-// 		in->flags.single_q = 1;
-// 		in->flags.global_q = 1;
-// 	}
-// 	else if (s[in->flags.i] == '"' && in->flags.single_q == 0)
-// 	{
-// 		in->flags.double_q = 1;
-// 		in->flags.global_q = 1;
-// 	}
-// 	else if (in->flags.double_q || in->flags.single_q)
-// 	{
-// 		if (in->flags.double_q)
-// 			double_quotes(in, s);
-// 		if (in->flags.single_q)
-// 			single_quotes(in, s);
-// 		in->flags.global_sp = 1;
-// 	}
-// }
 
 void	split_args(t_input *in, const char *s)
 {
