@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/15 21:34:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:31:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*delete_char(char *str, int c, int c_num)
 	return (str_final);
 }
 
-char	**check_quotes(char **user_input)
+char	**quotes(char **user_input)
 {
 	int		i;
 	int		count;
@@ -78,13 +78,6 @@ char	**check_quotes(char **user_input)
 	return (user_input);
 }
 
-// void	expand_vars(t_input *in)
-// {
-	
-// }
-
-
-
 void	read_input(t_input *in)
 {
 	char	*prompt;
@@ -96,9 +89,10 @@ void	read_input(t_input *in)
 	prompt = ft_strjoin(user, "@minishell$ ");
 	in->user_input = readline(prompt);
 	add_history(in->user_input);
-	in->split_input = cut_arg(in->user_input);
-	//check_quotes(in->split_input);
+	in->split_input = check_args(in);
+	in->split_input = quotes(in->split_input);
+	// print_matrix(in->split_input);
 	free(prompt);
-	//if (in->split_input[0] != NULL)
-	//	builtins(in);
+	if (in->split_input[0] != NULL)
+		builtins(in);
 }

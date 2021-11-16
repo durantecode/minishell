@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:06:51 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/10 18:01:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/16 01:07:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ t_list	*ft_new_node(void *content, size_t size);
 
 int		get_next_line(int fd, char **line);
 void	free_matrix(char **matrix);
+void	print_matrix(char **matrix);
 
 #endif

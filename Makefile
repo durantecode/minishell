@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/15 21:34:38 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/16 20:03:16 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,12 @@ SRCS =	srcs/main.c \
 		srcs/read_input.c \
 		srcs/builtins.c \
 		srcs/echo.c \
+		srcs/env.c \
 		srcs/export.c \
 		srcs/unset.c \
 		srcs/signal.c \
 		srcs/exec_cmd.c \
-		srcs/cut_arg.c\
+		srcs/check_args.c \
 
 OBJS = $(SRCS:.c=.o)
 
