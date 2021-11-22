@@ -29,7 +29,7 @@ void	env(t_input *in)
 	aux = *in->env_list;
 	while (aux)
 	{
-		printf("%s\n", aux->content);
+		printf("%s\n", (char *)aux->content);
 		aux = aux->next;
 	}
 }

@@ -78,15 +78,56 @@ char	**check_quotes(char **user_input)
 	return (user_input);
 }
 
-// void	expand_vars(char ***)
-// {
-	
-// }
+char	*separate_pipes(char *input)
+{
+	int i;
+	char *final_input;
+	int	flag;
+	int	count;
+
+	count = 0;
+	flag = 0;
+	i = 0;
+	while (input[i])
+	{
+		if ((input[i] == '"' || input[i] == '\'') && flag == 0)
+			flag = 1;
+		else if ((input[i] == '"' || input[i] == '\'') && flag == 1)
+			flag = 0;
+		if (flag == 0 && input[i] == '|')
+			count += 2;
+		count++;
+		i++;
+	}
+	final_input = malloc(sizeof(char) * count);
+	count = 0;
+	i = 0;
+	while (input[i])
+	{
+		if ((input[i] == '"' || input[i] == '\'') && flag == 0)
+			flag = 1;
+		else if ((input[i] == '"' || input[i] == '\'') && flag == 1)
+			flag = 0;
+		if (flag == 0 && input[i] == '|')
+		{
+			final_input[count++] = ' ';
+			final_input[count++] = input[i];
+			final_input[count] = ' ';
+		}
+		else
+			final_input[count] = input[i]; 
+		count++;
+		i++;
+	}
+	final_input[count] = '\0'; 
+	return (final_input);
+}
 
 void	read_input(t_input *in)
 {
 	char	*prompt;
 	char	*user;
+	char	*aux;
 
 	user = ft_getenv("USER", in);
 	if (!user)
@@ -97,12 +138,12 @@ void	read_input(t_input *in)
 	{
 		if (pair_chars(in->user_input, '\'') % 2 == 0)
 		{
-			in->split_input = check_args(in);
-			//in->split_input = check_quotes(in->split_input);
-			
-			print_matrix(in->split_input);
 			if (in->user_input[0] != '\0')
 				add_history(in->user_input);
+			aux = in->user_input;
+			in->user_input = separate_pipes(in->user_input);
+			free(aux);
+			in->split_input = check_args(in);
 			if (in->split_input[0] != NULL)
 				builtins(in);
 			free(prompt);
