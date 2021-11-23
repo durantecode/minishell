@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/16 21:33:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:50:36 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	env(t_input *in)
 	aux = *in->env_list;
 	while (aux)
 	{
-		printf("%s\n", aux->content);
+		printf("%s\n", (char *)aux->content);
 		aux = aux->next;
 	}
 }
@@ -80,9 +80,10 @@ void	builtins(t_input *in)
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");
-		free(in->user_input);
-		free_matrix(in->split_input);
-		free_matrix(in->split_path);
+		// free(in->user_input);
+		// print_matrix(in->split_path);
+		// free_matrix(in->split_path);
+		// free_matrix(in->split_input);
 		exit(0);
 	}
 	else
