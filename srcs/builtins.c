@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/17 18:54:11 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:50:36 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ void	builtins(t_input *in)
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");
-		free(in->user_input);
-		free_matrix(in->split_input);
-		free_matrix(in->split_path);
+		// free(in->user_input);
+		// print_matrix(in->split_path);
+		// free_matrix(in->split_path);
+		// free_matrix(in->split_input);
 		exit(0);
 	}
 	else

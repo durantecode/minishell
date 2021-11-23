@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/16 20:06:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:28:32 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ char	*ft_getenv(const char *str, t_input *in)
 		size_var = ft_strlen(var);
 		total_size = ft_strlen(aux->content);
 		if (!(ft_strncmp(var, aux->content, size_var)))
+		{
+			free(var);
 			return (ft_substr(aux->content, size_var, total_size - size_var));
+		}
 		aux = aux->next;
 	}
+	free(var);
 	return (NULL);
 }

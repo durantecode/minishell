@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/17 19:14:53 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:51:40 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ void	init_flags(t_input *in)
 
 void	init_structs(t_input *in, t_list **envp)
 {
+	char *aux;
+
 	in->path_unset = 0;
 	in->env_list = envp;
-	in->split_path = ft_split(ft_getenv("PATH", in), ':');
+	aux = ft_getenv("PATH", in);
+	in->split_path = ft_split(aux, ':');
+	free(aux);
 	if (!in->split_path)
 	{
 		in->path_unset = 1;
@@ -51,7 +55,7 @@ int	main(void)
 	t_list	*envp;
 	struct	sigaction	sa;
 	
-	//atexit(leaks);
+	// atexit(leaks);
 	if (*environ)
 	{
 		envp = NULL;
@@ -60,15 +64,10 @@ int	main(void)
 		sa.sa_sigaction = catch_signal;
 		while (1)
 		{
-			init_structs(&in, &envp);
-			sa.sa_sigaction = catch_signal;
-			while (1)
-			{
-				sigaction(SIGINT, &sa, NULL);
-				read_input(&in);
-			}
-			return (0);
+			sigaction(SIGINT, &sa, NULL);
+			read_input(&in);
 		}
+		return (0);
 	}
 	// else
 	// 	printf("No environment values\n");
