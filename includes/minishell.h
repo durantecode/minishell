@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/16 21:28:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/23 22:38:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
-# include <sys/wait.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
