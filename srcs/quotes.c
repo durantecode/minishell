@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 15:55:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 20:42:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,6 @@ char	*delete_quote(char *str, int c, int c_num)
 	return (str_final);
 }
 
-void	expand_flags(t_input *in)
-{
-	int i;
-	int j;
-	int single_flag;
-
-	i = -1;
-	while (++i < 255)
-		in->expand[i] = 0;
-	i = 0;
-	single_flag = 0;
-	while(in->split_input[i] != NULL)
-	{
-		j = 0;
-		while (in->split_input[i][j] != '\0')
-		{
-			if (in->split_input[i][j] == '\'')
-				single_flag++;
-			if (in->split_input[i][j] == '$' && single_flag % 2 != 0)
-				in->expand[i] = 1;
-			j++;
-		}
-		i++;
-	}
-	// printf("%d\n", in->expand[0]);
-}
-
 char	**quotes(char **user_input, t_input *in)
 {
 	int		i;
@@ -84,7 +57,6 @@ char	**quotes(char **user_input, t_input *in)
 	char	*string;
 	
 	i = 0;
-	expand_flags(in);
 	while (user_input[i] != NULL)
 	{
 		if ((count = pair_quotes(user_input[i], '"')) % 2 == 0)

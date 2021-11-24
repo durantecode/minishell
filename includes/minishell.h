@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 12:43:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 20:42:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_flags
 
 typedef struct s_input
 {
-	int		expand[255];
 	int		path_unset;
 	char	*user_input;
 	char	**split_path;
