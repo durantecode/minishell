@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 18:08:34 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:16:33 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	expand_flags(t_input *in)
 		in->expand[i] = 0;
 	i = 0;
 	single_flag = 0;
-	while(in->split_input[i] != NULL)
+	while (in->split_input[i] != NULL)
 	{
 		j = 0;
 		while (in->split_input[i][j] != '\0')
@@ -108,7 +108,7 @@ char	**quotes(char **user_input, t_input *in)
 {
 	int		i;
 	char	*aux;
-	
+
 	i = 0;
 	while (user_input[i] != NULL)
 	{

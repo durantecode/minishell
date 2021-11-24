@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:48:45 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:49:59 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,24 @@ void	exec_cmd(t_input *in)
 	pid_t	pid;
 
 	i = -1;
+	in->cmd_path = NULL;
 	while (in->split_path[++i])
 	{
 		aux = ft_strjoin(in->split_path[i], "/");
 		path = ft_strjoin(aux, in->split_input[0]);
 		if ((access(path, F_OK)) == 0)
+		{
 			in->cmd_path = ft_strdup(path);
+			free(aux);
+			free(path);
+			break;
+		}
 		free(aux);
 		free(path);
 	}
 	if (in->cmd_path && in->path_unset == 0)
 	{
+		printf("%s\n", in->cmd_path);
 		pid = fork();
 		if (pid == 0)
 			execve(in->cmd_path, in->split_input, environ);
