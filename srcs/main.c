@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/23 15:51:40 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:45:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_flags(t_input *in)
 void	init_structs(t_input *in, t_list **envp)
 {
 	char *aux;
-
+	
 	in->path_unset = 0;
 	in->env_list = envp;
 	aux = ft_getenv("PATH", in);

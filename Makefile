@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/23 15:51:30 by dpavon-g         ###   ########.fr        #
+#    Updated: 2021/11/24 12:03:33 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRCS =	srcs/main.c \
 		srcs/signal.c \
 		srcs/exec_cmd.c \
 		srcs/check_args.c \
+		srcs/quotes.c \
+		srcs/expand.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -51,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) $(DEBUG) libft/libft.a $(READLINE) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a $(READLINE) -o $(NAME)
 	@echo "$(GREY) Minishell compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all

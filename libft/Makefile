@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 16:59:01 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/15 20:10:59 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/24 10:53:57 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c 
 		 ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_split.c \
 		 ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 		 ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_new_node.c \
-		 get_next_line.c free_matrix.c print_matrix.c \
+		 get_next_line.c free_matrix.c print_matrix.c ft_strjoin3.c \
 
 SRCS_PF = ft_printf/ft_printf.c ft_printf/check_format.c ft_printf/check_flags.c ft_printf/type_c.c \
 		  ft_printf/type_s.c ft_printf/type_p.c ft_printf/type_diu.c ft_printf/type_x.c ft_printf/width_no_precision.c \

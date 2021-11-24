@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/23 19:17:05 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 14:03:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,21 +151,21 @@ void	read_input(t_input *in)
 {
 	char	*prompt;
 	char	*user;
-	char	*aux;
 
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	prompt = ft_strjoin(user, "@minishell$ ");
+	prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(prompt);
 	if (pair_chars(in->user_input) == 0)						//Esto para comprobar que las comillas se cierran.
 	{
 		if (in->user_input[0] != '\0')								//Con esto compruebo que no haya mandado una linea vacia para guardarla en el history
 			add_history(in->user_input);
-		aux = in->user_input;
 		in->user_input = separate_pipes(in->user_input);			//Aquí detecto los pipes y los separo con espacios para poder cortarlo bien en el check_args.
-		free(aux);
-		in->split_input = check_args(in);							//Aquí separo las cosas en un matriz.
+		in->split_input = check_args(in);					//Aquí separo las cosas en un matriz.
+		in->split_input = quotes(in->split_input, in);
+		expand_vars(in);
+		// printf("%s\n", in->user_input);
 		print_matrix(in->split_input);
 		if (in->split_input[0] != NULL)
 			builtins(in);
