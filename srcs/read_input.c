@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 18:11:13 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:57:13 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	read_input(t_input *in)
 {
 	char	*prompt;
 	char	*user;
+	char	*aux;
 
 	user = ft_getenv("USER", in);
 	if (!user)
@@ -131,7 +132,9 @@ void	read_input(t_input *in)
 	in->user_input = readline(prompt);
 	if (pair_chars(in->user_input) == 0)
 	{
+		aux = in->user_input;
 		in->user_input = separate_pipes(in->user_input);
+		free(aux);
 		in->split_input = check_args(in);
 		in->split_input = quotes(in->split_input, in);
 		if (in->split_input[0] != NULL)
