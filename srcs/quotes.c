@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 15:03:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:55:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**quotes(char **user_input, t_input *in)
 	char	*string;
 	
 	i = 0;
-	// expand_flags(in);
+	expand_flags(in);
 	while (user_input[i] != NULL)
 	{
 		if ((count = pair_quotes(user_input[i], '"')) % 2 == 0)
@@ -94,7 +94,7 @@ char	**quotes(char **user_input, t_input *in)
 			free(user_input[i]);
 			user_input[i] = string;
 		}
-		if ((count = pair_quotes(user_input[i], '\'')) % 2 == 0)
+		else if ((count = pair_quotes(user_input[i], '\'')) % 2 == 0)
 		// else if (count % 2 == 0)
 		{
 			string = delete_quote(user_input[i], '\'', count);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 14:03:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:31:28 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ void	read_input(t_input *in)
 			add_history(in->user_input);
 		in->user_input = separate_pipes(in->user_input);			//Aquí detecto los pipes y los separo con espacios para poder cortarlo bien en el check_args.
 		in->split_input = check_args(in);					//Aquí separo las cosas en un matriz.
-		in->split_input = quotes(in->split_input, in);
 		expand_vars(in);
+		// in->split_input = quotes(in->split_input, in);
 		// printf("%s\n", in->user_input);
-		print_matrix(in->split_input);
+		// print_matrix(in->split_input);
 		if (in->split_input[0] != NULL)
 			builtins(in);
 		free(prompt);

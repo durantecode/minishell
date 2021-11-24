@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 14:06:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:32:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,35 @@ void	expand_vars(t_input *in)
 {
 	int i;
 	int j;
+	int open_quote;
+	int	close_quote;
 	int front;
 	char *var;
 	char *first;
 
 	i = 0;
-	while (in->split_input[i] != NULL && in->expand[i] == 0)
+	while (in->split_input[i] != NULL)
 	{
 		j = 0;
 		front = 0;
+		open_quote = 0;
+		close_quote = 0;
 		while (in->split_input[i][j] != '\0')
 		{
-			if (in->split_input[i][j] == '$')
+			if (in->split_input[i][j] == '"' && !open_quote)
+			{
+				if (!close_quote)
+					open_quote+=2;
+				else
+					open_quote++;
+			}
+			if (in->split_input[i][j] == '\'')
+			{
+				close_quote++;
+				if (!open_quote)
+					open_quote++;
+			}
+			if (in->split_input[i][j] == '$' && open_quote % 2 == 0)
 			{
 				j++;
 				while (ft_isalnum(in->split_input[i][j]))
