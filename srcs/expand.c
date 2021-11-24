@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 22:22:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:34:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,10 @@ void	insert_var(t_input *in, char *var, char *first, int i)
 	int		len3;
 	char	*last;
 	char	*expanded;
-	char	*aux;
 
-
-	aux = NULL;
 	len1 = ft_strlen(first);
 	len2 = ft_strlen(var);
 	len3 = ft_strlen(in->split_input[i]);
-
 	last = ft_substr(in->split_input[i], len1 + len2 + 1, len3 - len2 - len1);
 	expanded = ft_getenv(var, in);
 	if (!expanded)

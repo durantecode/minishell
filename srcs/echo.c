@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 13:52:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:46:47 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	expand_var(char *str, t_input *in)
 
 void	echo(t_input *in)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (in->split_input[1] == NULL)

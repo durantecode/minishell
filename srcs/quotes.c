@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 20:42:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:33:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	pair_quotes(char *arg, int c)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -28,53 +28,69 @@ int	pair_quotes(char *arg, int c)
 	return (count);
 }
 
-char	*delete_quote(char *str, int c, int c_num)
+char	*delete_quote(char *str)
 {
 	char	*str_final;
 	int		i;
-	int		pos;
+	int		len;
+	int		flag_simple;
+	int		flag_double;
 
+	flag_double = 0;
+	flag_simple = 0;
 	i = 0;
-	pos = 0;
-	str_final = malloc(sizeof(char) * (ft_strlen(str) - c_num + 1));
+	len = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
+		if (str[i] == '"' && flag_simple == 0 && flag_double == 0)
+			flag_double = 1;
+		else if (str[i] == '"' && flag_simple == 0 && flag_double == 1)
+			flag_double = 0;
+		else if (str[i] == '\'' && flag_simple == 0 && flag_double == 0)
+			flag_simple = 1;
+		else if (str[i] == '\'' && flag_simple == 1 && flag_double == 0)
+			flag_simple = 0;
+		else
+			len++;
+		i++;
+	}
+	str_final = malloc(sizeof(char) * (len + 1));
+	i = 0;
+	str_final[len] = '\0';
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' && flag_simple == 0 && flag_double == 0)
+			flag_double = 1;
+		else if (str[i] == '"' && flag_simple == 0 && flag_double == 1)
+			flag_double = 0;
+		else if (str[i] == '\'' && flag_simple == 0 && flag_double == 0)
+			flag_simple = 1;
+		else if (str[i] == '\'' && flag_simple == 1 && flag_double == 0)
+			flag_simple = 0;
+		else
 		{
-			str_final[pos] = str[i];
-			pos++;
+			str_final[len] = str[i];
+			len++;
 		}
 		i++;
 	}
-	str_final[pos] = '\0';
 	return (str_final);
 }
 
-char	**quotes(char **user_input, t_input *in)
+char	**quotes(char **user_input)
 {
 	int		i;
-	int		count;
-	char	*string;
-	
+	char	*aux;
+
 	i = 0;
 	while (user_input[i] != NULL)
 	{
-		if ((count = pair_quotes(user_input[i], '"')) % 2 == 0)
-		// if (count % 2 == 0)
-		{
-			string = delete_quote(user_input[i], '"', count);
-			free(user_input[i]);
-			user_input[i] = string;
-		}
-		else if ((count = pair_quotes(user_input[i], '\'')) % 2 == 0)
-		// else if (count % 2 == 0)
-		{
-			string = delete_quote(user_input[i], '\'', count);
-			free(user_input[i]);
-			user_input[i] = string;
-		}
+		aux = user_input[i];
+		user_input[i] = delete_quote(user_input[i]);
+		free(aux);
 		i++;
 	}
-	(void)in;
+	(void)aux;
 	return (user_input);
 }

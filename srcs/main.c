@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 13:45:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:37:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	init_flags(t_input *in)
 
 void	init_structs(t_input *in, t_list **envp)
 {
-	char *aux;
-	
+	char	*aux;
+
 	in->path_unset = 0;
 	in->env_list = envp;
 	aux = ft_getenv("PATH", in);
@@ -51,10 +51,10 @@ void	init_structs(t_input *in, t_list **envp)
 
 int	main(void)
 {
-	t_input	in;
-	t_list	*envp;
-	struct	sigaction	sa;
-	
+	t_input				in;
+	t_list				*envp;
+	struct sigaction	sa;
+
 	// atexit(leaks);
 	if (*environ)
 	{
@@ -69,6 +69,4 @@ int	main(void)
 		}
 		return (0);
 	}
-	// else
-	// 	printf("No environment values\n");
 }

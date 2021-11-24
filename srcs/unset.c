@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/11 15:12:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:53:41 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	unset(t_input *in)
 	var = ft_strjoin(in->split_input[1], "=");
 	size_var = ft_strlen(var);
 	if (!(ft_strncmp(var, aux->content, size_var)))
-    {
+	{
 		tmp = *in->env_list;
 		*in->env_list = (*in->env_list)->next;
 		free(tmp);

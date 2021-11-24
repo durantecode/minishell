@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 20:42:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:33:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_input
 int		main(void);
 void	init_flags(t_input *in);
 void	read_input(t_input *in);
-char	**quotes(char **user_input, t_input *in);
+char	**quotes(char **user_input);
 void	expand_vars(t_input *in);
 char	*ft_getenv(const char *str, t_input *in);
 
