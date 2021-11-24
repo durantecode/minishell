@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/11 15:49:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:48:45 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	exec_cmd(t_input *in)
 {
-	int i;
-	char *aux;
-	char *path;
+	int		i;
+	char	*aux;
+	char	*path;
 	pid_t	pid;
-	
+
 	i = -1;
 	while (in->split_path[++i])
 	{
@@ -42,6 +42,7 @@ void	exec_cmd(t_input *in)
 		if (in->path_unset == 0)
 			printf("minishell: %s: command not found\n", in->split_input[0]);
 		else
-			printf("minishell: %s: No such file or directory\n", in->split_input[0]);
+			printf("minishell: %s: No such file or directory\n",
+				in->split_input[0]);
 	}
 }

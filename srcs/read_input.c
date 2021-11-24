@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 14:03:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:11:13 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	pair_chars(char *arg)
 {
-	int i;
-	int count_single;
+	int	i;
+	int	count_single;
 	int	count_double;
 	int	flag_simple;
 	int	flag_double;
-	
+
 	i = 0;
 	count_single = 0;
 	count_double = 0;
@@ -74,40 +74,12 @@ char	*delete_char(char *str, int c, int c_num)
 	return (str_final);
 }
 
-// char	**check_quotes(char **user_input)
-// {
-// 	int		i;
-// 	int		count;
-// 	char	*string;
-	
-// 	i = 0;
-// 	while (user_input[i] != NULL)
-// 	{
-// 		count = pair_chars(user_input[i], '"');
-// 		if (count % 2 == 0)
-// 		{
-// 			string = delete_char(user_input[i], '"', count);
-// 			free(user_input[i]);
-// 			user_input[i] = string;
-// 		}
-// 		count = pair_chars(user_input[i], '\'');
-// 		if (count % 2 == 0)
-// 		{
-// 			string = delete_char(user_input[i], '\'', count);
-// 			free(user_input[i]);
-// 			user_input[i] = string;
-// 		}
-// 		i++;
-// 	}
-// 	return (user_input);
-// }
-
 char	*separate_pipes(char *input)
 {
-	int i;
-	char *final_input;
-	int	flag;
-	int	count;
+	int		i;
+	char	*final_input;
+	int		flag;
+	int		count;
 
 	count = 0;
 	flag = 0;
@@ -139,11 +111,11 @@ char	*separate_pipes(char *input)
 			final_input[count] = ' ';
 		}
 		else
-			final_input[count] = input[i]; 
+			final_input[count] = input[i];
 		count++;
 		i++;
 	}
-	final_input[count] = '\0'; 
+	final_input[count] = '\0';
 	return (final_input);
 }
 
@@ -157,26 +129,18 @@ void	read_input(t_input *in)
 		user = ft_strdup("guest");
 	prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(prompt);
-	if (pair_chars(in->user_input) == 0)						//Esto para comprobar que las comillas se cierran.
+	if (pair_chars(in->user_input) == 0)
 	{
-		if (in->user_input[0] != '\0')								//Con esto compruebo que no haya mandado una linea vacia para guardarla en el history
-			add_history(in->user_input);
-		in->user_input = separate_pipes(in->user_input);			//Aquí detecto los pipes y los separo con espacios para poder cortarlo bien en el check_args.
-		in->split_input = check_args(in);					//Aquí separo las cosas en un matriz.
+		in->user_input = separate_pipes(in->user_input);
+		in->split_input = check_args(in);
 		in->split_input = quotes(in->split_input, in);
-		expand_vars(in);
-		// printf("%s\n", in->user_input);
-		print_matrix(in->split_input);
 		if (in->split_input[0] != NULL)
 			builtins(in);
-		free(prompt);
 		free(user);
 	}
 	else
-	{
-		add_history(in->user_input);
 		printf("minishell: Invalid argument\n");
-		free(prompt);
-	}
-	
+	if (in->user_input[0] != '\0')
+		add_history(in->user_input);
+	free(prompt);
 }
