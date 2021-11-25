@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 22:36:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:43:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exec_cmd(t_input *in)
 			in->cmd_path = ft_strdup(path);
 			free(aux);
 			free(path);
-			break;
+			break ;
 		}
 		free(aux);
 		free(path);

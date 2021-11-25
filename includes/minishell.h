@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 22:33:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:46:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@
 # include <readline/history.h>
 # include <signal.h>
 
-extern	char **environ;
+extern char	**environ;
 
 typedef struct s_flags
 {
 	int	i;
-	int j;
-	int start;
+	int	j;
+	int	start;
 	int	count;
-	int single_q;
+	int	single_q;
 	int	double_q;
 	int	global_q;
 	int	global_count;
-	int global_sp;
+	int	global_sp;
 }	t_flags;
-
 
 typedef struct s_input
 {
@@ -56,8 +55,8 @@ char	**quotes(char **user_input);
 void	expand_vars(t_input *in);
 char	*ft_getenv(const char *str, t_input *in);
 
-
 void	builtins(t_input *in);
+void	env(t_input *in);
 void	echo(t_input *in);
 void	export(t_input *in);
 void	unset(t_input *in);

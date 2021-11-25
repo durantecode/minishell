@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:52:29 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/25 00:21:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,29 @@ void	split_args(t_input *in, const char *s)
 	in->flags.global_count = 0;
 }
 
+void	token_aux(t_input *in, const char *s, int split, int n)
+{
+	if (n == 0)
+	{
+		if (s[in->flags.i] != ' ' && s[in->flags.i] != '\0')
+		{
+			in->flags.count++;
+			while (s[in->flags.i] != ' ' && s[in->flags.i])
+				in->flags.i++;
+			in->flags.global_count = 1;
+		}
+	}
+	if (n == 1)
+	{
+		if (s[in->flags.i])
+			in->flags.i++;
+		if (split == 1 && in->flags.global_count)
+			split_args(in, s);
+		if (!in->flags.global_q)
+			in->flags.start = in->flags.i;
+	}
+}
+
 int	count_tokens(const char *s, t_input *in, int split)
 {
 	init_flags(in);
@@ -97,21 +120,8 @@ int	count_tokens(const char *s, t_input *in, int split)
 			in->flags.global_sp = 1;
 		}
 		else
-		{
-			if (s[in->flags.i] != ' ' && s[in->flags.i] != '\0')
-			{
-				in->flags.count++;
-				while (s[in->flags.i] != ' ' && s[in->flags.i])
-					in->flags.i++;
-				in->flags.global_count = 1;
-			}
-		}
-		if (s[in->flags.i])
-			in->flags.i++;
-		if (split == 1 && in->flags.global_count)
-			split_args(in, s);
-		if (!in->flags.global_q)
-			in->flags.start = in->flags.i;
+			token_aux(in, s, split, 0);
+		token_aux(in, s, split, 1);
 	}
 	return (in->flags.count);
 }

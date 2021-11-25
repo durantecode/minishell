@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:52:42 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:01:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	env(t_input *in)
+{
+	t_list	*aux;
+
+	aux = *in->env_list;
+	while (aux)
+	{
+		printf("%s\n", (char *)aux->content);
+		aux = aux->next;
+	}
+}
 
 void	init_env_list(t_list **envp)
 {

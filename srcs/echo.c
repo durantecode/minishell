@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:46:47 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/25 00:27:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,13 @@ void	echo(t_input *in)
 	{
 		i = 1;
 		while (in->split_input[++i])
-		{
 			printf("%s ", in->split_input[i]);
-		}
 	}
 	else
 	{
 		i = 0;
 		while (in->split_input[++i])
-		{
 			printf("%s ", in->split_input[i]);
-		}
 		printf("\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 22:34:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/25 00:59:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,56 +30,62 @@ void	insert_var(t_input *in, char *var, char *first, int i)
 	in->split_input[i] = ft_strjoin3(first, expanded, last);
 	free(last);
 	free(expanded);
+	free(var);
+	free(first);
 }
 
+void	expand_flags(t_input *in)
+{
+	if (in->split_input[in->flags.i][in->flags.j] == '"'
+			&& !in->flags.single_q)
+	{
+		if (!in->flags.double_q)
+			in->flags.single_q += 2;
+		else
+			in->flags.single_q++;
+	}
+	if (in->split_input[in->flags.i][in->flags.j] == '\'')
+	{
+		in->flags.double_q++;
+		if (!in->flags.single_q)
+			in->flags.single_q++;
+	}
+}
+
+void	replace_var(t_input *in, int front)
+{
+	char	*var;
+	char	*first;
+
+	in->flags.j++;
+	while (ft_isalnum(in->split_input[in->flags.i][in->flags.j]))
+		in->flags.j++;
+	var = ft_substr(in->split_input[in->flags.i],
+			front + 1, in->flags.j - 1 - front);
+	first = ft_substr(in->split_input[in->flags.i], 0, front);
+	insert_var(in, var, first, in->flags.i);
+}
 
 void	expand_vars(t_input *in)
 {
-	int i;
-	int j;
-	int open_single;
-	int	open_double;
-	int front;
-	char *var;
-	char *first;
+	int	front;
 
-	i = 0;
-	while (in->split_input[i] != NULL)
+	init_flags(in);
+	while (in->split_input[in->flags.i] != NULL)
 	{
-		j = 0;
+		in->flags.j = 0;
+		in->flags.single_q = 0;
+		in->flags.double_q = 0;
 		front = 0;
-		open_single = 0;
-		open_double = 0;
-		while (in->split_input[i][j] != '\0')
+		while (in->split_input[in->flags.i][in->flags.j] != '\0')
 		{
-			front = j;
-			if (in->split_input[i][j] == '"' && !open_single)
-			{
-				if (!open_double)
-					open_single += 2;
-				else
-					open_single++;
-			}
-			if (in->split_input[i][j] == '\'')
-			{
-				open_double++;
-				if (!open_single)
-					open_single++;
-			}
-			if (in->split_input[i][j] == '$' && open_single % 2 == 0)
-			{
-				j++;
-				while (ft_isalnum(in->split_input[i][j]))
-					j++;
-				var = ft_substr(in->split_input[i], front + 1, j - 1 - front);
-				first = ft_substr(in->split_input[i], 0, front);
-				insert_var(in, var, first, i);
-
-				free(var);
-				free(first);
-			}
-			j++;
+			front = in->flags.j;
+			expand_flags(in);
+			if (in->split_input[in->flags.i][in->flags.j] == '$'
+				&& in->flags.single_q % 2 == 0)
+				replace_var(in, front);
+			in->flags.j++;
 		}
-		i++;
+		in->flags.i++;
 	}
 }

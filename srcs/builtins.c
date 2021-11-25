@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:46:24 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:01:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ void	pwd(t_input *in)
 	printf("%s\n", pwd);
 	free(pwd);
 	(void)in;
-}
-
-void	env(t_input *in)
-{
-	t_list	*aux;
-
-	aux = *in->env_list;
-	while (aux)
-	{
-		printf("%s\n", (char *)aux->content);
-		aux = aux->next;
-	}
 }
 
 void	cd(t_input *in)
