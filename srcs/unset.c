@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:53:41 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/11/25 23:52:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	unset(t_input *in)
 	t_list	*tmp;
 
 	aux = *in->env_list;
+	if (in->split_input[1] == NULL)
+	{
+		printf("minishell: unset: not a valid identifier\n");
+		return ;
+	}
 	var = ft_strjoin(in->split_input[1], "=");
 	size_var = ft_strlen(var);
 	if (!(ft_strncmp(var, aux->content, size_var)))

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 23:46:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/25 18:56:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_flags
 	int	j;
 	int	start;
 	int	count;
+	int count_double;
 	int	single_q;
 	int	double_q;
 	int	global_q;
@@ -50,8 +51,13 @@ typedef struct s_input
 
 int		main(void);
 void	init_flags(t_input *in);
+
 void	read_input(t_input *in);
-char	**quotes(char **user_input);
+char	*split_pipes(t_input *in);
+void	check_args(t_input *in);
+int		count_tokens(const char *s, t_input *in, int split);
+char	**quotes(t_input *in);
+int		quotes_aux(t_input *in, char *str);
 void	expand_vars(t_input *in);
 char	*ft_getenv(const char *str, t_input *in);
 
@@ -65,5 +71,4 @@ void	init_env_list(t_list **envp);
 void	exec_cmd(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
-char	**check_args(t_input *in);
 #endif

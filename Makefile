@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/24 12:03:33 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/25 13:52:00 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRCS =	srcs/main.c \
 		srcs/signal.c \
 		srcs/exec_cmd.c \
 		srcs/check_args.c \
+		srcs/split_pipes.c \
+		srcs/token.c \
 		srcs/quotes.c \
 		srcs/expand.c \
 
