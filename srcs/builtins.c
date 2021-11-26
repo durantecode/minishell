@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 23:01:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:05:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	cd(t_input *in)
 
 void	builtins(t_input *in)
 {
+	char *split[2];
+	pid_t pid;
+	
+	split[0] = ft_strdup("minishell");
+	split[1] = NULL;
 	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
 		pwd(in);
 	else if (!(ft_strncmp(in->split_input[0], "env", 4)))
@@ -65,6 +70,13 @@ void	builtins(t_input *in)
 		export(in);
 	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
 		unset(in);
+	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)))
+	{
+		pid = fork();
+		if (pid == 0)
+			execve("/usr/bin/", split, environ);
+		waitpid(pid, NULL, 0);
+	}
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");

@@ -6,44 +6,23 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 23:47:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/26 15:26:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	replace_env_var(t_input *in, char *s)
-{
-	int size_var;
-	t_list *aux;
-	// t_list *tmp;
-	
-	aux = *in->env_list;
-	size_var = ft_strlen(s);
-	while (aux)
-	{
-		if (!(ft_strncmp(s, aux->content, size_var)))
-		{
-			// tmp = aux->next;
-			// aux->next = aux->next->next;
-			// free(tmp);
-			aux->content = in->split_input[1];
-			break ;
-		}
-		aux = aux->next;
-	}
-	return(0);
-}
-
 void	export(t_input *in)
 {
-	int i;
-	char **aux;
-	int flag;
-	int size;
-	
+	size_t	i;
+	int		flag;
+	int		size;
+	char	*tmp;
+	char	**aux;
+
 	i = 0;
 	flag = 0;
+	tmp = ft_strdup(in->split_input[1]);
 	if (in->split_input[1] == NULL)
 	{
 		printf("minishell: export: not a valid identifier\n");
@@ -63,17 +42,21 @@ void	export(t_input *in)
 			}
 			else
 			{
-				if (flag)
+				if (flag && i == ft_strlen(aux[0]) - 1)
 				{
-					size = ft_strlen(in->split_input[1]);
+					size = ft_strlen(tmp);
 					if (ft_getenv(aux[0], in))
+					{
+						in->split_input[1] = ft_strdup(aux[0]);
 						unset(in);
+						ft_lstadd_back(in->env_list, ft_new_node((void *) tmp, size + 1));
+					}
 					else
-						ft_lstadd_back(in->env_list, ft_new_node((void *) in->split_input[1], size + 1));
+						ft_lstadd_back(in->env_list, ft_new_node((void *) tmp, size + 1));
 					return ;
 				}
 			}
-			i++;	
+			i++;
 		}
 	}
 }

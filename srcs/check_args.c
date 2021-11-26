@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 16:16:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/26 15:13:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,3 @@ void	check_args(t_input *in)
 	in->split_input[input_size] = NULL;
 	expand_vars(in);
 }
-

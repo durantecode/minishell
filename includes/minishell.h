@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 18:56:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/26 15:32:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_flags
 	int	j;
 	int	start;
 	int	count;
-	int count_double;
+	int	count_double;
 	int	single_q;
 	int	double_q;
 	int	global_q;
