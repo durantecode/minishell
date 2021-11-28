@@ -39,7 +39,7 @@ int	pair_quotes(t_input *in)
 		}
 		in->flags.i++;
 	}
-	return (in->flags.count_double % 2 == 0 + in->flags.count % 2 == 0);
+	return (in->flags.count_double % 2 + in->flags.count % 2);
 }
 
 void	read_input(t_input *in)

@@ -82,8 +82,10 @@ void	builtins(t_input *in)
 		printf("%s\n", "exit");
 		exit(0);
 	}
-	else
+	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
+	else
+		exec_absolute(in);
 	if (in->split_input)
 		free_matrix(in->split_input);
 	free(in->user_input);

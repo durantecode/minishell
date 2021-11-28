@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 extern char	**environ;
 
@@ -69,6 +70,7 @@ void	unset(t_input *in);
 void	init_env_list(t_list **envp);
 
 void	exec_cmd(t_input *in);
+void	exec_absolute(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 #endif
