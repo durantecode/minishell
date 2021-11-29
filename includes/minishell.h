@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 11:18:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 14:31:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <sys/wait.h>
+# include <dirent.h>
 
 extern char	**environ;
 
@@ -70,6 +72,7 @@ void	init_env_list(t_list **envp);
 
 void	exec_cmd(t_input *in);
 void	pipes(t_input *in);
+void	exec_absolute(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 #endif

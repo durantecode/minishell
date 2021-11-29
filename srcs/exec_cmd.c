@@ -6,11 +6,41 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/27 01:41:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 14:31:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	exec_absolute(t_input *in)
+{
+	pid_t	pid;
+	DIR 	*dir;
+
+	if ((access(in->split_input[0], F_OK)) == 0)
+	{
+		dir = opendir(in->split_input[0]);
+		if (dir)
+		{
+			printf("minishell: %s: is a directory\n", in->split_input[0]);
+			closedir(dir);
+		}
+		else
+		{
+			if ((access(in->split_input[0], X_OK)) == 0)
+			{
+				pid = fork();
+				if (pid == 0)
+					execve(in->split_input[0], in->split_input, environ);
+				waitpid(pid, NULL, 0);
+			}
+			else
+				printf("minishell: %s: Permission denied\n", in->split_input[0]);
+		}
+	}
+	else
+		printf("minishell: %s: No such file or directory\n", in->split_input[0]);
+}
 
 void	exec_cmd(t_input *in)
 {

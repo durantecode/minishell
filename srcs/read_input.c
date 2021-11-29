@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 11:22:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 14:32:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	pair_quotes(t_input *in)
 			in->flags.single_q = 0;
 		in->flags.i++;
 	}
-	return (in->flags.count_double % 2 == 0 + in->flags.count % 2 == 0);
+	return (in->flags.count_double % 2 + in->flags.count % 2);
 }
 
 void	read_input(t_input *in)

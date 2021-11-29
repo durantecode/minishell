@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 13:51:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 14:30:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ void	builtins(t_input *in)
 		printf("%s\n", "exit");
 		exit(0);
 	}
-	else
+	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
+	else
+		exec_absolute(in);
 	if (in->split_input)
 		free_matrix(in->split_input);
 	free(in->user_input);
