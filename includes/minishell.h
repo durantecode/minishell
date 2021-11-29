@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/26 15:32:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 11:18:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	unset(t_input *in);
 void	init_env_list(t_list **envp);
 
 void	exec_cmd(t_input *in);
+void	pipes(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 #endif
