@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/26 15:32:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 12:23:20 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 extern char	**environ;
 
