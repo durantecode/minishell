@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 16:25:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 20:52:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	replace_var(t_input *in, int front, char *first, char *var)
 				var = ft_strdup("$");
 		}
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '?')
-			printf("LAST ERROR\n");
+			printf("LAST ERROR\n"); /* TODO */
 		else
 			write(1, "$", 1);
 	}
