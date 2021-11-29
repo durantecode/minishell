@@ -6,11 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/26 00:42:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:28:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/* Revisar flags -n múltiples */
 
 void	echo(t_input *in)
 {
@@ -23,13 +25,13 @@ void	echo(t_input *in)
 	{
 		i = 1;
 		while (in->split_input[++i])
-			printf("%s ", in->split_input[i]);
+			printf("%s", in->split_input[i]);
 	}
 	else
 	{
 		i = 0;
 		while (in->split_input[++i])
-			printf("%s ", in->split_input[i]);
+			printf("%s", in->split_input[i]);
 		printf("\n");
 	}
 }

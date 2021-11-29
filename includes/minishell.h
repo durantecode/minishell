@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 14:31:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:53:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,16 @@
 # include <sys/wait.h>
 # include <dirent.h>
 
-extern char	**environ;
+// extern char	**environ;
+
+# define R_END 0
+# define W_END 1
+
+typedef struct s_arg
+{
+	char	**arg;
+	int		pipe_fd[2];
+}	t_arg;
 
 typedef struct s_flags
 {
@@ -47,11 +56,12 @@ typedef struct s_input
 	char	**split_path;
 	char	**split_input;
 	char	*cmd_path;
+	char	**dup_env;
 	t_list	**env_list;
 	t_flags	flags;
 }	t_input;
 
-int		main(void);
+int		main(int argc, char **argv, char **environ);
 void	init_flags(t_input *in);
 
 void	read_input(t_input *in);
@@ -68,7 +78,7 @@ void	env(t_input *in);
 void	echo(t_input *in);
 void	export(t_input *in);
 void	unset(t_input *in);
-void	init_env_list(t_list **envp);
+void	init_env_list(t_input *in, t_list **envp, char **environ);
 
 void	exec_cmd(t_input *in);
 void	pipes(t_input *in);

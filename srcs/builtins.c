@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 14:48:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:29:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_minishell(t_input *in)
 	pid_t	pid;
 	char	*aux;
 	int		level;
-	
+
 	if (in->split_input[1] != NULL)
 	{
 		printf("minishell: cannot execute binary file\n");
@@ -76,7 +76,7 @@ void	exec_minishell(t_input *in)
 		export(in);
 		split[0] = ft_strdup("minishell");
 		split[1] = NULL;
-		execve("/usr/bin/", split, environ);
+		execve("/usr/bin/", split, in->dup_env);
 	}
 	waitpid(pid, NULL, 0);	
 }
@@ -102,10 +102,10 @@ void	builtins(t_input *in)
 		printf("%s\n", "exit");
 		exit(0);
 	}
-	// else if (!(ft_strchr(in->split_input[0], '/')))
-	else
+	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
-	// 	exec_absolute(in);
+	else
+		exec_absolute(in);
 	if (in->split_input)
 		free_matrix(in->split_input);
 	free(in->user_input);

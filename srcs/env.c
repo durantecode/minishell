@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 23:52:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:12:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,45 @@ void	env(t_input *in)
 	}
 }
 
-void	init_env_list(t_list **envp)
+void	dup_env(t_input *in, char **environ)
+{
+	int i;
+
+	i = 0;
+	in->dup_env = NULL;
+	if (!(*environ))
+	{
+		in->dup_env = malloc(sizeof(char *) * 5);
+		in->dup_env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		in->dup_env[1] = ft_strdup("SHLVL=1");
+		in->dup_env[2] = ft_strdup("_=/usr/bin/env");
+		in->dup_env[3]
+			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		in->dup_env[4] = NULL;
+	}
+	else
+	{
+		while (environ[i] != NULL)
+			i++;
+		in->dup_env = malloc(sizeof(char *) * i);
+		i = -1;
+		while (environ[++i])
+			in->dup_env[i] = ft_strdup(environ[i]);
+		in->dup_env[i] = NULL;
+	}
+}
+
+void	init_env_list(t_input *in, t_list **envp, char **environ)
 {
 	int		i;
 	int		size;
 
 	i = 0;
-	while (environ[i] != NULL)
+	dup_env(in, environ);
+	while (in->dup_env[i] != NULL)
 	{
-		size = ft_strlen(environ[i]);
-		ft_lstadd_back(envp, ft_new_node((void *) environ[i], size + 1));
+		size = ft_strlen(in->dup_env[i]);
+		ft_lstadd_back(envp, ft_new_node((void *) in->dup_env[i], size + 1));
 		i++;
 	}
 }

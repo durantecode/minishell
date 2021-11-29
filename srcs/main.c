@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 14:29:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:06:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,49 @@ void sigint_handler(int sig)
     return;
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **environ)
 {
 	t_input				in;
 	t_list				*envp;
-	//struct sigaction	sa;
+	// struct sigaction	sa;
 
-	atexit(leaks);
-	if (!(*environ))
-	{
-		environ = malloc(sizeof(char *) * 5);
-		environ[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
-		environ[1] = ft_strdup("SHLVL=1");
-		environ[2] = ft_strdup("_=/usr/bin/env");
-		environ[3]
-			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-		environ[4] = NULL;
-	}
+	// atexit(leaks);
 	envp = NULL;
-	init_env_list(&envp);
+	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
-	//sa.sa_sigaction = catch_signal;
+	// sa.sa_sigaction = catch_signal;
 	while (1)
 	{
-		//sigaction(SIGINT, &sa, NULL);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
+		// sigaction(SIGINT, &sa, NULL);
+		// signal(SIGQUIT, SIG_IGN);
+		// signal(SIGINT, SIG_IGN);
 		read_input(&in);
 		//signal(SIGQUIT, SIG_IGN);
 	}
+	(void)argc;
+	(void)argv;
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	t_input				in;
+// 	t_list				*envp;
+// 	struct sigaction	sa;
+
+// 	// atexit(leaks);
+// 	if (*environ)
+// 	{
+// 		envp = NULL;
+// 		init_env_list(&envp);
+// 		init_structs(&in, &envp);
+// 		sa.sa_sigaction = catch_signal;
+// 		while (1)
+// 		{
+// 			sigaction(SIGINT, &sa, NULL);
+// 			read_input(&in);
+// 		}
+// 		return (0);
+// 	}
+// 	// printf("%s\n", getenv("PATH"));
+// }

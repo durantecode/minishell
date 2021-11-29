@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 14:31:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:09:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_absolute(t_input *in)
 			{
 				pid = fork();
 				if (pid == 0)
-					execve(in->split_input[0], in->split_input, environ);
+					execve(in->split_input[0], in->split_input, in->dup_env);
 				waitpid(pid, NULL, 0);
 			}
 			else
@@ -69,7 +69,7 @@ void	exec_cmd(t_input *in)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(in->cmd_path, in->split_input, environ);
+			execve(in->cmd_path, in->split_input, in->dup_env);
 		waitpid(pid, NULL, 0);
 		free(in->cmd_path);
 	}
