@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 09:36:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:49:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@ int	pair_quotes(t_input *in)
 		in->flags.i++;
 	}
 	return (in->flags.count_double % 2 + in->flags.count % 2);
-}
-
-void	print_matrix(char **matrix)
-{
-	int i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		printf("%s\n", matrix[i]);
-		i++;
-	}
 }
 
 void	read_input(t_input *in)
