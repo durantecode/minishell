@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/15 20:02:57 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:36:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 void	leaks(void)
 {
-	system("leaks minishell");
+	system("leaks -q minishell");
 }
 
 void	init_structs(t_input *in, t_list **envp)
 {
+	char	*aux;
+
 	in->path_unset = 0;
 	in->env_list = envp;
-	in->split_path = ft_split(ft_getenv("PATH", in), ':');
+	aux = ft_getenv("PATH", in);
+	in->split_path = ft_split(aux, ':');
+	free(aux);
 	if (!in->split_path)
 	{
 		in->path_unset = 1;
@@ -32,65 +36,41 @@ void	init_structs(t_input *in, t_list **envp)
 	in->cmd_path = NULL;
 }
 
-char	*ft_getenv(const char *str, t_input *in)
+void sigint_handler(int sig) 
 {
-	t_list	*aux;
-	char	*var;
-	int		size_var;
-	int		total_size;
-
-	aux = *in->env_list;
-	var = ft_strjoin(str, "=");
-	while (aux)
-	{
-		size_var = ft_strlen(var);
-		total_size = ft_strlen(aux->content);
-		if (!(ft_strncmp(var, aux->content, size_var)))
-			return (ft_substr(aux->content, size_var, total_size - size_var));
-		aux = aux->next;
-	}
-	return (NULL);
-}
-
-void	init_env_list(t_list **envp)
-{
-	int		i;
-	int		size;
-
-	i = 0;
-	while (environ[i] != NULL)
-	{
-		size = ft_strlen(environ[i]);
-		ft_lstadd_back(envp, ft_new_node((void *) environ[i], size + 1));
-		i++;
-	}
+	(void)sig;
+	write(1, &"\n", 1);
+    return;
 }
 
 int	main(void)
 {
-	t_input	in;
-	t_list	*envp;
-	struct	sigaction	sa;
-	
-	// atexit(leaks);
-	if (*environ)
+	t_input				in;
+	t_list				*envp;
+	//struct sigaction	sa;
+
+	atexit(leaks);
+	if (!(*environ))
 	{
-		envp = NULL;
-		init_env_list(&envp);
-		init_structs(&in, &envp);
-		sa.sa_sigaction = catch_signal;
-		// while (1)
-		// {
-			init_structs(&in, &envp);
-			sa.sa_sigaction = catch_signal;
-			// while (1)
-			// {
-				sigaction(SIGINT, &sa, NULL);
-				read_input(&in);
-			// }
-			return (0);
-	// 	}
+		environ = malloc(sizeof(char *) * 5);
+		environ[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		environ[1] = ft_strdup("SHLVL=1");
+		environ[2] = ft_strdup("_=/usr/bin/env");
+		environ[3]
+			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		environ[4] = NULL;
 	}
-	// else
-	// 	printf("No environment values\n");
+	envp = NULL;
+	init_env_list(&envp);
+	init_structs(&in, &envp);
+	//sa.sa_sigaction = catch_signal;
+	while (1)
+	{
+		//sigaction(SIGINT, &sa, NULL);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
+		read_input(&in);
+		//signal(SIGQUIT, SIG_IGN);
+	}
+	return (0);
 }

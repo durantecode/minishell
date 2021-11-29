@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   print_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/24 17:35:58 by dpavon-g         ###   ########.fr       */
+/*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
+/*   Updated: 2021/11/25 22:34:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	catch_signal(int signal, siginfo_t *info, void *context)
+void	print_matrix(char **matrix)
 {
-	if (signal == SIGINT)
+	int	i;
+
+	i = 0;
+	if (!matrix)
+		printf("(null)\n");
+	else
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		while (matrix[i])
+		{
+			printf("%s\n", matrix[i]);
+			i++;
+		}
 	}
-	(void)signal;
-	(void)context;
-	(void)info;
 }

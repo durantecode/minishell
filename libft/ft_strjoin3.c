@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/26 00:42:14 by ldurante         ###   ########.fr       */
+/*   Created: 2021/11/24 10:52:58 by ldurante          #+#    #+#             */
+/*   Updated: 2021/11/24 10:54:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	echo(t_input *in)
+char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 {
-	int	i;
+	char	*temp;
+	char	*ret;
 
-	i = 0;
-	if (in->split_input[1] == NULL)
-		printf("\n");
-	else if (!(ft_strncmp(in->split_input[1], "-n", 3)))
-	{
-		i = 1;
-		while (in->split_input[++i])
-			printf("%s ", in->split_input[i]);
-	}
-	else
-	{
-		i = 0;
-		while (in->split_input[++i])
-			printf("%s ", in->split_input[i]);
-		printf("\n");
-	}
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	temp = ft_strjoin(s1, s2);
+	if (!temp)
+		return (NULL);
+	ret = ft_strjoin(temp, s3);
+	free(temp);
+	return (ret);
 }

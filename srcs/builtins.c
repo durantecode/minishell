@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/11 15:48:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:05:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ void	pwd(t_input *in)
 	printf("%s\n", pwd);
 	free(pwd);
 	(void)in;
-}
-
-void	env(t_input *in)
-{
-	t_list *aux;
-
-	aux = *in->env_list;
-	while (aux)
-	{
-		printf("%s\n", aux->content);
-		aux = aux->next;
-	}
 }
 
 void	cd(t_input *in)
@@ -59,12 +47,17 @@ void	cd(t_input *in)
 		}
 	}
 	else if (chdir(in->split_input[1]) != 0)
-		printf("minishell: cd: %s: No such file or directory\n", 
+		printf("minishell: cd: %s: No such file or directory\n",
 			in->split_input[1]);
 }
 
 void	builtins(t_input *in)
 {
+	char *split[2];
+	pid_t pid;
+	
+	split[0] = ft_strdup("minishell");
+	split[1] = NULL;
 	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
 		pwd(in);
 	else if (!(ft_strncmp(in->split_input[0], "env", 4)))
@@ -77,16 +70,23 @@ void	builtins(t_input *in)
 		export(in);
 	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
 		unset(in);
+	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)))
+	{
+		pid = fork();
+		if (pid == 0)
+			execve("/usr/bin/", split, environ);
+		waitpid(pid, NULL, 0);
+	}
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");
-		free(in->user_input);
-		free_matrix(in->split_input);
-		free_matrix(in->split_path);
 		exit(0);
 	}
-	else
+	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
-	free_matrix(in->split_input);
+	else
+		exec_absolute(in);
+	if (in->split_input)
+		free_matrix(in->split_input);
 	free(in->user_input);
 }

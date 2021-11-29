@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/10 13:39:22 by ldurante         ###   ########.fr        #
+#    Updated: 2021/11/25 13:52:00 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ MAKE = make
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
 CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include
 DEBUG = -g3 -fsanitize=address
+
 # COLORS #
 
 RED = \033[0;31m
@@ -35,11 +36,16 @@ SRCS =	srcs/main.c \
 		srcs/read_input.c \
 		srcs/builtins.c \
 		srcs/echo.c \
+		srcs/env.c \
 		srcs/export.c \
 		srcs/unset.c \
 		srcs/signal.c \
 		srcs/exec_cmd.c \
-		srcs/cut_arg.c\
+		srcs/check_args.c \
+		srcs/split_pipes.c \
+		srcs/token.c \
+		srcs/quotes.c \
+		srcs/expand.c \
 
 OBJS = $(SRCS:.c=.o)
 
