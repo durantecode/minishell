@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 16:29:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/30 16:53:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	builtins(t_input *in)
 		exec_cmd(in);
 	else
 		exec_absolute(in);
-	if (in->split_input)
-		free_matrix(in->split_input);
+	// if (in->split_input)
+	// 	free_matrix(in->split_input);
 	free(in->user_input);
+	exit(0);
 }

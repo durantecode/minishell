@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 18:00:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/11/30 17:24:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	read_input(t_input *in)
 	if (!user)
 		user = ft_strdup("guest");
 	prompt = ft_strjoin(user, "@minishell> $ ");
+	printf("hola\n");
 	in->user_input = readline(prompt);
 	if (pair_quotes(in) == 0)
 	{
@@ -55,7 +56,7 @@ void	read_input(t_input *in)
 		check_args(in);
 		// if (in->split_input[0] != NULL)
 		// 	builtins(in);
-		pipes(in);
+		init_arg_list(in);
 		free(user);
 	}
 	else
