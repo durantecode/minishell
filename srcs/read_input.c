@@ -78,7 +78,7 @@ int	check_errors(t_input *in)
 			if (count > 2)
 				return (1);
 		}
-		else
+		else 
 			in->flags.i++;
 	}
 	return (0);
