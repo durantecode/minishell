@@ -22,12 +22,12 @@ void	export(t_input *in)
 
 	i = 0;
 	flag = 0;
-	tmp = ft_strdup(in->split_input[1]);
 	if (in->split_input[1] == NULL)
 	{
 		printf("minishell: export: not a valid identifier\n");
 		return ;
 	}
+	tmp = ft_strdup(in->split_input[1]);
 	if (ft_strchr(in->split_input[1], '='))
 		flag = 1;
 	aux = ft_split(in->split_input[1], '=');

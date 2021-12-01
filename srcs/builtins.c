@@ -109,5 +109,5 @@ void	builtins(t_input *in)
 	// if (in->split_input)
 	// 	free_matrix(in->split_input);
 	free(in->user_input);
-	exit(0);
+	//exit(0);
 }
