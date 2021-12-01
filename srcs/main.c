@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/30 15:16:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/02 00:43:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_structs(t_input *in, t_list **envp)
 	}
 	in->user_input = NULL;
 	in->split_input = NULL;
+	in->split_arg = NULL;
 	in->cmd_path = NULL;
 }
 

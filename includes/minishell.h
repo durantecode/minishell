@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/30 15:50:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:30:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 typedef struct s_arg
 {
 	char	**arg;
-	int		pipe_fd[2];
+	// int		pipe_fd[2];
 	int 	x;
 }	t_arg;
 
@@ -56,6 +56,7 @@ typedef struct s_input
 	char	*user_input;
 	char	**split_path;
 	char	**split_input;
+	char	**split_arg;
 	char	*cmd_path;
 	char	**dup_env;
 	t_list	**env_list;

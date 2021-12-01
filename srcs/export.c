@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/26 15:26:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:17:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	export(t_input *in)
 
 	i = 0;
 	flag = 0;
-	tmp = ft_strdup(in->split_input[1]);
 	if (in->split_input[1] == NULL)
 	{
 		printf("minishell: export: not a valid identifier\n");
 		return ;
 	}
+	tmp = ft_strdup(in->split_input[1]);
 	if (ft_strchr(in->split_input[1], '='))
 		flag = 1;
 	aux = ft_split(in->split_input[1], '=');

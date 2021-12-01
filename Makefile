@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/30 15:12:39 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/01 02:00:45 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) $(DEBUG) libft/libft.a $(READLINE) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a $(READLINE) -o $(NAME)
 	@echo "$(GREY) Minishell compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all
