@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/02 00:44:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:35:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	read_input(t_input *in)
 		free(aux);
 		check_args(in);
 		// if (in->split_input[0] != NULL)
-		// 	builtins(in);
+			// builtins(in);
 		init_arg_list(in);
 		free(user);
 	}

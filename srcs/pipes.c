@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/02 00:32:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:09:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,33 @@ void	pipesito(t_input *in)
 {
 	int i;
 	int j;
+	int k;
+	int l;
 	pid_t	pid;
 	int		pipe_fd[2];
 
 	i = 0;
 	j = 0;
-			pipe(pipe_fd);
-	while(in->split_input[i] != NULL)
-		i++;
-	in->split_arg = malloc(sizeof(char *) * i + 1);
-	i = 0;
-	while (in->split_input[i] != NULL)
+	k = 0;
+	l = 0;
+		pipe(pipe_fd);
+	while (l < count_pipes(in) && in->split_input[i] != NULL)
 	{
+		k = 0;
+		while (in->split_input[i] != NULL && (ft_strncmp(in->split_input[i], "|", 2)))
+		{
+			i++;
+			k++;
+		}
+		in->split_arg = malloc(sizeof(char *) * k + 1);
+		i = i - k;
+		while (in->split_input[i] != NULL && (ft_strncmp(in->split_input[i], "|", 2)))
+		{
+			in->split_arg[j] = ft_strdup(in->split_input[i]);
+			i++;
+			j++;	
+		}
+		// printf("%d\n", i);
 		if (!(ft_strncmp(in->split_input[i], "|", 2)))
 		{
 			pid = fork();
@@ -53,10 +68,11 @@ void	pipesito(t_input *in)
 				// {
 					// print_matrix(in->split_arg);
 					close(pipe_fd[R_END]);
-					if (in->split_input[i + 1] != NULL)
+					// if (in->split_input[i + 1] != NULL)
 						dup2(pipe_fd[W_END], STDOUT_FILENO);
 					close(pipe_fd[W_END]);
 					builtins(in);
+					exit(0);
 				// }
 				// else
 				// {
@@ -70,72 +86,72 @@ void	pipesito(t_input *in)
 			}
 			// printf("%d\n", p);
 			waitpid(pid, NULL, 0);
-			if (in->split_input[i + 1] != NULL)
-			{
+			// if (in->split_input[i + 1] != NULL)
+			// {
 				close(pipe_fd[W_END]);
 				close(pipe_fd[R_END]);
 				dup2(pipe_fd[R_END], STDIN_FILENO);
-			}
-			// free_matrix(in->split_arg);
+			// }
+			free_matrix(in->split_arg);
 			i++;
 			j = 0;
 		}
-		if (in->split_input[i] != NULL)
-		{
-			// printf("AA: asda\n");
-			in->split_arg[j] = ft_strdup(in->split_input[i]);
-			i++;
-			j++;
-		}
+		// if (in->split_input[i] != NULL)
+		// {
+		// 	// printf("AA: asda\n");
+		// 	in->split_arg[j] = ft_strdup(in->split_input[i]);
+		// 	i++;
+		l++;
+		// }
 	}
 }
 
-void	pipex(t_input * in, t_list *arg_list)
-{
-	t_arg *aux;
-	t_list *aux_list;
-	pid_t	pid;
-	int		pipe_fd[2];
-	// int i = 0;
+// void	pipex(t_input * in, t_list *arg_list)
+// {
+// 	t_arg *aux;
+// 	t_list *aux_list;
+// 	pid_t	pid;
+// 	int		pipe_fd[2];
+// 	// int i = 0;
 
-	aux = NULL;
-	aux_list = arg_list;
-	// aux = (t_arg *)aux_list->next->content;
-	// printf("%s\n", aux->arg[1]);
-		if (pipe(pipe_fd) == -1)
-			printf("Error pipe\n");
-	while (aux_list)
-	{
-		aux = (t_arg *)aux_list->content;
-		in->split_input = aux->arg;
+// 	aux = NULL;
+// 	aux_list = arg_list;
+// 	// aux = (t_arg *)aux_list->next->content;
+// 	// printf("%s\n", aux->arg[1]);
+// 		if (pipe(pipe_fd) == -1)
+// 			printf("Error pipe\n");
+// 	while (aux_list)
+// 	{
+// 		aux = (t_arg *)aux_list->content;
+// 		in->split_input = aux->arg;
 
-		pid = fork();
-		if (pid < 0)
-		{
-			/* cerrar FD's + errpr */
-			printf("Error fork\n");
-		}
-		if (pid == 0)
-		{
-			close(pipe_fd[R_END]);
-			if (aux_list->next != NULL)
-				dup2(pipe_fd[W_END], STDOUT_FILENO);
-			close(pipe_fd[W_END]);
-			builtins(in);
-			// exit(0);
-		}
-		waitpid(pid, NULL, 0);
-		if (aux_list->next != NULL)
-		{
-			close(pipe_fd[W_END]);
-			dup2(pipe_fd[R_END], STDIN_FILENO);
-			close(pipe_fd[R_END]);
-		}
-		aux_list = aux_list->next;
-		free_matrix(in->split_input);
-	}
+// 		pid = fork();
+// 		if (pid < 0)
+// 		{
+// 			/* cerrar FD's + errpr */
+// 			printf("Error fork\n");
+// 		}
+// 		if (pid == 0)
+// 		{
+// 			close(pipe_fd[R_END]);
+// 			if (aux_list->next != NULL)
+// 				dup2(pipe_fd[W_END], STDOUT_FILENO);
+// 			close(pipe_fd[W_END]);
+// 			builtins(in);
+// 			// exit(0);
+// 		}
+// 		waitpid(pid, NULL, 0);
+// 		if (aux_list->next != NULL)
+// 		{
+// 			close(pipe_fd[W_END]);
+// 			dup2(pipe_fd[R_END], STDIN_FILENO);
+// 			close(pipe_fd[R_END]);
+// 		}
+// 		aux_list = aux_list->next;
+// 		free_matrix(in->split_input);
+// 	}
 	
-}
+// }
 
 void	init_arg_list(t_input *in)
 {
@@ -179,5 +195,6 @@ void	init_arg_list(t_input *in)
 	// }
 	// free_matrix(in->split_input);
 	// pipex(in, arg_list);
-	pipesito(in);
+		pipesito(in);
+	// }
 }

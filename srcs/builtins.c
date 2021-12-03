@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/02 00:44:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:31:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,5 @@ void	builtins(t_input *in)
 	// free_matrix(in->split_arg);
 	free(in->user_input);
 	// if (in->split_arg[0] == NULL)
-	exit(0);
+	// exit(0);
 }
