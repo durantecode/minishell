@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/30 17:24:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/04 18:58:28 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	read_input(t_input *in)
 			in->user_input = split_pipes(in);
 			free(aux);
 			check_args(in);
-			print_matrix(in->split_input);
-			if (in->split_input[0] != NULL)
-			 	builtins(in);
-			//init_arg_list(in);
+			init_arg_list(in);
+			// print_matrix(in->split_input);
+			// if (in->split_input[0] != NULL)
+			//  	builtins(in);
 		}
 		free(user);
 	}

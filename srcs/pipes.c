@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/30 17:27:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/04 20:33:33 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,18 @@ void	pipex(t_input * in, t_list *arg_list)
 	t_arg *aux;
 	t_list *aux_list;
 	pid_t	pid;
+	int		indice = 0;
+	int		fd[2][2];
 
 	aux_list = arg_list;
+	// aux = (t_arg *)aux_list->content;
 	while (aux_list)
 	{
+		pipe(fd[indice % 2]);
 		aux = (t_arg *)aux_list->content;
-		if (pipe(aux->pipe_fd) == -1)
-			printf("Error pipe\n");
+		// if (pipe(aux->pipe_fd) == -1)
+		// 	printf("Error pipe\n");
+		//write(1, ft_itoa(indice), 1);
 		pid = fork();
 		if (pid < 0)
 		{
@@ -48,10 +53,12 @@ void	pipex(t_input * in, t_list *arg_list)
 		}
 		if (pid == 0)
 		{
-			close(aux->pipe_fd[R_END]);
 			if (aux_list->next != NULL)
-				dup2(aux->pipe_fd[W_END], STDOUT_FILENO);
-			close(aux->pipe_fd[W_END]);
+				dup2(fd[indice % 2][W_END], STDOUT_FILENO);
+			close(fd[indice % 2][W_END]);
+			if (indice > 0)
+				dup2(fd[(indice + 1) % 2][R_END], STDIN_FILENO);
+			close(fd[(indice + 1) % 2][R_END]);
 			// printf("hola\n");
 			// free_matrix(in->split_input);
 			in->split_input = aux->arg;
@@ -59,19 +66,44 @@ void	pipex(t_input * in, t_list *arg_list)
 			exit(0);
 		}
 		waitpid(pid, NULL, 0);
-		if (aux_list->next != NULL)
-		{
-			dup2(aux->pipe_fd[R_END], STDIN_FILENO);
-			close(aux->pipe_fd[R_END]);
-		}
+		close(fd[indice % 2][W_END]);
+		//write(1, "F\n", 2);
+		// if (aux_list->next != NULL)
+		// {
+		// //	dup2(aux->pipe_fd[R_END], 1);
+		// 	dup2(aux->pipe_fd[R_END], STDIN_FILENO);
+		// 	close(aux->pipe_fd[R_END]);
+		// }
 		aux_list = aux_list->next;
+		indice++;
 		in->split_input = aux->arg;
 	}
 }
 
+// void	pipex(t_input * in, t_list *arg_list)
+// {
+// 	t_arg *aux_arg;
+// 	t_list *aux_list;
+// 	int		fd[2][2];
+
+// 	aux_list = aux_arg;
+// 	while (aux_list)
+// 	{
+// 		aux_arg = (t_arg *)aux_list->content;
+// 		// print_matrix(aux_arg->arg);
+// 		// printf("-------\n");
+// 		if (aux_list->next)
+// 		{
+			
+// 		}
+// 		aux_list = aux_list->next;
+// 	}
+// }
+
 void	init_arg_list(t_input *in)
 {
 	t_arg	*args;
+	t_arg	*aux;
 	t_list	*arg_list;
 	int		i[4];
 
@@ -103,4 +135,13 @@ void	init_arg_list(t_input *in)
 	}
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
+	
+	// while (arg_list)
+	// {
+	// 	aux = (t_arg *)arg_list->content;
+	// 	print_matrix(aux->arg);
+	// 	printf("-------\n");
+	// 	arg_list = arg_list->next;
+	// }
+	(void)aux;
 }

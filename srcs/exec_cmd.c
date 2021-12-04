@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/29 16:09:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/04 19:59:09 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	exec_cmd(t_input *in)
 	int		i;
 	char	*aux;
 	char	*path;
-	pid_t	pid;
+	//pid_t	pid;
 
 	i = -1;
 	in->cmd_path = NULL;
@@ -67,10 +67,10 @@ void	exec_cmd(t_input *in)
 	}
 	if (in->cmd_path && in->path_unset == 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		// pid = fork();
+		// if (pid == 0)
 			execve(in->cmd_path, in->split_input, in->dup_env);
-		waitpid(pid, NULL, 0);
+		// waitpid(pid, NULL, 0);
 		free(in->cmd_path);
 	}
 	else
