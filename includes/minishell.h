@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:19:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:17:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include <sys/wait.h>
 # include <dirent.h>
 
-// extern char	**environ;
 # define R_END 0
 # define W_END 1
 
@@ -32,7 +30,6 @@ typedef struct s_arg
 {
 	char	**arg;
 	// int		pipe_fd[2];
-	int 	x;
 }	t_arg;
 
 typedef struct s_flags
@@ -52,10 +49,10 @@ typedef struct s_flags
 typedef struct s_input
 {
 	int		path_unset;
+	int		total_pipes;
 	char	*user_input;
 	char	**split_path;
 	char	**split_input;
-	char	**split_arg;
 	char	*cmd_path;
 	char	**dup_env;
 	t_list	**env_list;
@@ -74,12 +71,16 @@ int		quotes_aux(t_input *in, char *str);
 void	expand_vars(t_input *in);
 char	*ft_getenv(const char *str, t_input *in);
 
+int		is_builtin(t_input *in); 
 void	builtins(t_input *in);
 void	env(t_input *in);
 void	echo(t_input *in);
 void	export(t_input *in);
 void	unset(t_input *in);
+
+int		count_pipes(t_input *in);
 void	init_env_list(t_input *in, t_list **envp, char **environ);
+void	list_to_matrix(t_input *in);
 void	exec_cmd(t_input *in);
 void	init_arg_list(t_input *in);
 void	exec_absolute(t_input *in);

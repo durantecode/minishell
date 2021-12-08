@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:28:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:21:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,9 @@ void	leaks(void)
 
 void	init_structs(t_input *in, t_list **envp)
 {
-	char	*aux;
-
-	in->path_unset = 0;
 	in->env_list = envp;
-	aux = ft_getenv("PATH", in);
-	in->split_path = ft_split(aux, ':');
-	free(aux);
-	if (!in->split_path)
-	{
-		in->path_unset = 1;
-		in->split_path = ft_split(" . ", '.');
-	}
 	in->user_input = NULL;
 	in->split_input = NULL;
-	in->split_arg = NULL;
 	in->cmd_path = NULL;
 }
 
@@ -44,6 +32,23 @@ void sigint_handler(int sig)
     return;
 }
 
+void	update_level(t_input *in)
+{
+	int		level;
+	char	*aux;	
+	
+	aux = ft_getenv("SHLVL", in);
+	level = ft_atoi(aux);
+	free(aux);
+	level++;
+	aux = ft_strjoin("SHLVL=", ft_itoa(level));
+	in->split_input = malloc(sizeof(char *) * 3);
+	in->split_input[1] = ft_strdup(aux);
+	in->split_input[2] = NULL;
+	free(aux);
+	export(in);
+}
+
 int	main(int argc, char **argv, char **environ)
 {
 	t_input				in;
@@ -52,6 +57,7 @@ int	main(int argc, char **argv, char **environ)
 	envp = NULL;
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
+	update_level(&in);
 	if (argc == 1)
 	{
 		while (1)

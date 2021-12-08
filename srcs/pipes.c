@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:32:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 15:46:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	count_pipes(t_input *in)
 			pipes++;
 		i++;
 	}
+	in->total_pipes = pipes;
 	return (pipes);
 }
 
@@ -48,7 +49,8 @@ void	pipex(t_input * in, t_list *arg_list)
 		pid = fork();
 		if (pid < 0)
 		{
-			/* cerrar FD's + errpr */
+			close(fd[indice % 2][W_END]);
+			close(fd[indice % 2][R_END]);
 			printf("Error fork\n");
 		}
 		if (pid == 0)
@@ -63,6 +65,7 @@ void	pipex(t_input * in, t_list *arg_list)
 			// free_matrix(in->split_input);
 			in->split_input = aux->arg;
 			builtins(in);
+			free_matrix(in->split_input);
 			exit(0);
 		}
 		waitpid(pid, NULL, 0);

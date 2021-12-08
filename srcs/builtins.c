@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:34:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:26:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	cd(t_input *in)
 	char	*full_path;
 
 	home_path = ft_getenv("HOME", in);
-	printf("%s\n", home_path);
 	if (in->split_input[1] == NULL)
 		chdir(home_path);
 	else if (in->split_input[1][0] == '~')
@@ -54,10 +53,10 @@ void	cd(t_input *in)
 
 void	exec_minishell(t_input *in)
 {
-	char	*split[2];
+	// char	*split[2];
 	pid_t	pid;
-	char	*aux;
-	int		level;
+	// char	*aux;
+	// int		level;
 
 	if (in->split_input[1] != NULL)
 	{
@@ -67,19 +66,42 @@ void	exec_minishell(t_input *in)
 	pid = fork();
 	if (pid == 0)
 	{
-		aux = ft_getenv("SHLVL", in);
-		level = ft_atoi(aux);
+		// aux = ft_getenv("SHLVL", in);
+		// level = ft_atoi(aux);
 		// free(aux);
-		level++;
-		aux = ft_strjoin("SHLVL=", ft_itoa(level));
-		in->split_input[1] = ft_strdup(aux);
-		in->split_input[2] = NULL;
-		export(in);
-		split[0] = ft_strdup("minishell");
-		split[1] = NULL;
-		execve("/usr/bin/", split, in->dup_env);
+		// level++;
+		// aux = ft_strjoin("SHLVL=", ft_itoa(level));
+		// in->split_input[1] = ft_strdup(aux);
+		// in->split_input[2] = NULL;
+		// free(aux);
+		// export(in);
+		// split[0] = ft_strdup("./minishell");
+		// split[1] = NULL;
+		// print_matrix(in->dup_env);
+		execve(in->split_input[0], in->split_input, in->dup_env);
 	}
-	waitpid(pid, NULL, 0);	
+	waitpid(pid, NULL, 0);
+}
+
+int		is_builtin(t_input *in)
+{
+	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "env", 4)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "cd", 3)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "echo", 5)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "export", 7)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
+		return (1);
+	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)))
+		return (1);
+	return (0);
 }
 
 void	builtins(t_input *in)
@@ -100,15 +122,13 @@ void	builtins(t_input *in)
 		exec_minishell(in);
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
-		printf("%s\n", "exit");
+		if (in->total_pipes == 1)
+			printf("%s\n", "exit");
 		exit(0);
 	}
 	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
 	else
 		exec_absolute(in);
-	// if (in->split_input)
-	// free_matrix(in->split_input);
 	free(in->user_input);
-	//exit(0);
 }

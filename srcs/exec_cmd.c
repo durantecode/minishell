@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:28:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:05:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exec_absolute(t_input *in)
 {
-	// pid_t	pid;
 	DIR 	*dir;
 
 	if ((access(in->split_input[0], F_OK)) == 0)
@@ -28,12 +27,7 @@ void	exec_absolute(t_input *in)
 		else
 		{
 			if ((access(in->split_input[0], X_OK)) == 0)
-			{
-				// pid = fork();
-				// if (pid == 0)
-					execve(in->split_input[0], in->split_input, in->dup_env);
-				// waitpid(pid, NULL, 0);
-			}
+				execve(in->split_input[0], in->split_input, in->dup_env);
 			else
 				printf("minishell: %s: Permission denied\n", in->split_input[0]);
 		}
@@ -43,13 +37,30 @@ void	exec_absolute(t_input *in)
 	exit (0);
 }
 
+/* Revisar get_path con una función extra */
+
+void	get_path(t_input *in)
+{
+	char	*aux;
+	
+	in->path_unset = 0;
+	aux = ft_getenv("PATH", in);
+	in->split_path = ft_split(aux, ':');
+	free(aux);
+	if (!in->split_path)
+	{
+		in->path_unset = 1;
+		in->split_path = ft_split(" . ", '.');
+	}
+}
+
 void	exec_cmd(t_input *in)
 {
 	int		i;
 	char	*aux;
 	char	*path;
-	//pid_t	pid;
 
+	get_path(in);
 	i = -1;
 	in->cmd_path = NULL;
 	while (in->split_path[++i])
@@ -68,10 +79,7 @@ void	exec_cmd(t_input *in)
 	}
 	if (in->cmd_path && in->path_unset == 0)
 	{
-		// pid = fork();
-		// if (pid == 0)
-			execve(in->cmd_path, in->split_input, in->dup_env);
-		// waitpid(pid, NULL, 0);
+		execve(in->cmd_path, in->split_input, in->dup_env);
 		free(in->cmd_path);
 	}
 	else

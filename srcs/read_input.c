@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 01:19:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:22:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_errors(t_input *in)
 				in->flags.i++;
 			}
 			if (count > 2)
-				printf("minishel: syntax error near '%c'\n", c);
+				printf("minishell: syntax error near '%c'\n", c);
 			if (count > 2)
 				return (1);
 		}
@@ -106,10 +106,12 @@ void	read_input(t_input *in)
 			in->user_input = split_pipes(in);
 			free(aux);
 			check_args(in);
-			init_arg_list(in);
+			if (is_builtin(in) && count_pipes(in) == 1)
+			 	builtins(in);
+			else
+				init_arg_list(in);
 			// print_matrix(in->split_input);
 			// if (in->split_input[0] != NULL)
-			//  	builtins(in);
 		}
 		free(user);
 	}

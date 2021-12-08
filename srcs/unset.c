@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 23:52:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:17:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	unset(t_input *in)
 	}
 	if (!(ft_strncmp(var, "PATH=", size_var)))
 		in->path_unset = 1;
+	list_to_matrix(in);
 }

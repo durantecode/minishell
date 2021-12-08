@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/03 12:28:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:17:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	dup_env(t_input *in, char **environ)
 	{
 		in->dup_env = malloc(sizeof(char *) * 5);
 		in->dup_env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
-		in->dup_env[1] = ft_strdup("SHLVL=1");
+		in->dup_env[1] = ft_strdup("SHLVL=0");
 		in->dup_env[2] = ft_strdup("_=/usr/bin/env");
 		in->dup_env[3]
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
