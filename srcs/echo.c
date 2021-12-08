@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/02 00:44:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 01:24:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void	echo(t_input *in)
 	int	i;
 
 	i = 0;
-	if (in->split_arg[1] == NULL)
+	if (in->split_input[1] == NULL)
 		printf("\n");
-	else if (!(ft_strncmp(in->split_arg[1], "-n", 3)))
+	else if (!(ft_strncmp(in->split_input[1], "-n", 3)))
 	{
 		i = 1;
-		while (in->split_arg[++i])
-			printf("%s", in->split_arg[i]);
-			// ft_putstr_fd(in->split_arg[i], 2);
+		while (in->split_input[++i])
+			printf("%s", in->split_input[i]);
+			// ft_putstr_fd(in->split_input[i], 2);
 	}
 	else
 	{
 		i = 0;
-		while (in->split_arg[++i])
-			// ft_putstr_fd(in->split_arg[i], 2);
-			printf("%s", in->split_arg[i]);
+		while (in->split_input[++i])
+			// ft_putstr_fd(in->split_input[i], 2);
+			printf("%s", in->split_input[i]);
 		// ft_putchar_fd('\n', 2);
 		printf("\n");
 	}

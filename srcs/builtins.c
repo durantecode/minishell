@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/03 12:31:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 01:34:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,27 @@ void	cd(t_input *in)
 	char	*full_path;
 
 	home_path = ft_getenv("HOME", in);
-	if (in->split_arg[1] == NULL)
+	printf("%s\n", home_path);
+	if (in->split_input[1] == NULL)
 		chdir(home_path);
-	else if (in->split_arg[1][0] == '~')
+	else if (in->split_input[1][0] == '~')
 	{
-		if (in->split_arg[1][1] == '\0')
+		if (in->split_input[1][1] == '\0')
 			chdir(home_path);
 		else
 		{
-			aux = in->split_arg[1];
+			aux = in->split_input[1];
 			aux++;
 			full_path = ft_strjoin(home_path, aux);
-			free(in->split_arg[1]);
-			in->split_arg[1] = ft_strdup(full_path);
+			free(in->split_input[1]);
+			in->split_input[1] = ft_strdup(full_path);
 			cd(in);
 			free(full_path);
 		}
 	}
-	else if (chdir(in->split_arg[1]) != 0)
+	else if (chdir(in->split_input[1]) != 0)
 		printf("minishell: cd: %s: No such file or directory\n",
-			in->split_arg[1]);
+			in->split_input[1]);
 }
 
 void	exec_minishell(t_input *in)
@@ -58,7 +59,7 @@ void	exec_minishell(t_input *in)
 	char	*aux;
 	int		level;
 
-	if (in->split_arg[1] != NULL)
+	if (in->split_input[1] != NULL)
 	{
 		printf("minishell: cannot execute binary file\n");
 		return ;
@@ -71,8 +72,8 @@ void	exec_minishell(t_input *in)
 		// free(aux);
 		level++;
 		aux = ft_strjoin("SHLVL=", ft_itoa(level));
-		in->split_arg[1] = ft_strdup(aux);
-		in->split_arg[2] = NULL;
+		in->split_input[1] = ft_strdup(aux);
+		in->split_input[2] = NULL;
 		export(in);
 		split[0] = ft_strdup("minishell");
 		split[1] = NULL;
@@ -83,32 +84,31 @@ void	exec_minishell(t_input *in)
 
 void	builtins(t_input *in)
 {
-	if (!(ft_strncmp(in->split_arg[0], "pwd", 4)))
+	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
 		pwd(in);
-	else if (!(ft_strncmp(in->split_arg[0], "env", 4)))
+	else if (!(ft_strncmp(in->split_input[0], "env", 4)))
 		env(in);
-	else if (!(ft_strncmp(in->split_arg[0], "cd", 3)))
+	else if (!(ft_strncmp(in->split_input[0], "cd", 3)))
 		cd(in);
-	else if (!(ft_strncmp(in->split_arg[0], "echo", 5)))
+	else if (!(ft_strncmp(in->split_input[0], "echo", 5)))
 		echo(in);
-	else if (!(ft_strncmp(in->split_arg[0], "export", 7)))
+	else if (!(ft_strncmp(in->split_input[0], "export", 7)))
 		export(in);
-	else if (!(ft_strncmp(in->split_arg[0], "unset", 6)))
+	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
 		unset(in);
-	else if (!(ft_strncmp(in->split_arg[0], "./minishell", 12)))
+	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)))
 		exec_minishell(in);
-	else if (!(ft_strncmp(in->split_arg[0], "exit", 5)))
+	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{
 		printf("%s\n", "exit");
 		exit(0);
 	}
-	else if (!(ft_strchr(in->split_arg[0], '/')))
+	else if (!(ft_strchr(in->split_input[0], '/')))
 		exec_cmd(in);
 	else
 		exec_absolute(in);
-	// if (in->split_arg)
-	// free_matrix(in->split_arg);
+	// if (in->split_input)
+	// free_matrix(in->split_input);
 	free(in->user_input);
-	// if (in->split_arg[0] == NULL)
-	// exit(0);
+	//exit(0);
 }

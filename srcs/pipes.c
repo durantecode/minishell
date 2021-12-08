@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/03 13:09:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 01:32:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,173 +28,100 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
-void	pipesito(t_input *in)
+void	pipex(t_input * in, t_list *arg_list)
 {
-	int i;
-	int j;
-	int k;
-	int l;
+	t_arg	*aux;
+	t_list	*aux_list;
 	pid_t	pid;
-	int		pipe_fd[2];
+	int		indice = 0;
+	int		fd[2][2];
 
-	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
-		pipe(pipe_fd);
-	while (l < count_pipes(in) && in->split_input[i] != NULL)
+	aux_list = arg_list;
+	// aux = (t_arg *)aux_list->content;
+	while (aux_list)
 	{
-		k = 0;
-		while (in->split_input[i] != NULL && (ft_strncmp(in->split_input[i], "|", 2)))
+		pipe(fd[indice % 2]);
+		aux = (t_arg *)aux_list->content;
+		// if (pipe(aux->pipe_fd) == -1)
+		// 	printf("Error pipe\n");
+		//write(1, ft_itoa(indice), 1);
+		pid = fork();
+		if (pid < 0)
 		{
-			i++;
-			k++;
+			/* cerrar FD's + errpr */
+			printf("Error fork\n");
 		}
-		in->split_arg = malloc(sizeof(char *) * k + 1);
-		i = i - k;
-		while (in->split_input[i] != NULL && (ft_strncmp(in->split_input[i], "|", 2)))
+		if (pid == 0)
 		{
-			in->split_arg[j] = ft_strdup(in->split_input[i]);
-			i++;
-			j++;	
+			if (aux_list->next != NULL)
+				dup2(fd[indice % 2][W_END], STDOUT_FILENO);
+			close(fd[indice % 2][W_END]);
+			if (indice > 0)
+				dup2(fd[(indice + 1) % 2][R_END], STDIN_FILENO);
+			close(fd[(indice + 1) % 2][R_END]);
+			// printf("hola\n");
+			// free_matrix(in->split_input);
+			in->split_input = aux->arg;
+			builtins(in);
+			exit(0);
 		}
-		// printf("%d\n", i);
-		if (!(ft_strncmp(in->split_input[i], "|", 2)))
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				// if (p == 0)
-				// {
-					// print_matrix(in->split_arg);
-					close(pipe_fd[R_END]);
-					// if (in->split_input[i + 1] != NULL)
-						dup2(pipe_fd[W_END], STDOUT_FILENO);
-					close(pipe_fd[W_END]);
-					builtins(in);
-					exit(0);
-				// }
-				// else
-				// {
-				// 	ft_putendl_fd("OJETE\n", 1);
-				// 	close(pipe_fd[W_END]);
-				// 	dup2(pipe_fd[R_END], STDIN_FILENO);
-				// 	close(pipe_fd[R_END]);
-				// 	builtins(in);
-				// }
-				// exit(0);
-			}
-			// printf("%d\n", p);
-			waitpid(pid, NULL, 0);
-			// if (in->split_input[i + 1] != NULL)
-			// {
-				close(pipe_fd[W_END]);
-				close(pipe_fd[R_END]);
-				dup2(pipe_fd[R_END], STDIN_FILENO);
-			// }
-			free_matrix(in->split_arg);
-			i++;
-			j = 0;
-		}
-		// if (in->split_input[i] != NULL)
+		waitpid(pid, NULL, 0);
+		close(fd[indice % 2][W_END]);
+		//write(1, "F\n", 2);
+		// if (aux_list->next != NULL)
 		// {
-		// 	// printf("AA: asda\n");
-		// 	in->split_arg[j] = ft_strdup(in->split_input[i]);
-		// 	i++;
-		l++;
+		// //	dup2(aux->pipe_fd[R_END], 1);
+		// 	dup2(aux->pipe_fd[R_END], STDIN_FILENO);
+		// 	close(aux->pipe_fd[R_END]);
 		// }
+		aux_list = aux_list->next;
+		indice++;
+		in->split_input = aux->arg;
 	}
 }
 
-// void	pipex(t_input * in, t_list *arg_list)
-// {
-// 	t_arg *aux;
-// 	t_list *aux_list;
-// 	pid_t	pid;
-// 	int		pipe_fd[2];
-// 	// int i = 0;
-
-// 	aux = NULL;
-// 	aux_list = arg_list;
-// 	// aux = (t_arg *)aux_list->next->content;
-// 	// printf("%s\n", aux->arg[1]);
-// 		if (pipe(pipe_fd) == -1)
-// 			printf("Error pipe\n");
-// 	while (aux_list)
-// 	{
-// 		aux = (t_arg *)aux_list->content;
-// 		in->split_input = aux->arg;
-
-// 		pid = fork();
-// 		if (pid < 0)
-// 		{
-// 			/* cerrar FD's + errpr */
-// 			printf("Error fork\n");
-// 		}
-// 		if (pid == 0)
-// 		{
-// 			close(pipe_fd[R_END]);
-// 			if (aux_list->next != NULL)
-// 				dup2(pipe_fd[W_END], STDOUT_FILENO);
-// 			close(pipe_fd[W_END]);
-// 			builtins(in);
-// 			// exit(0);
-// 		}
-// 		waitpid(pid, NULL, 0);
-// 		if (aux_list->next != NULL)
-// 		{
-// 			close(pipe_fd[W_END]);
-// 			dup2(pipe_fd[R_END], STDIN_FILENO);
-// 			close(pipe_fd[R_END]);
-// 		}
-// 		aux_list = aux_list->next;
-// 		free_matrix(in->split_input);
-// 	}
-	
-// }
-
 void	init_arg_list(t_input *in)
 {
-	// t_arg	*args;
-	// t_list	*arg_list;
-	// int		i[4];
+	t_arg	*args;
+	t_arg	*aux;
+	t_list	*arg_list;
+	int		i[4];
 
-	// i[0] = 0;
-	// i[1] = 0;
-	// arg_list = NULL;
-	// while (i[1] < count_pipes(in))
-	// {
-	// 	i[3] = 0;
-	// 	i[2] = 0;
-	// 	while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
-	// 	{
-	// 		i[0]++;
-	// 		i[2]++;
-	// 	}
-	// 	args = malloc(sizeof(t_arg));
-	// 	args->arg = malloc(sizeof(char *) * i[2] + 1);
-	// 	i[0] = i[0] - i[2];
-	// 	while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
-	// 	{
-	// 		args->arg[i[3]] = ft_strdup(in->split_input[i[0]]);
-	// 		i[0]++;
-	// 		i[3]++;
-	// 	}
-	// 	args->arg[i[3]] = NULL;
-	// 	ft_lstadd_back(&arg_list, ft_lstnew((void *) args));
-	// 	i[1]++;
-	// 	i[0]++;
-	// }
-	// t_arg *aux;
-	// aux = NULL;
+	i[0] = 0;
+	i[1] = 0;
+	arg_list = NULL;
+	while (i[1] < count_pipes(in))
+	{
+		i[3] = 0;
+		i[2] = 0;
+		while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
+		{
+			i[0]++;
+			i[2]++;
+		}
+		args = malloc(sizeof(t_arg));
+		args->arg = malloc(sizeof(char *) * i[2] + 1);
+		i[0] = i[0] - i[2];
+		while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
+		{
+			args->arg[i[3]] = ft_strdup(in->split_input[i[0]]);
+			i[0]++;
+			i[3]++;
+		}
+		args->arg[i[3]] = NULL;
+		ft_lstadd_back(&arg_list, ft_lstnew((void *) args));
+		i[1]++;
+		i[0]++;
+	}
+	free_matrix(in->split_input);
+	pipex(in, arg_list);
+	
 	// while (arg_list)
 	// {
 	// 	aux = (t_arg *)arg_list->content;
 	// 	print_matrix(aux->arg);
+	// 	printf("-------\n");
 	// 	arg_list = arg_list->next;
 	// }
-	// free_matrix(in->split_input);
-	// pipex(in, arg_list);
-		pipesito(in);
-	// }
+	(void)aux;
 }

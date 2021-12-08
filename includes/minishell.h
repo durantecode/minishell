@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/03 12:20:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 01:19:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <dirent.h>
 
 // extern char	**environ;
-
 # define R_END 0
 # define W_END 1
 
@@ -81,10 +80,11 @@ void	echo(t_input *in);
 void	export(t_input *in);
 void	unset(t_input *in);
 void	init_env_list(t_input *in, t_list **envp, char **environ);
-
 void	exec_cmd(t_input *in);
 void	init_arg_list(t_input *in);
 void	exec_absolute(t_input *in);
-
 void	catch_signal(int signal, siginfo_t *info, void *context);
+
+void	single_input(t_input *in, char **str);
+
 #endif

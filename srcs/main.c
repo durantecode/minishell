@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/02 00:43:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/08 01:28:25 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,17 @@ int	main(int argc, char **argv, char **environ)
 {
 	t_input				in;
 	t_list				*envp;
-	// struct sigaction	sa;
 
-	// atexit(leaks);
 	envp = NULL;
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
-	// sa.sa_sigaction = catch_signal;
-	while (1)
+	if (argc == 1)
 	{
-		// sigaction(SIGINT, &sa, NULL);
-		// signal(SIGQUIT, SIG_IGN);
-		// signal(SIGINT, SIG_IGN);
-		read_input(&in);
-		//signal(SIGQUIT, SIG_IGN);
+		while (1)
+		{
+			//printf("holaa\n");
+			read_input(&in);
+		}
 	}
 	(void)argc;
 	(void)argv;

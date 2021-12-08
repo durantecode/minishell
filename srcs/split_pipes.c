@@ -24,7 +24,7 @@ static void	split_pipes_aux(t_input *in, char **final_input)
 				|| in->user_input[in->flags.i] == '\'')
 			&& in->flags.global_q == 1)
 			in->flags.global_q = 0;
-		if (in->flags.global_q == 0 && in->user_input[in->flags.i] == '|')
+		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
 		{
 			(*final_input)[in->flags.count++] = ' ';
 			(*final_input)[in->flags.count++] = in->user_input[in->flags.i];
@@ -52,7 +52,7 @@ char	*split_pipes(t_input *in)
 				|| in->user_input[in->flags.i] == '\'')
 			&& in->flags.global_q == 1)
 			in->flags.global_q = 0;
-		if (in->flags.global_q == 0 && in->user_input[in->flags.i] == '|')
+		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
 			in->flags.count += 2;
 		in->flags.count++;
 		in->flags.i++;
