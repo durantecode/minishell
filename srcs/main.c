@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 18:21:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:43:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->user_input = NULL;
 	in->split_input = NULL;
 	in->cmd_path = NULL;
+	in->n_bytes = 0;
 }
 
 void sigint_handler(int sig) 
@@ -51,9 +52,9 @@ void	update_level(t_input *in)
 
 int	main(int argc, char **argv, char **environ)
 {
-	t_input				in;
-	t_list				*envp;
-
+	t_input	in;
+	t_list	*envp;
+	
 	envp = NULL;
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
@@ -62,10 +63,23 @@ int	main(int argc, char **argv, char **environ)
 	{
 		while (1)
 		{
-			//printf("holaa\n");
+			// printf("holaa\n");
+			if (!isatty(STDIN_FILENO))
+			{
+				ioctl(STDIN_FILENO, FIONREAD, &in.n_bytes);
+				// printf("There's %d bytes left to read\n", nbytes);
+				if (in.n_bytes < 1)
+					exit (0);
+			}
 			read_input(&in);
 		}
 	}
+	else
+	{
+		in.split_input[0] = argv[1];
+		error_msg(&in, ERR_ARG, 1);
+	}
+	
 	(void)argc;
 	(void)argv;
 	return (0);

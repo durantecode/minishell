@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/12/01 02:00:45 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/09 12:17:09 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS =	srcs/main.c \
 		srcs/quotes.c \
 		srcs/expand.c \
 		srcs/pipes.c \
+		srcs/error_msg.c \
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 17:05:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/09 18:55:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,21 @@ void	exec_cmd(t_input *in)
 	}
 	if (in->cmd_path && in->path_unset == 0)
 	{
+		// in->split_input[0] = NULL;
+		// write(1, in->split_input[1], ft_strlen(in->split_input[1]));
+		// print_matrix(in->dup_env);
 		execve(in->cmd_path, in->split_input, in->dup_env);
 		free(in->cmd_path);
 	}
 	else
 	{
 		if (in->path_unset == 0)
-			printf("minishell: %s: command not found\n", in->split_input[0]);
+			error_msg(in, ERR_CMD, 1);
+			// printf("minishell: %s: command not found\n", in->split_input[0]);
 		else
-			printf("minishell: %s: No such file or directory\n",
-				in->split_input[0]);
+			error_msg(in, ERR_FILE, 1);
+			// printf("minishell: %s: No such file or directory\n",
+			// 	in->split_input[0]);
 	}
-	exit (0);
+	// exit (0);
 }

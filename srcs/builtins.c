@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 17:26:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/09 15:46:52 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,11 @@ void	cd(t_input *in)
 
 void	exec_minishell(t_input *in)
 {
-	// char	*split[2];
 	pid_t	pid;
-	// char	*aux;
-	// int		level;
 
-	if (in->split_input[1] != NULL)
-	{
-		printf("minishell: cannot execute binary file\n");
-		return ;
-	}
 	pid = fork();
 	if (pid == 0)
 	{
-		// aux = ft_getenv("SHLVL", in);
-		// level = ft_atoi(aux);
-		// free(aux);
-		// level++;
-		// aux = ft_strjoin("SHLVL=", ft_itoa(level));
-		// in->split_input[1] = ft_strdup(aux);
-		// in->split_input[2] = NULL;
-		// free(aux);
-		// export(in);
-		// split[0] = ft_strdup("./minishell");
-		// split[1] = NULL;
-		// print_matrix(in->dup_env);
 		execve(in->split_input[0], in->split_input, in->dup_env);
 	}
 	waitpid(pid, NULL, 0);
@@ -118,7 +98,7 @@ void	builtins(t_input *in)
 		export(in);
 	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
 		unset(in);
-	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)))
+	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12)) && in->total_pipes == 1)
 		exec_minishell(in);
 	else if (!(ft_strncmp(in->split_input[0], "exit", 5)))
 	{

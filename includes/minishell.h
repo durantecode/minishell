@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 18:17:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:21:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,25 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <dirent.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
 
 # define R_END 0
 # define W_END 1
+
+# define SHELL "minishell"
+# define ERR_PIPE "Pipe error\n"
+# define ERR_FORK "Fork error\n"
+# define ERR_DUP "Dup error\n"
+# define ERR_SYNTAX "syntax error near \n"
+
+# define ERR_CMD "command not found\n"
+# define ERR_FILE "No such file or directory\n"
+# define ERR_PERM "Permission denied\n"
+# define ERR_BIN "cannot execute binary file\n"
+
+# define ERR_ID "not a valid identifier\n"
+# define ERR_ARG "Invalid argument\n"
 
 typedef struct s_arg
 {
@@ -50,6 +66,7 @@ typedef struct s_input
 {
 	int		path_unset;
 	int		total_pipes;
+	int		n_bytes;
 	char	*user_input;
 	char	**split_path;
 	char	**split_input;
@@ -60,7 +77,11 @@ typedef struct s_input
 }	t_input;
 
 int		main(int argc, char **argv, char **environ);
+int		error_msg(t_input *in, char *ERR, int n);
+
+void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	init_flags(t_input *in);
+void	init_arg_list(t_input *in);
 
 void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
@@ -79,13 +100,11 @@ void	export(t_input *in);
 void	unset(t_input *in);
 
 int		count_pipes(t_input *in);
-void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	list_to_matrix(t_input *in);
 void	exec_cmd(t_input *in);
-void	init_arg_list(t_input *in);
 void	exec_absolute(t_input *in);
-void	catch_signal(int signal, siginfo_t *info, void *context);
 
+void	catch_signal(int signal, siginfo_t *info, void *context);
 void	single_input(t_input *in, char **str);
 
 #endif

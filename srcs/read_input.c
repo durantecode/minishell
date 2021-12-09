@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 18:22:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:38:52 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,33 +93,39 @@ void	read_input(t_input *in)
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	prompt = ft_strjoin(user, "@minishell> $ ");
-	in->user_input = readline(prompt);
-	if (pair_quotes(in) == 0)
-	{
-		if (in->user_input[0] != '\0')
-			add_history(in->user_input);
-		ft_bzero(&in->flags, sizeof(in->flags));
-		if (!check_errors(in))
-		{
-			aux = in->user_input;
-			in->user_input = split_pipes(in);
-			free(aux);
-			check_args(in);
-			if (is_builtin(in) && count_pipes(in) == 1)
-			 	builtins(in);
-			else
-				init_arg_list(in);
-			// print_matrix(in->split_input);
-			// if (in->split_input[0] != NULL)
-		}
-		free(user);
-	}
+	if (in->n_bytes > 0)
+		prompt = NULL;
 	else
+		prompt = ft_strjoin(user, "@minishell> $ ");
+	in->user_input = readline(prompt);
+	if ((ft_strncmp(in->user_input, "", 1)))
 	{
-		printf("minishell: Invalid argument\n");
-		if (in->user_input[0] != '\0')
-			add_history(in->user_input);
+		if (pair_quotes(in) == 0)
+		{
+			if (in->user_input[0] != '\0')
+				add_history(in->user_input);
+			ft_bzero(&in->flags, sizeof(in->flags));
+			if (!check_errors(in))
+			{
+				aux = in->user_input;
+				in->user_input = split_pipes(in);
+				free(aux);
+				check_args(in);
+				if (is_builtin(in) && count_pipes(in) == 1)
+					builtins(in);
+				else
+					init_arg_list(in);
+				// print_matrix(in->split_input);
+				// if (in->split_input[0] != NULL)
+			}
+			free(user);
+		}
+		else
+		{
+			printf("minishell: Invalid argument\n");
+			if (in->user_input[0] != '\0')
+				add_history(in->user_input);
+		}
 	}
 	free(prompt);
 }

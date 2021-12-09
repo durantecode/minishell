@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/07 11:10:36 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/09 13:18:38 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/09 18:54:25 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-size_t	ft_strlen(const char *s)
+int		error_msg(t_input *in, char *ERR, int n)
 {
-	size_t	i;
-
-	i = 0;
-	if (s == NULL)
-		return (0);
-	while (*s++)
-		i++;
-	return (i);
+	if (n == 1)
+		printf("%s: %s: %s", SHELL, in->split_input[0], ERR);
+	else
+		printf("%s: %s", SHELL, ERR);
+	(void)in;
+	return (0);
 }
