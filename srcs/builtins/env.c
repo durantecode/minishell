@@ -6,11 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/09 13:22:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:34:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	env(t_input *in)
 {
@@ -50,7 +50,7 @@ char	*ft_getenv(const char *str, t_input *in)
 
 void	dup_env(t_input *in, char **environ)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	in->dup_env = NULL;
@@ -82,6 +82,7 @@ void	init_env_list(t_input *in, t_list **envp, char **environ)
 	int		size;
 
 	i = 0;
+	in->old_environ = environ;
 	dup_env(in, environ);
 	while (in->dup_env[i] != NULL)
 	{

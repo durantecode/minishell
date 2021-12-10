@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 15:08:33 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/10 16:33:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	error_msg(t_input *in, char *MSG, int n)
+/* REVISAR SI HACER FREES EN ESTA FUNCIÓN */
+
+void	my_exit(t_input *in)
 {
-	if (n == 0)
-		printf("%s: %s: %s\n", SHELL, in->split_input[0], MSG);
-	else if (n == 1)
-		printf("%s: %s: %s\n", SHELL, in->split_input[1], MSG);
-	else
-		printf("%s: %s\n", SHELL, MSG);
-	return (0);
+	if (in->total_pipes == 1)
+		printf("%s\n", "exit");
+	exit(0);
 }

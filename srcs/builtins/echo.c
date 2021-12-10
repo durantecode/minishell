@@ -6,13 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 11:13:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:34:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-/* Revisar flags -n múltiples */
+#include "../../includes/minishell.h"
 
 void	print_echo(t_input *in, int i)
 {
@@ -21,7 +19,7 @@ void	print_echo(t_input *in, int i)
 		if (in->split_input[i + 1] != NULL)
 			printf("%s ", in->split_input[i]);
 		else
-			printf("%s", in->split_input[i]);		
+			printf("%s", in->split_input[i]);
 	}
 }
 

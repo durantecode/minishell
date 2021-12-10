@@ -6,11 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/09 13:12:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:34:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+/* REVISAR LONGITUD FUNCIONES */
 
 int	count_pipes(t_input *in)
 {
@@ -29,56 +31,46 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
-void	pipex(t_input * in, t_list *arg_list)
+void	pipex(t_input *in, t_list *arg_list)
 {
 	t_arg	*aux;
 	t_list	*aux_list;
 	pid_t	pid;
-	int		indice = 0;
+	int		index;
 	int		fd[2][2];
 
+	index = 0;
 	aux_list = arg_list;
-	// aux = (t_arg *)aux_list->content;
 	while (aux_list)
 	{
-		if (pipe(fd[indice % 2]) == -1)
+		if (pipe(fd[index % 2]) == -1)
 			printf("Error pipe\n");
 		aux = (t_arg *)aux_list->content;
-		// if (pipe(aux->pipe_fd) == -1)
-		//write(1, ft_itoa(indice), 1);
 		pid = fork();
 		if (pid < 0)
 		{
-			close(fd[indice % 2][W_END]);
-			close(fd[indice % 2][R_END]);
+			close(fd[index % 2][W_END]);
+			close(fd[index % 2][R_END]);
 			printf("Error fork\n");
 		}
 		if (pid == 0)
 		{
 			if (aux_list->next != NULL)
-				dup2(fd[indice % 2][W_END], STDOUT_FILENO);
-			close(fd[indice % 2][W_END]);
-			if (indice > 0)
-				dup2(fd[(indice + 1) % 2][R_END], STDIN_FILENO);
-			close(fd[(indice + 1) % 2][R_END]);
-			// printf("hola\n");
-			// free_matrix(in->split_input);
+				dup2(fd[index % 2][W_END], STDOUT_FILENO);
+			close(fd[index % 2][W_END]);
+			if (index > 0)
+				dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
+			close(fd[(index + 1) % 2][R_END]);
 			in->split_input = aux->arg;
-			builtins(in);
+			exec_args(in);
 			free_matrix(in->split_input);
-			exit(0);
+			free(in->cmd_path);
+			exit (0);
 		}
 		waitpid(pid, NULL, 0);
-		close(fd[indice % 2][W_END]);
-		//write(1, "F\n", 2);
-		// if (aux_list->next != NULL)
-		// {
-		// //	dup2(aux->pipe_fd[R_END], 1);
-		// 	dup2(aux->pipe_fd[R_END], STDIN_FILENO);
-		// 	close(aux->pipe_fd[R_END]);
-		// }
+		close(fd[index % 2][W_END]);
 		aux_list = aux_list->next;
-		indice++;
+		index++;
 		in->split_input = aux->arg;
 	}
 }
@@ -86,7 +78,6 @@ void	pipex(t_input * in, t_list *arg_list)
 void	init_arg_list(t_input *in)
 {
 	t_arg	*args;
-	t_arg	*aux;
 	t_list	*arg_list;
 	int		i[4];
 
@@ -118,13 +109,4 @@ void	init_arg_list(t_input *in)
 	}
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
-	
-	// while (arg_list)
-	// {
-	// 	aux = (t_arg *)arg_list->content;
-	// 	print_matrix(aux->arg);
-	// 	printf("-------\n");
-	// 	arg_list = arg_list->next;
-	// }
-	(void)aux;
 }

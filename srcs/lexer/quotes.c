@@ -6,11 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 19:29:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:35:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	quotes_aux(t_input *in, char *str)
 {
@@ -43,7 +43,7 @@ int	quotes_aux(t_input *in, char *str)
 
 static char	*delete_quote(t_input *in, char *str)
 {
-	char	*str_final;
+	char	*final_str;
 
 	while (str[in->flags.i])
 	{
@@ -51,16 +51,16 @@ static char	*delete_quote(t_input *in, char *str)
 			in->flags.j++;
 		in->flags.i++;
 	}
-	str_final = malloc(sizeof(char) * (in->flags.j + 1));
-	str_final[in->flags.j] = '\0';
+	final_str = malloc(sizeof(char) * (in->flags.j + 1));
+	final_str[in->flags.j] = '\0';
 	ft_bzero(&in->flags, sizeof(in->flags));
 	while (str[in->flags.i])
 	{
 		if (!quotes_aux(in, str))
-			str_final[in->flags.j++] = str[in->flags.i];
+			final_str[in->flags.j++] = str[in->flags.i];
 		in->flags.i++;
 	}
-	return (str_final);
+	return (final_str);
 }
 
 char	**quotes(t_input *in)

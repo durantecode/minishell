@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 15:08:33 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/10 12:37:56 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/10 16:34:28 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	error_msg(t_input *in, char *MSG, int n)
+void	pwd(void)
 {
-	if (n == 0)
-		printf("%s: %s: %s\n", SHELL, in->split_input[0], MSG);
-	else if (n == 1)
-		printf("%s: %s: %s\n", SHELL, in->split_input[1], MSG);
-	else
-		printf("%s: %s\n", SHELL, MSG);
-	return (0);
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 }

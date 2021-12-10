@@ -6,22 +6,20 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/08 18:19:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:34:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /* Revisar leaks y longitud de funciones */
 
 void	list_to_matrix(t_input *in)
 {
-	int i;
-	t_list *aux;
-	
+	int		i;
+	t_list	*aux;
+
 	i = 0;
-	// if (in->dup_env)
-	// 	free_matrix(in->dup_env);
 	aux = *in->env_list;
 	in->dup_env = malloc(sizeof(char *) * ft_lstsize(*in->env_list));
 	while (aux)
@@ -44,7 +42,7 @@ void	export(t_input *in)
 	flag = 0;
 	if (in->split_input[1] == NULL)
 	{
-		printf("minishell: export: not a valid identifier\n");
+		error_msg(in, ERR_ID, 2);
 		return ;
 	}
 	tmp = ft_strdup(in->split_input[1]);
@@ -57,7 +55,7 @@ void	export(t_input *in)
 		{
 			if (!(ft_isalnum(aux[0][i])))
 			{
-				printf("minishell: export: not a valid identifier\n");
+				error_msg(in, ERR_ID, 2);
 				return ;
 			}
 			else
@@ -69,10 +67,12 @@ void	export(t_input *in)
 					{
 						in->split_input[1] = ft_strdup(aux[0]);
 						unset(in);
-						ft_lstadd_back(in->env_list, ft_new_node((void *) tmp, size + 1));
+						ft_lstadd_back(in->env_list,
+							ft_new_node((void *) tmp, size + 1));
 					}
 					else
-						ft_lstadd_back(in->env_list, ft_new_node((void *) tmp, size + 1));
+						ft_lstadd_back(in->env_list,
+							ft_new_node((void *) tmp, size + 1));
 					list_to_matrix(in);
 					return ;
 				}

@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/12/09 12:17:09 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/10 16:31:56 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,21 +33,24 @@ NO_COLOR = \033[0m
 # SOURCES & OBJECTS #
 
 SRCS =	srcs/main.c \
-		srcs/read_input.c \
-		srcs/builtins.c \
-		srcs/echo.c \
-		srcs/env.c \
-		srcs/export.c \
-		srcs/unset.c \
-		srcs/signal.c \
-		srcs/exec_cmd.c \
-		srcs/check_args.c \
-		srcs/split_pipes.c \
-		srcs/token.c \
-		srcs/quotes.c \
-		srcs/expand.c \
-		srcs/pipes.c \
 		srcs/error_msg.c \
+		srcs/read_input.c \
+		srcs/signal.c \
+		srcs/builtins/cd.c \
+		srcs/builtins/pwd.c \
+		srcs/builtins/echo.c \
+		srcs/builtins/env.c \
+		srcs/builtins/export.c \
+		srcs/builtins/unset.c \
+		srcs/builtins/exit.c \
+		srcs/executer/exec_args.c \
+		srcs/executer/exec_cmd.c \
+		srcs/executer/pipes.c \
+		srcs/lexer/check_args.c \
+		srcs/lexer/expand.c \
+		srcs/lexer/quotes.c \
+		srcs/lexer/split_pipes.c \
+		srcs/lexer/token.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -65,7 +68,7 @@ test: all
 	./minishell
 
 normi:
-	norminette -R CheckForbiddenSourceHeaders srcs/*.c srcs_utils/*.c includes/*.h
+	norminette -R CheckForbiddenSourceHeaders srcs/*.c includes/*.h
 
 clean:
 	@clear

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/09 19:38:52 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:19:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_errors(t_input *in)
 			else
 				in->flags.i++;
 			while ((in->user_input[in->flags.i] == c || in->user_input[in->flags.i] == ' ')
-				&& count <=2 && in->user_input[in->flags.i])
+				&& count <= 2 && in->user_input[in->flags.i])
 			{
 				if (in->user_input[in->flags.i] == c)
 					count++;
@@ -78,10 +78,29 @@ int	check_errors(t_input *in)
 			if (count > 2)
 				return (1);
 		}
-		else 
+		else
 			in->flags.i++;
 	}
 	return (0);
+}
+
+void	read_input_aux(t_input *in, char *aux, char *user)
+{
+	if (in->user_input[0] != '\0')
+		add_history(in->user_input);
+	ft_bzero(&in->flags, sizeof(in->flags));
+	if (!check_errors(in))
+	{
+		aux = in->user_input;
+		in->user_input = split_pipes(in);
+		free(aux);
+		check_args(in);
+		if (is_builtin(in) && count_pipes(in) == 1)
+			exec_args(in);
+		else
+			init_arg_list(in);
+	}
+	free(user);
 }
 
 void	read_input(t_input *in)
@@ -90,42 +109,23 @@ void	read_input(t_input *in)
 	char	*user;
 	char	*aux;
 
+	aux = NULL;
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	if (in->n_bytes > 0)
-		prompt = NULL;
-	else
-		prompt = ft_strjoin(user, "@minishell> $ ");
+	prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(prompt);
 	if ((ft_strncmp(in->user_input, "", 1)))
 	{
 		if (pair_quotes(in) == 0)
-		{
-			if (in->user_input[0] != '\0')
-				add_history(in->user_input);
-			ft_bzero(&in->flags, sizeof(in->flags));
-			if (!check_errors(in))
-			{
-				aux = in->user_input;
-				in->user_input = split_pipes(in);
-				free(aux);
-				check_args(in);
-				if (is_builtin(in) && count_pipes(in) == 1)
-					builtins(in);
-				else
-					init_arg_list(in);
-				// print_matrix(in->split_input);
-				// if (in->split_input[0] != NULL)
-			}
-			free(user);
-		}
+			read_input_aux(in, aux, user);
 		else
 		{
-			printf("minishell: Invalid argument\n");
+			error_msg(in, ERR_ARG, 2);
 			if (in->user_input[0] != '\0')
 				add_history(in->user_input);
 		}
 	}
+	free(in->user_input);
 	free(prompt);
 }

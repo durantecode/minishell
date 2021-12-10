@@ -6,11 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:50:19 by ldurante          #+#    #+#             */
-/*   Updated: 2021/11/25 15:41:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:35:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	split_pipes_aux(t_input *in, char **final_input)
 {
