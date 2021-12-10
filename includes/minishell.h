@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:38:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:18:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ typedef struct s_input
 	int		path_unset;
 	int		total_pipes;
 	int		n_bytes;
+	char	*prompt;
 	char	*user_input;
+	char	*cmd_path;
 	char	**split_path;
 	char	**split_input;
-	char	*cmd_path;
 	char	**dup_env;
 	char	**old_environ;
 	t_list	**env_list;
@@ -87,6 +88,8 @@ void	init_arg_list(t_input *in);
 void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 void	check_args(t_input *in);
+void	check_redirs(t_input *in);
+
 int		count_tokens(const char *s, t_input *in, int split);
 char	**quotes(t_input *in);
 int		quotes_aux(t_input *in, char *str);
@@ -108,7 +111,6 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 
 int		count_pipes(t_input *in);
-void	list_to_matrix(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 

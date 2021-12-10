@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_matrix.c                                     :+:      :+:    :+:   */
+/*   matrix_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 20:48:23 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/10 21:25:06 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/10 21:25:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	print_matrix(char **matrix)
+int		matrix_len(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	if (!matrix)
-		printf("(null)\n");
-	else
-	{
-		while (matrix[i])
-		{
-			printf("%s\n", matrix[i]);
-			i++;
-		}
-	}
+	while (matrix && matrix[i])
+		i++;
+	return (i);
 }

@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_matrix.c                                     :+:      :+:    :+:   */
+/*   matrix_dup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 20:48:23 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/10 23:32:24 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/10 23:34:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	print_matrix(char **matrix)
+char	**matrix_dup(char **matrix)
 {
-	int	i;
+	char	**out;
+	int		size;
+	int		i;
 
 	i = 0;
-	if (!matrix)
-		printf("(null)\n");
-	else
+	size = matrix_len(matrix);
+	out = malloc(sizeof(char *) * (size + 1));
+	if (!out)
+		return (NULL);
+	while (matrix[i])
 	{
-		while (matrix[i])
+		out[i] = ft_strdup(matrix[i]);
+		if (!out[i])
 		{
-			printf("%s\n", matrix[i]);
-			i++;
+			free_matrix(out);
+			return (NULL);
 		}
+		i++;
 	}
+	out[i] = NULL;
+	return (out);
 }

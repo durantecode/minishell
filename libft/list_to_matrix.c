@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_matrix.c                                     :+:      :+:    :+:   */
+/*   list_to_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 20:48:23 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/10 18:34:58 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/10 18:51:32 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	print_matrix(char **matrix)
+char	**list_to_matrix(t_list *lst)
 {
-	int	i;
+	int		i;
+	char	**matrix;
+	t_list	*aux;
 
 	i = 0;
-	if (!matrix)
-		printf("(null)\n");
-	else
+	aux = lst;
+	matrix = malloc(sizeof(char *) * ft_lstsize(lst));
+	while (aux)
 	{
-		while (matrix[i])
-		{
-			printf("%s\n", matrix[i]);
-			i++;
-		}
+		matrix[i] = ft_strdup(aux->content);
+		aux = aux->next;
+		i++;
 	}
+	return (matrix);
 }

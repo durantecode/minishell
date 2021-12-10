@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 15:19:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 23:36:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 		in->user_input = split_pipes(in);
 		free(aux);
 		check_args(in);
+		check_redirs(in);
+		// print_matrix(in->split_input);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else
@@ -105,7 +107,6 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 
 void	read_input(t_input *in)
 {
-	char	*prompt;
 	char	*user;
 	char	*aux;
 
@@ -113,8 +114,8 @@ void	read_input(t_input *in)
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	prompt = ft_strjoin(user, "@minishell> $ ");
-	in->user_input = readline(prompt);
+	in->prompt = ft_strjoin(user, "@minishell> $ ");
+	in->user_input = readline(in->prompt);
 	if ((ft_strncmp(in->user_input, "", 1)))
 	{
 		if (pair_quotes(in) == 0)
@@ -127,5 +128,5 @@ void	read_input(t_input *in)
 		}
 	}
 	free(in->user_input);
-	free(prompt);
+	free(in->prompt);
 }

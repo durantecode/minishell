@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/12/10 16:31:56 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/10 18:13:34 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS =	srcs/main.c \
 		srcs/executer/exec_args.c \
 		srcs/executer/exec_cmd.c \
 		srcs/executer/pipes.c \
+		srcs/executer/here_doc.c \
 		srcs/lexer/check_args.c \
 		srcs/lexer/expand.c \
 		srcs/lexer/quotes.c \

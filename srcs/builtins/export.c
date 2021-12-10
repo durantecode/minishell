@@ -6,29 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 18:51:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /* Revisar leaks y longitud de funciones */
-
-void	list_to_matrix(t_input *in)
-{
-	int		i;
-	t_list	*aux;
-
-	i = 0;
-	aux = *in->env_list;
-	in->dup_env = malloc(sizeof(char *) * ft_lstsize(*in->env_list));
-	while (aux)
-	{
-		in->dup_env[i] = ft_strdup(aux->content);
-		aux = aux->next;
-		i++;
-	}
-}
 
 void	export(t_input *in)
 {
@@ -73,7 +57,7 @@ void	export(t_input *in)
 					else
 						ft_lstadd_back(in->env_list,
 							ft_new_node((void *) tmp, size + 1));
-					list_to_matrix(in);
+					in->dup_env = list_to_matrix(*in->env_list);
 					return ;
 				}
 			}

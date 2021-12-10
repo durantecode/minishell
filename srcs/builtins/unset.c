@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/10 18:51:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	unset(t_input *in)
 		unset_aux(aux, var, size_var);
 	if (!(ft_strncmp(var, "PATH=", size_var)))
 		in->path_unset = 1;
-	list_to_matrix(in);
+	in->dup_env = list_to_matrix(*in->env_list);
 }
