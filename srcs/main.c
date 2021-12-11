@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:21:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 03:29:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int	main(int argc, char **argv, char **environ)
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
 	update_level(&in);
+	// print_matrix(environ);
+	// printf("OJETEEE\n");
+	// print_matrix(in.dup_env);
 	if (argc == 1)
 	{
 		while (1)

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:35:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 02:58:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ static char	*delete_quote(t_input *in, char *str)
 	return (final_str);
 }
 
+char	**remove_space(t_input *in)
+{
+	int i;
+	int size;
+	char *aux;
+
+	i = 0;
+	while (in->split_input[i] != NULL)
+	{
+		size = ft_strlen(in->split_input[i]);
+		if (!ft_isascii(in->split_input[i][0]))
+		{
+			aux = ft_substr(in->split_input[i], 2, size - 1);
+			in->split_input[i] = ft_strdup(aux);
+			free(aux);
+		}	
+		i++;
+	}
+	return (in->split_input);
+}
+
 char	**quotes(t_input *in)
 {
 	int		i;
@@ -77,5 +98,6 @@ char	**quotes(t_input *in)
 		free(aux);
 		i++;
 	}
+	remove_space(in);
 	return (in->split_input);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 23:36:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 02:07:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 		free(aux);
 		check_args(in);
 		check_redirs(in);
-		// print_matrix(in->split_input);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else
@@ -116,6 +115,7 @@ void	read_input(t_input *in)
 		user = ft_strdup("guest");
 	in->prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(in->prompt);
+	ft_bzero(&in->flags, sizeof(in->flags));
 	if ((ft_strncmp(in->user_input, "", 1)))
 	{
 		if (pair_quotes(in) == 0)

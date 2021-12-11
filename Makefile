@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/12/10 18:13:34 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/11 03:06:23 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS =	srcs/main.c \
 		srcs/error_msg.c \
 		srcs/read_input.c \
 		srcs/signal.c \
+		srcs/redirections.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/echo.c \

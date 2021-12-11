@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 19:18:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 03:04:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	exec_minishell(t_input *in);
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
+void	here_doc(t_input *in, int i);
 
 int		count_pipes(t_input *in);
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 03:15:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	dup_env(t_input *in, char **environ)
 	{
 		while (environ[i] != NULL)
 			i++;
-		in->dup_env = malloc(sizeof(char *) * i);
+		in->dup_env = malloc(sizeof(char *) * i + 1);
 		i = -1;
 		while (environ[++i])
 			in->dup_env[i] = ft_strdup(environ[i]);
