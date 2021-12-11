@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:58 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 19:18:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,17 @@ void	replace_var(t_input *in, int front, char *first, char *var)
 	{
 		if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
 			var = ft_strdup("$");
+			// printf("$\n");
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
 		{
 			while (in->split_input[in->flags.j][in->flags.i] == '"')
+				in->flags.i++;
+			if (in->flags.i % 2 != 0)
+				var = ft_strdup("$");
+		}
+		else if (in->split_input[in->flags.j][in->flags.i + 1] == '\'')
+		{
+			while (in->split_input[in->flags.j][in->flags.i] == '\'')
 				in->flags.i++;
 			if (in->flags.i % 2 != 0)
 				var = ft_strdup("$");
@@ -69,6 +77,8 @@ void	replace_var(t_input *in, int front, char *first, char *var)
 	first = ft_substr(in->split_input[in->flags.j], 0, front);
 	insert_var(in, var, first, in->flags.j);
 }
+
+/* CORREGIR ECHO $ Y CUANDO EL STRING TERMINA CON $ */
 
 void	expand_vars(t_input *in)
 {
@@ -91,7 +101,14 @@ void	expand_vars(t_input *in)
 			quotes_aux(in, in->split_input[in->flags.j]);
 			if (in->split_input[in->flags.j][in->flags.i] == '$'
 				&& in->flags.single_q != 1)
+			{
 				replace_var(in, front, first, var);
+				// if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
+				// 	in->flags.i = 0;
+				// 	// break ;
+				// else
+					in->flags.i = -1;
+			}
 			in->flags.i++;
 		}
 		in->flags.j++;

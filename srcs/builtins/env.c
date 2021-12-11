@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 03:15:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 13:06:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	env(t_input *in)
 {
 	t_list	*aux;
 
+	if (in->split_input[1] != NULL)
+	{
+		error_msg(in, ERR_FILE, 1);
+		return ;
+	}
 	aux = *in->env_list;
 	while (aux)
 	{
@@ -57,11 +62,11 @@ void	dup_env(t_input *in, char **environ)
 	if (!(*environ))
 	{
 		in->dup_env = malloc(sizeof(char *) * 5);
-		in->dup_env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
-		in->dup_env[1] = ft_strdup("SHLVL=0");
-		in->dup_env[2] = ft_strdup("_=/usr/bin/env");
-		in->dup_env[3]
+		in->dup_env[0]
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		in->dup_env[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		in->dup_env[2] = ft_strdup("SHLVL=0");
+		in->dup_env[3] = ft_strdup("_=/usr/bin/env");
 		in->dup_env[4] = NULL;
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 03:03:40 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:54:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	check_redirs(t_input *in)
 		{
 			if (!(ft_strncmp(in->split_input[i + 1], "<", 2)))
 				here_doc(in, i);
+			// else
 		}
 		i++;
 	}

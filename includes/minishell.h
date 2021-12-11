@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 03:04:16 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 19:17:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 
 int		count_pipes(t_input *in);
+void	list_to_mat(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 

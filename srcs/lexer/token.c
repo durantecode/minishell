@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 02:38:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:11:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	single_quotes(t_input *in, const char *s)
 
 void	split_args(t_input *in, const char *s)
 {
-	// printf("%d\n", in->flags.i);
 	if (!in->flags.global_q)
 	{
 		if (s[in->flags.i - 1] != ' ')

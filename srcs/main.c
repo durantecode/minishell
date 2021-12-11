@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 03:29:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:32:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	sigint_handler(int sig)
 	return ;
 }
 
+/* REVISAR SHELL LEVEL CUANDO SE HACE UNSET */
+
 void	update_level(t_input *in)
 {
 	int		level;
@@ -48,6 +50,7 @@ void	update_level(t_input *in)
 	in->split_input[2] = NULL;
 	free(aux);
 	export(in);
+	free_matrix(in->split_input);
 }
 
 int	main(int argc, char **argv, char **environ)
@@ -59,9 +62,6 @@ int	main(int argc, char **argv, char **environ)
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
 	update_level(&in);
-	// print_matrix(environ);
-	// printf("OJETEEE\n");
-	// print_matrix(in.dup_env);
 	if (argc == 1)
 	{
 		while (1)
