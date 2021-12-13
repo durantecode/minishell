@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:21:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:09:00 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,28 @@ void	update_level(t_input *in)
 {
 	int		level;
 	char	*aux;	
+	char	*number;
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
 	free(aux);
 	level++;
-	aux = ft_strjoin("SHLVL=", ft_itoa(level));
+	number = ft_itoa(level);
+	aux = ft_strjoin("SHLVL=", number);
 	in->split_input = malloc(sizeof(char *) * 3);
 	in->split_input[1] = ft_strdup(aux);
 	in->split_input[2] = NULL;
 	free(aux);
+	free(number);
 	export(in);
+}
+
+void	handler(int	code)
+{
+	if (code == SIGINT)
+	{
+		printf("\n");
+	}
 }
 
 int	main(int argc, char **argv, char **environ)
@@ -59,6 +70,9 @@ int	main(int argc, char **argv, char **environ)
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
 	update_level(&in);
+	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
+	//atexit(leaks);
 	if (argc == 1)
 	{
 		while (1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 15:19:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:04:42 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,29 @@ int	pair_quotes(t_input *in)
 	while (in->user_input[in->flags.i])
 	{
 		if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
-			&& in->flags.double_q && (in->flags.count_double++) == 0)
+			&& !in->flags.double_q)
+		{
+			in->flags.count_double++;
 			in->flags.double_q = 1;
+		}
 		else if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
-			&& in->flags.double_q && (in->flags.count_double++) == 1)
+			&& in->flags.double_q)
+		{
+			in->flags.count_double++;
 			in->flags.double_q = 0;
+		}
 		else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 0
-			&& in->flags.double_q && (in->flags.count++) == 0)
+			&& !in->flags.double_q)
+		{
+			in->flags.count++;
 			in->flags.single_q = 1;
+		}
 		else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 1
-			&& in->flags.double_q && (in->flags.count++) == 0)
+			&& !in->flags.double_q)
+		{
+			in->flags.count++;
 			in->flags.single_q = 0;
+		}
 		in->flags.i++;
 	}
 	return (in->flags.count_double % 2 + in->flags.count % 2);
@@ -36,17 +48,17 @@ int	pair_quotes(t_input *in)
 
 void	check_errors_aux(t_input *in)
 {
-	if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
-		&& in->flags.double_q && (in->flags.count_double++) == 0)
+	if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
+		&& in->flags.double_q)
 		in->flags.double_q = 1;
-	else if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
-		&& in->flags.double_q && (in->flags.count_double++) == 1)
+	else if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
+		&& in->flags.double_q)
 		in->flags.double_q = 0;
-	else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 0
-		&& in->flags.double_q && (in->flags.count++) == 0)
+	else if (in->user_input[in->flags.i] == '\'' && !in->flags.single_q
+		&& !in->flags.double_q)
 		in->flags.single_q = 1;
-	else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 1
-		&& in->flags.double_q && (in->flags.count++) == 0)
+	else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q
+		&& !in->flags.double_q)
 		in->flags.single_q = 0;
 }
 
@@ -115,17 +127,27 @@ void	read_input(t_input *in)
 		user = ft_strdup("guest");
 	prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(prompt);
-	if ((ft_strncmp(in->user_input, "", 1)))
+	if (in->user_input)
 	{
-		if (pair_quotes(in) == 0)
-			read_input_aux(in, aux, user);
-		else
+		if ((ft_strncmp(in->user_input, "", 1)))
 		{
-			error_msg(in, ERR_ARG, 2);
-			if (in->user_input[0] != '\0')
-				add_history(in->user_input);
+			if (pair_quotes(in) == 0)
+				read_input_aux(in, aux, user);
+			else
+			{
+				error_msg(in, ERR_ARG, 2);
+				if (in->user_input[0] != '\0')
+					add_history(in->user_input);
+			}
 		}
+		free(in->user_input);
+		free(prompt);
 	}
-	free(in->user_input);
-	free(prompt);
+	else
+	{
+		printf("exit\n");
+		free_matrix(in->dup_env);
+		free(prompt);
+		exit(0);
+	}
 }
