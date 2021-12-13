@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:17:49 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:04:56 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	export(t_input *in);
 void	pwd(void);
 void	unset(t_input *in);
 void	exec_minishell(t_input *in);
+
+void	check_errors_aux(t_input *in);
 
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
