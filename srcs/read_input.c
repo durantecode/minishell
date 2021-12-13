@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:27:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:35:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 		free(aux);
 		check_args(in);
 		check_redirs(in);
+		print_matrix(in->split_input);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else

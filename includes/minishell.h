@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:27:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:49:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	check_redirs(t_input *in);
 
 int		count_tokens(const char *s, t_input *in, int split);
 char	**quotes(t_input *in);
-int		quotes_aux(t_input *in, char *str);
+int		quotes_state(t_input *in, char *str);
 void	expand_vars(t_input *in);
 char	*ft_getenv(const char *str, t_input *in);
 

@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 16:37:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:45:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	quotes_aux(t_input *in, char *str)
+int	quotes_state(t_input *in, char *str)
 {
 	if (str[in->flags.i] == '"'
 		&& in->flags.single_q == 0 && in->flags.double_q == 0)
@@ -47,7 +47,7 @@ static char	*delete_quote(t_input *in, char *str)
 
 	while (str[in->flags.i])
 	{
-		if (!quotes_aux(in, str))
+		if (!quotes_state(in, str))
 			in->flags.j++;
 		in->flags.i++;
 	}
@@ -56,7 +56,7 @@ static char	*delete_quote(t_input *in, char *str)
 	ft_bzero(&in->flags, sizeof(in->flags));
 	while (str[in->flags.i])
 	{
-		if (!quotes_aux(in, str))
+		if (!quotes_state(in, str))
 			final_str[in->flags.j++] = str[in->flags.i];
 		in->flags.i++;
 	}

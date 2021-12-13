@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:58:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			close(fd[index % 2][R_END]);
 			printf("Error fork\n");
 		}
-		if (pid == 0)
+		else if (pid == 0)
 		{
 			if (aux_list->next != NULL)
 				dup2(fd[index % 2][W_END], STDOUT_FILENO);
