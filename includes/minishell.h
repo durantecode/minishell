@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 19:17:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:27:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERR_PIPE "Pipe error"
 # define ERR_FORK "Fork error"
 # define ERR_DUP "Dup error"
-# define ERR_SYNTAX "syntax error near token"
+# define ERR_SYNTAX "syntax error near (INSERTAR TOKEN)"
 
 # define ERR_CMD "command not found"
 # define ERR_FILE "No such file or directory"
@@ -41,7 +41,7 @@
 # define ERR_BIN "cannot execute binary file"
 
 # define ERR_ID "not a valid identifier"
-# define ERR_ARG "Invalid argument"
+# define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
 
 typedef struct s_arg
 {

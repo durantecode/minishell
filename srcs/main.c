@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 14:32:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:27:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,35 @@ void	init_structs(t_input *in, t_list **envp)
 	in->n_bytes = 0;
 }
 
-void	sigint_handler(int sig)
-{
-	(void)sig;
-	write(1, &"\n", 1);
-	return ;
-}
-
 /* REVISAR SHELL LEVEL CUANDO SE HACE UNSET */
 
 void	update_level(t_input *in)
 {
 	int		level;
 	char	*aux;	
+	char	*number;
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
 	free(aux);
 	level++;
-	aux = ft_strjoin("SHLVL=", ft_itoa(level));
+	number = ft_itoa(level);
+	aux = ft_strjoin("SHLVL=", number);
 	in->split_input = malloc(sizeof(char *) * 3);
 	in->split_input[1] = ft_strdup(aux);
 	in->split_input[2] = NULL;
 	free(aux);
+	free(number);
 	export(in);
 	free_matrix(in->split_input);
+}
+
+void	handler(int	code)
+{
+	if (code == SIGINT)
+	{
+		printf("\n");
+	}
 }
 
 int	main(int argc, char **argv, char **environ)
@@ -62,6 +66,8 @@ int	main(int argc, char **argv, char **environ)
 	init_env_list(&in, &envp, environ);
 	init_structs(&in, &envp);
 	update_level(&in);
+	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
 	if (argc == 1)
 	{
 		while (1)
