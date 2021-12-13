@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:09:00 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:09:42 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	main(int argc, char **argv, char **environ)
 	update_level(&in);
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
-	//atexit(leaks);
 	if (argc == 1)
 	{
 		while (1)
