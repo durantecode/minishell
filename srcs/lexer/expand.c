@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 19:18:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/13 12:00:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	insert_var(t_input *in, char *var, char *first, int j)
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
 	if (!strncmp(var, "$", 2))
+	{
 		expanded = ft_strdup(var);
+		len2++;
+	}
 	else
 		expanded = ft_getenv(var, in);
 	free(var);
@@ -40,13 +43,16 @@ void	insert_var(t_input *in, char *var, char *first, int j)
 	free(last);
 }
 
-void	replace_var(t_input *in, int front, char *first, char *var)
+int		replace_var(t_input *in, int front, char *first, char *var)
 {
 	if (!(ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])))
 	{
 		if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
+		{	
 			var = ft_strdup("$");
+			return (1);
 			// printf("$\n");
+		}
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
 		{
 			while (in->split_input[in->flags.j][in->flags.i] == '"')
@@ -76,6 +82,7 @@ void	replace_var(t_input *in, int front, char *first, char *var)
 	}
 	first = ft_substr(in->split_input[in->flags.j], 0, front);
 	insert_var(in, var, first, in->flags.j);
+	return (0);
 }
 
 /* CORREGIR ECHO $ Y CUANDO EL STRING TERMINA CON $ */
@@ -102,7 +109,10 @@ void	expand_vars(t_input *in)
 			if (in->split_input[in->flags.j][in->flags.i] == '$'
 				&& in->flags.single_q != 1)
 			{
-				replace_var(in, front, first, var);
+				if (replace_var(in, front, first, var))
+					in->flags.i++;
+				else
+					// break ;
 				// if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
 				// 	in->flags.i = 0;
 				// 	// break ;
