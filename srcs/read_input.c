@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:04:42 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:22:54 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,24 @@ int	pair_quotes(t_input *in)
 	ft_bzero(&in->flags, sizeof(in->flags));
 	while (in->user_input[in->flags.i])
 	{
-		if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
+		if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
 			&& !in->flags.double_q)
 		{
 			in->flags.count_double++;
 			in->flags.double_q = 1;
 		}
-		else if (in->user_input[in->flags.i] == '"' && in->flags.single_q == 0
-			&& in->flags.double_q)
-		{
-			in->flags.count_double++;
+		else if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
+			&& in->flags.double_q && (in->flags.count_double++))
 			in->flags.double_q = 0;
-		}
-		else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 0
+		else if (in->user_input[in->flags.i] == '\'' && !in->flags.single_q
 			&& !in->flags.double_q)
 		{
 			in->flags.count++;
 			in->flags.single_q = 1;
 		}
-		else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q == 1
-			&& !in->flags.double_q)
-		{
-			in->flags.count++;
+		else if (in->user_input[in->flags.i] == '\'' && in->flags.single_q
+			&& !in->flags.double_q && (in->flags.count++))
 			in->flags.single_q = 0;
-		}
 		in->flags.i++;
 	}
 	return (in->flags.count_double % 2 + in->flags.count % 2);
