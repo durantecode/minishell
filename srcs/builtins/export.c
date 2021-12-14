@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 14:19:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 02:44:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	export(t_input *in)
 {
 	size_t	i;
+	int		j;
 	int		flag;
 	int		size;
 	char	*tmp;
@@ -29,39 +30,44 @@ void	export(t_input *in)
 		error_msg(in, ERR_ID, 2);
 		return ;
 	}
-	tmp = ft_strdup(in->split_input[1]);
-	if (ft_strchr(in->split_input[1], '='))
-		flag = 1;
-	aux = ft_split(in->split_input[1], '=');
-	if (aux)
-	{
-		while (aux[0][i] != '\0')
+	j = 1;
+	while (in->split_input[j])
+	{		
+		tmp = ft_strdup(in->split_input[j]);
+		if (ft_strchr(in->split_input[j], '='))
+			flag = 1;
+		aux = ft_split(in->split_input[j], '=');
+		if (aux)
 		{
-			if (!(ft_isalnum(aux[0][i])))
+			while (aux[0][i] != '\0')
 			{
-				error_msg(in, ERR_ID, 2);
-				return ;
-			}
-			else
-			{
-				if (flag && i == ft_strlen(aux[0]) - 1)
+				if (!(ft_isalnum(aux[0][i])))
 				{
-					size = ft_strlen(tmp);
-					if (ft_getenv(aux[0], in))
-					{
-						in->split_input[1] = ft_strdup(aux[0]);
-						unset(in);
-						ft_lstadd_back(in->env_list,
-							ft_new_node((void *) tmp, size + 1));
-					}
-					else
-						ft_lstadd_back(in->env_list,
-							ft_new_node((void *) tmp, size + 1));
-					in->dup_env = list_to_matrix(*in->env_list);
+					error_msg(in, ERR_ID, 2);
 					return ;
 				}
+				else
+				{
+					if (flag && i == ft_strlen(aux[0]) - 1)
+					{
+						size = ft_strlen(tmp);
+						if (ft_getenv(aux[0], in))
+						{
+							in->split_input[j] = ft_strdup(aux[0]);
+							unset(in);
+							ft_lstadd_back(in->env_list,
+								ft_new_node((void *) tmp, size + 1));
+						}
+						else
+							ft_lstadd_back(in->env_list,
+								ft_new_node((void *) tmp, size + 1));
+						in->dup_env = list_to_matrix(*in->env_list);
+						break ;
+					}
+				}
+				i++;
 			}
-			i++;
 		}
-	}
+		j++;
+	}	
 }
