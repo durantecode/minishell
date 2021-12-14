@@ -122,77 +122,51 @@ void	check_errors_aux2(t_input *in)
 
 int	count_tokens(const char *s, t_input *in, int split)
 {
-	int prov;
-	int	j;
-
-	j = 0;
-	prov = 0;
 	while (s[in->flags.i] != '\0')
 	{
 		check_errors_aux2(in);
-		if (!in->flags.double_q && !in->flags.single_q && s[in->flags.i] != '\'' && s[in->flags.i] != '"')
+		if (s[in->flags.i] == ' ' && in->flags.single_q == 0 && in->flags.double_q == 0)
 		{
-			printf("|%c|\n", s[in->flags.i]);
-			printf("%d\n", in->flags.i);
-			printf("|%c|\n\n", s[in->flags.i-1]);
-			while (s[in->flags.i] && s[in->flags.i] != ' ' && s[in->flags.i] != '\'' && s[in->flags.i] != '"')
-			{
-				in->flags.i++;
-			}
-			if (!s[in->flags.i] && prov == 0)
-				in->flags.count++;
-			if(s[in->flags.i] == ' ')
-			{
-				in->flags.count++;
-				prov = 0;
-				while(s[in->flags.i] == ' ' && s[in->flags.i])
-				{
-					in->flags.i++;
-				}
-			}
-			else if (s[in->flags.i] != '\'' && s[in->flags.i] != '"' && s[in->flags.i])
+			in->flags.count++;
+			while (s[in->flags.i] == ' ' && s[in->flags.i])
 				in->flags.i++;
 		}
-		else if (in->flags.double_q || in->flags.single_q)
+		else 
 		{
-			printf("VUELTA2\n");
-			if (s[in->flags.i - 1] == ' ' && (s[in->flags.i] == '"' || s[in->flags.i] == '\''))
-			{
-				if (in->flags.double_q)
-				{
-					while (in->flags.double_q)
-					{
-						check_errors_aux2(in);
-						in->flags.i++;
-					}
-					if (s[in->flags.i] == ' ' || s[in->flags.i] == '\0')
-					{
-						in->flags.count++;
-						prov = 1;
-					}
-				}
-				else if (in->flags.single_q)
-				{
-					while (in->flags.single_q)
-					{
-						check_errors_aux2(in);
-						in->flags.i++;
-					}
-
-					printf("-%c-\n", s[in->flags.i]);
-					printf("-%c-\n\n", s[in->flags.i-1]);
-					if (s[in->flags.i + 1] == ' ' || s[in->flags.i + 1] == '\0')
-					{
-						in->flags.count++;
-						prov = 1;
-					}
-				}
-			}
-			if (!s[in->flags.i])
-				in->flags.count++;
 			in->flags.i++;
+			if (s[in->flags.i] == '\0')
+				in->flags.count++;
 		}
 	}
+	if (split == 1)
+	{
+		in->flags.i = 0;
+		in->flags.start = 0;
+		while (s[in->flags.i] != '\0')
+		{
+			check_errors_aux2(in);
+			if (s[in->flags.i] == ' ' && in->flags.single_q == 0 && in->flags.double_q == 0)
+			{
+				in->split_input[in->flags.j] = ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
+				in->flags.start = in->flags.i + 1;
+				in->flags.j++;
+				while (s[in->flags.i] == ' ' && s[in->flags.i])
+					in->flags.i++;
+			}
+			else 
+			{
+				in->flags.i++;
+				if (s[in->flags.i] == '\0')
+				{
+					in->split_input[in->flags.j] = ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
+					in->flags.start = in->flags.i;
+					in->flags.j++;
+				}
+			}
+		}
+	}
+
+
 	// if (split == 1)
 	// {
 	// 	in->flags.i = 0;
@@ -272,29 +246,3 @@ int	count_tokens(const char *s, t_input *in, int split)
 		// }
 	return (in->flags.count);
 }
-
-
-
-		// check_errors_aux(in);
-		// if (s[in->flags.i] != '\'' && s[in->flags.i] != '"' && in->flags.double_q == 0 && in->flags.single_q == 0)
-		// {
-		// 	in->flags.count++;
-		// 	while (s[in->flags.i] != ' ' && s[in->flags.i])
-		// 		in->flags.i++;
-		// 	while (s[in->flags.i] == ' ' && s[in->flags.i])
-		// 		in->flags.i++;
-		// }
-		// else if (s[in->flags.i] == '\'' && in->flags.single_q == 1)
-		// {
-		// 	in->flags.count++;
-		// 	while (s[in->flags.i] != '\'' && s[in->flags.i])
-		// 		in->flags.i++;
-		// }
-		// else if (s[in->flags.i] == '"' && in->flags.double_q == 1)
-		// {
-		// 	in->flags.count++;
-		// 	while (s[in->flags.i] != '"' && s[in->flags.i])
-		// 		in->flags.i++;
-		// }
-		// else
-		// 	in->flags.i++;

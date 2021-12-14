@@ -25,8 +25,8 @@ void	check_args(t_input *in)
 	if (!in->split_input)
 		return ;
 	ft_bzero(&in->flags, sizeof(in->flags));
-	//count_tokens(in->user_input, in, 1);
+	count_tokens(in->user_input, in, 1);
 	in->split_input[input_size] = NULL;
-	print_matrix(in->split_input);
+	//print_matrix(in->split_input);
 	expand_vars(in);
 }

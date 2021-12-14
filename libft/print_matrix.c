@@ -23,7 +23,7 @@ void	print_matrix(char **matrix)
 	{
 		while (matrix[i])
 		{
-			printf("[%d]: %s\n", i, matrix[i]);
+			printf("[%d]: |%s|\n", i, matrix[i]);
 			i++;
 		}
 	}

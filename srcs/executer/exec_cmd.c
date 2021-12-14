@@ -93,7 +93,7 @@ void	exec_cmd(t_input *in)
 	in->cmd_path = NULL;
 	get_cmd_path(in);
 	if (in->cmd_path && in->path_unset == 0)
-		execve(in->cmd_path, in->split_input, in->dup_env);
+		execve(in->cmd_path, in->split_input, in->old_environ);
 	else
 	{
 		if (in->path_unset == 0)

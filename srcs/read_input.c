@@ -101,6 +101,7 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 		in->user_input = split_pipes(in);
 		free(aux);
 		check_args(in);
+		print_matrix(in->split_input);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else
