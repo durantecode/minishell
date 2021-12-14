@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 14:28:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:28:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	export(t_input *in)
 				if (!(ft_isalnum(aux[0][i])))
 				{
 					error_msg(in, ERR_ID, 2);
+					free_matrix(aux);
+					free(tmp);
 					return ;
 				}
 				else
@@ -61,7 +63,6 @@ void	export(t_input *in)
 						else
 							ft_lstadd_back(in->env_list,
 								ft_new_node((void *) tmp, size + 1));
-						in->dup_env = list_to_matrix(*in->env_list);
 						break ;
 					}
 				}
@@ -69,5 +70,9 @@ void	export(t_input *in)
 			}
 		}
 		j++;
-	}	
+	}
+	free_matrix(in->dup_env);
+	in->dup_env = list_to_matrix(*in->env_list);
+	free_matrix(aux);
+	free(tmp);
 }

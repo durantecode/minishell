@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 12:44:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:32:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	update_level(t_input *in)
 	number = ft_itoa(level);
 	aux = ft_strjoin("SHLVL=", number);
 	in->split_input = malloc(sizeof(char *) * 3);
+	in->split_input[0] = ft_strdup("export");
 	in->split_input[1] = ft_strdup(aux);
 	in->split_input[2] = NULL;
 	free(aux);
@@ -62,14 +63,15 @@ int	main(int argc, char **argv, char **environ)
 	t_input	in;
 	t_list	*envp;
 
+	// atexit(leaks);
 	envp = NULL;
-	init_env_list(&in, &envp, environ);
-	init_structs(&in, &envp);
-	update_level(&in);
-	// signal(SIGINT, handler);
-	// signal(SIGQUIT, handler);
 	if (argc == 1)
 	{
+		init_env_list(&in, &envp, environ);
+		init_structs(&in, &envp);
+		update_level(&in);
+	// signal(SIGINT, handler);
+	// signal(SIGQUIT, handler);
 		while (1)
 		{
 			if (!isatty(STDIN_FILENO))
@@ -83,9 +85,8 @@ int	main(int argc, char **argv, char **environ)
 	}
 	else
 	{
-		in.split_input[0] = argv[1];
+		in.split_input = argv;
 		error_msg(&in, ERR_ARG, 1);
 	}
-	(void)argv;
 	return (0);
 }

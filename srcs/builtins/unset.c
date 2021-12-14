@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 02:44:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:37:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	unset_aux(t_list *aux, char *var, int size_var)
 		{
 			tmp = aux->next;
 			aux->next = aux->next->next;
-			free(tmp);
+			ft_lstdelone(tmp, free);
 			break ;
 		}
 		aux = aux->next;
@@ -52,13 +52,15 @@ void	unset(t_input *in)
 		{
 			tmp = *in->env_list;
 			*in->env_list = (*in->env_list)->next;
-			free(tmp);
+			// ft_lstclear(&tmp, free); ---> REVISAR LEAKS
 		}
 		else
 			unset_aux(aux, var, size_var);
 		if (!(ft_strncmp(var, "PATH=", size_var)))
 			in->path_unset = 1;
 		j++;
+		free(var);
+		free_matrix(in->dup_env);
 		in->dup_env = list_to_matrix(*in->env_list);
 	}
 	// print_matrix(in->dup_env);

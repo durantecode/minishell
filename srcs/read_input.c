@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 12:44:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:21:25 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_errors(t_input *in)
 	return (0);
 }
 
-void	read_input_aux(t_input *in, char *aux, char *user)
+void	read_input_aux(t_input *in, char *aux)
 {
 	if (in->user_input[0] != '\0')
 		add_history(in->user_input);
@@ -109,7 +109,6 @@ void	read_input_aux(t_input *in, char *aux, char *user)
 		else
 			init_arg_list(in);
 	}
-	free(user);
 }
 
 void	read_input(t_input *in)
@@ -128,7 +127,7 @@ void	read_input(t_input *in)
 		if ((ft_strncmp(in->user_input, "", 1)))
 		{
 			if (pair_quotes(in) == 0)
-				read_input_aux(in, aux, user);
+				read_input_aux(in, aux);
 			else
 			{
 				error_msg(in, ERR_ARG, 2);
@@ -138,12 +137,16 @@ void	read_input(t_input *in)
 		}
 		free(in->user_input);
 		free(in->prompt);
+		free(user);
 	}
 	else
 	{
 		printf("exit\n");
-		free_matrix(in->dup_env);
+		// free_matrix(in->dup_env);
+		// free_matrix(in->old_environ);
+		ft_lstclear(in->env_list, free);
 		free(in->prompt);
+		free(user);
 		exit(0);
 	}
 }
