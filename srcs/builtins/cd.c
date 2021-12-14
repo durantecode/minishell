@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:33:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:09:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cd(t_input *in)
 	char	*full_path;
 
 	home_path = ft_getenv("HOME", in);
-	if (in->split_input[1] == NULL)
+	if (!(ft_strncmp(in->split_input[1], "", 2)))
 		chdir(home_path);
 	else if (in->split_input[1][0] == '~')
 	{

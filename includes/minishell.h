@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:49:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:36:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -90,7 +91,7 @@ char	*split_pipes(t_input *in);
 void	check_args(t_input *in);
 void	check_redirs(t_input *in);
 
-int		count_tokens(const char *s, t_input *in, int split);
+int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);
 int		quotes_state(t_input *in, char *str);
 void	expand_vars(t_input *in);
@@ -105,6 +106,8 @@ void	export(t_input *in);
 void	pwd(void);
 void	unset(t_input *in);
 void	exec_minishell(t_input *in);
+
+void	check_errors_aux(t_input *in);
 
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);

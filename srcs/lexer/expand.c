@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 17:33:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:34:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,12 @@ void	insert_var(t_input *in, char *var, char *first, int j)
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
 	if (!strncmp(var, "$", 2))
-	{
 		expanded = ft_strdup(var);
-		// len2++;
-	}
 	else
 		expanded = ft_getenv(var, in);
 	free(var);
 	if (!expanded)
 		expanded = ft_strdup("");
-	// printf("FF:%s\n", last);
 	in->split_input[j] = ft_strjoin3(first, expanded, last);
 	free(first);
 	free(expanded);
@@ -49,30 +45,19 @@ int		replace_var(t_input *in, int front, char *first, char *var)
 	if (!(ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])))
 	{
 		if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
-		{	
-			var = ft_strdup("$");
 			return (1);
-			// printf("$\n");
-		}
+		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"'
+			&& in->split_input[in->flags.j][in->flags.i - 1] == '"')
+				return(1);
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
-		{
+		{	
 			if (in->flags.double_q)
 				var = ft_strdup("$");
-			// while (in->split_input[in->flags.j][in->flags.i] == '"')
-			// 	in->flags.i++;
-			// if (in->flags.i % 2 != 0)
 		}
-		// else if (in->split_input[in->flags.j][in->flags.i + 1] == '\'')
-		// {
-		// 	while (in->split_input[in->flags.j][in->flags.i] == '\'')
-		// 		in->flags.i++;
-		// 	if (in->flags.i % 2 != 0)
-		// 		var = ft_strdup("$");
-		// }
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '?')
 			printf("LAST ERROR\n");
-		// else
-		// 	write(1, "$", 1);
+		else
+			var = ft_strdup("$");
 	}
 	else
 	{
@@ -95,7 +80,6 @@ void	expand_vars(t_input *in)
 	char	*var;
 	char	*first;
 
-	// print_matrix(in->split_input);
 	var = ft_strdup("");
 	first = ft_strdup("");
 	ft_bzero(&in->flags, sizeof(in->flags));
@@ -109,20 +93,12 @@ void	expand_vars(t_input *in)
 		{
 			front = in->flags.i;
 			quotes_state(in, in->split_input[in->flags.j]);
-			// printf("%d\n", in->flags.single_q);
-			// printf("-%c-\n\n", in->split_input[in->flags.j][in->flags.i]);
 			if (in->split_input[in->flags.j][in->flags.i] == '$'
 				&& in->flags.single_q != 1)
 			{
 				if (replace_var(in, front, first, var))
-				// 	in->flags.i++;
-				// else
-					// break ;
-				// if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
-				// 	in->flags.i = 0;
 					break ;
-				// else
-					in->flags.i = -1;
+				in->flags.i = -1;
 			}
 			in->flags.i++;
 		}

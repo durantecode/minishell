@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/13 15:45:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:33:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 int	quotes_state(t_input *in, char *str)
 {
 	if (str[in->flags.i] == '"'
-		&& in->flags.single_q == 0 && in->flags.double_q == 0)
+		&& !in->flags.single_q && !in->flags.double_q)
 	{
 		in->flags.double_q = 1;
 		return (1);
 	}
 	else if (str[in->flags.i] == '"'
-		&& in->flags.single_q == 0 && in->flags.double_q == 1)
+		&& !in->flags.single_q && in->flags.double_q)
 	{	
 		in->flags.double_q = 0;
 		return (1);
 	}
 	else if (str[in->flags.i] == '\''
-		&& in->flags.single_q == 0 && in->flags.double_q == 0)
+		&& !in->flags.single_q && !in->flags.double_q)
 	{
 		in->flags.single_q = 1;
 		return (1);
 	}
 	else if (str[in->flags.i] == '\''
-		&& in->flags.single_q == 1 && in->flags.double_q == 0)
+		&& in->flags.single_q && !in->flags.double_q)
 	{
 		in->flags.single_q = 0;
 		return (1);
