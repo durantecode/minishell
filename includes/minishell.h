@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 16:21:07 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/15 23:53:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void	here_doc(t_input *in, int i);
 void	unset_aux(t_list *aux, char *var, int size_var);
 
 int		count_pipes(t_input *in);
-void	list_to_mat(t_input *in);
 
 void	catch_signal(int signal, siginfo_t *info, void *context);
 
