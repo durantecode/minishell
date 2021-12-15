@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 12:28:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:24:18 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	read_input(t_input *in)
 					add_history(in->user_input);
 			}
 		}
+		free_matrix(in->split_input);
 		free(in->user_input);
 		free(in->prompt);
 		free(user);
@@ -160,7 +161,7 @@ void	read_input(t_input *in)
 		printf("exit\n");
 		// free_matrix(in->dup_env);
 		// free_matrix(in->old_environ);
-		// free_matrix(in->split_input);
+		free_matrix(in->split_input);
 		ft_lstclear(in->env_list, free);
 		free(in->prompt);
 		free(user);

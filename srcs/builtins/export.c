@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 13:11:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:37:51 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 /* Revisar leaks y longitud de funciones */
 
-void	export(t_input *in)
+int	good_value(char *str)
 {
-	size_t	i;
-	int		j;
-	int		flag;
-	int		size;
-	char	*tmp;
-	char	*env_value;
-	char	**aux;
+	int	i;
 
 	i = 0;
+	while(str[i])
+	{
+		if (!(ft_isalnum(str[i])) && str[i] != '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	export(t_input *in)
+{
+  	int		j;
+	int		flag;
+	char	*env_value;
+	char	**aux;
+	char	*var;
 	flag = 0;
 	if (in->split_input[1] == NULL)
 	{
@@ -33,51 +43,37 @@ void	export(t_input *in)
 	}
 	j = 1;
 	while (in->split_input[j])
-	{		
-		tmp = ft_strdup(in->split_input[j]);
+	{
 		if (ft_strchr(in->split_input[j], '='))
 			flag = 1;
 		aux = ft_split(in->split_input[j], '=');
 		if (aux)
 		{
-			while (aux[0][i] != '\0')
+			if (!good_value(aux[0]))
 			{
-				if (!(ft_isalnum(aux[0][i])))
-				{
-					error_msg(in, ERR_ID, 2);
-					free_matrix(aux);
-					free(tmp);
-					return ;
-				}
-				else
-				{
-					if (flag && i == ft_strlen(aux[0]) - 1)
-					{
-						size = ft_strlen(tmp);
-						env_value = ft_getenv(aux[0], in);
-						if (env_value)
-						{
-							free(in->split_input[j]);
-							in->split_input[j] = ft_strdup(aux[0]);
-							unset(in, j);
-							ft_lstadd_back(in->env_list,
-								ft_new_node((void *) tmp, size + 1));
-							free(env_value);
-						}
-						else
-							ft_lstadd_back(in->env_list,
-								ft_new_node((void *) tmp, size + 1));
-						break ;
-					}
-				}
-				i++;
+				error_msg(in, ERR_ID, 2);
+				free(aux);
+				return;
 			}
+			env_value = ft_getenv(aux[0], in);
+			if (env_value)
+			{
+				var = ft_strjoin(aux[0], "=");
+				unset_aux(*in->env_list, var, ft_strlen(var));
+				ft_lstadd_back(in->env_list,
+					ft_new_node((void *) in->split_input[j],
+					ft_strlen(in->split_input[j]) + 1));
+				free(env_value);
+				free(var);
+			}
+			else if (aux[1])
+				ft_lstadd_back(in->env_list,
+					ft_new_node((void *) in->split_input[j],
+					ft_strlen(in->split_input[j]) + 1));
 		}
-		// free_matrix(aux);
+		free_matrix(aux);
 		j++;
 	}
-	// free_matrix(aux);
-	// free_matrix(in->split_input);
 	free_matrix(in->dup_env);
 	in->dup_env = list_to_matrix(*in->env_list);
 }
