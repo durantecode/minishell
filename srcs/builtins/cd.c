@@ -6,11 +6,14 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:33:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 11:50:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 00:46:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* REVISAR SI ACTUALIZAMOS PWD Y OLDPWD CON NUEVOS VALORES
+EN LA LISTA */
 
 void	cd(t_input *in)
 {
