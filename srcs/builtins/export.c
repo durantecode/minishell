@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 18:28:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 13:11:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	export(t_input *in)
 	int		flag;
 	int		size;
 	char	*tmp;
+	char	*env_value;
 	char	**aux;
 
 	i = 0;
@@ -53,12 +54,15 @@ void	export(t_input *in)
 					if (flag && i == ft_strlen(aux[0]) - 1)
 					{
 						size = ft_strlen(tmp);
-						if (ft_getenv(aux[0], in))
+						env_value = ft_getenv(aux[0], in);
+						if (env_value)
 						{
+							free(in->split_input[j]);
 							in->split_input[j] = ft_strdup(aux[0]);
-							unset(in);
+							unset(in, j);
 							ft_lstadd_back(in->env_list,
 								ft_new_node((void *) tmp, size + 1));
+							free(env_value);
 						}
 						else
 							ft_lstadd_back(in->env_list,
@@ -69,10 +73,11 @@ void	export(t_input *in)
 				i++;
 			}
 		}
+		// free_matrix(aux);
 		j++;
 	}
+	// free_matrix(aux);
+	// free_matrix(in->split_input);
 	free_matrix(in->dup_env);
 	in->dup_env = list_to_matrix(*in->env_list);
-	free_matrix(aux);
-	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/10 16:34:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 21:56:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exec_args(t_input *in)
 	else if (!(ft_strncmp(in->split_input[0], "export", 7)))
 		export(in);
 	else if (!(ft_strncmp(in->split_input[0], "unset", 6)))
-		unset(in);
+		unset(in, 1);
 	else if (!(ft_strncmp(in->split_input[0], "./minishell", 12))
 		&& in->total_pipes == 1)
 		exec_minishell(in);

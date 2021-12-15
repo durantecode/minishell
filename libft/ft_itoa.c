@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 09:59:52 by ldurante          #+#    #+#             */
-/*   Updated: 2021/04/13 12:49:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:36:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_itoa(int n)
 	len = ft_length(n);
 	if (n <= 0)
 	{
-		str = (char *)malloc(len + 2);
+		str = malloc(sizeof(char *) * (len + 2));
 		if (!str)
 			return (NULL);
 		str = ft_write(len, n, str);
@@ -69,7 +69,7 @@ char	*ft_itoa(int n)
 	}
 	else
 	{
-		str = (char *)malloc(len + 1);
+		str = malloc(sizeof(char *) * (len + 1));
 		if (!str)
 			return (NULL);
 		str = ft_write(len - 1, n, str);

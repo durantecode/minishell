@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 18:32:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:23:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	init_structs(t_input *in, t_list **envp)
 void	update_level(t_input *in)
 {
 	int		level;
-	char	*aux;	
 	char	*number;
+	char	*aux;	
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
@@ -42,9 +42,8 @@ void	update_level(t_input *in)
 	aux = ft_strjoin("SHLVL=", number);
 	in->split_input = malloc(sizeof(char *) * 3);
 	in->split_input[0] = ft_strdup("export");
-	in->split_input[1] = ft_strdup(aux);
+	in->split_input[1] = aux;
 	in->split_input[2] = NULL;
-	free(aux);
 	free(number);
 	export(in);
 	free_matrix(in->split_input);
@@ -63,7 +62,7 @@ int	main(int argc, char **argv, char **environ)
 	t_input	in;
 	t_list	*envp;
 
-	// atexit(leaks);
+	atexit(leaks);
 	envp = NULL;
 	if (argc == 1)
 	{

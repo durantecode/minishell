@@ -6,11 +6,27 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 18:21:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:28:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// void	ft_lstclear2(t_list **lst)
+// {
+// 	t_list	*copy;
+
+// 	copy = NULL;
+// 	if (lst)
+// 	{
+// 		while (*lst)
+// 		{
+// 			copy = (*lst)->next;
+// 			ft_lstdelone(*lst, free);
+// 			*lst = copy;
+// 		}
+// 	}
+// }
 
 int	pair_quotes(t_input *in)
 {
@@ -144,9 +160,12 @@ void	read_input(t_input *in)
 		printf("exit\n");
 		// free_matrix(in->dup_env);
 		// free_matrix(in->old_environ);
+		// free_matrix(in->split_input);
 		ft_lstclear(in->env_list, free);
 		free(in->prompt);
 		free(user);
 		exit(0);
 	}
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 13:36:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:22:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	env(t_input *in);
 void	my_exit(t_input *in);
 void	export(t_input *in);
 void	pwd(void);
-void	unset(t_input *in);
+void	unset(t_input *in, int j);
 void	exec_minishell(t_input *in);
 
 void	check_errors_aux(t_input *in);

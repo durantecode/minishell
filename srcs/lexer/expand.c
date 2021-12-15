@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 17:21:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/15 11:40:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	expand_vars(t_input *in)
 	char	*var;
 	char	*first;
 
-	var = ft_strdup("");
-	first = ft_strdup("");
+	var = NULL;
+	first = NULL;
 	ft_bzero(&in->flags, sizeof(in->flags));
 	while (in->split_input[in->flags.j] != NULL)
 	{

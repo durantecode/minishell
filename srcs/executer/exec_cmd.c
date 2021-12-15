@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 14:36:52 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/14 21:58:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_cmd(t_input *in)
 	in->cmd_path = NULL;
 	get_cmd_path(in);
 	if (in->cmd_path && in->path_unset == 0)
-		execve(in->cmd_path, in->split_input, in->old_environ);
+		execve(in->cmd_path, in->split_input, in->dup_env);
 	else
 	{
 		if (in->path_unset == 0)
