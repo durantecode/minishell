@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 11:48:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:14:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*ft_getenv(const char *str, t_input *in);
 int		is_builtin(t_input *in);
 void	cd(t_input *in);
 void	echo(t_input *in);
-void	env(t_input *in);
+void	env(t_input *in, int type);
 void	my_exit(t_input *in);
 void	export(t_input *in);
 void	pwd(void);

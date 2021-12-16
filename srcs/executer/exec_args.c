@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 21:56:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:00:11 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exec_args(t_input *in)
 	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
 		pwd();
 	else if (!(ft_strncmp(in->split_input[0], "env", 4)))
-		env(in);
+		env(in, 0);
 	else if (!(ft_strncmp(in->split_input[0], "cd", 3)))
 		cd(in);
 	else if (!(ft_strncmp(in->split_input[0], "echo", 5)))
