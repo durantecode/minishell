@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 14:14:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:32:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*ft_getenv(const char *str, t_input *in)
 	while (aux)
 	{
 		size_var = ft_strlen(str);
-		if (!(ft_strncmp(str, aux->content, size_var)) && ((char *)aux->content)[size_var] == '\0')
+		if (!(ft_strncmp(str, aux->content, size_var))
+			&& ((char *)aux->content)[size_var] == '\0')
 		{
 			var = ft_strdup(aux->content);
 			free(aux->content);
