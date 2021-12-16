@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 16:42:33 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:00:00 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	export(t_input *in)
 	flag = 0;
 	if (in->split_input[1] == NULL)
 	{
-		error_msg(in, ERR_ID, 2);
+		// error_msg(in, ERR_ID, 2);
+		env(in, 1);
 		return ;
 	}
 	j = 1;
@@ -66,7 +67,7 @@ void	export(t_input *in)
 				free(env_value);
 				free(var);
 			}
-			else if (aux[1])
+			else
 				ft_lstadd_back(in->env_list,
 					ft_new_node((void *) in->split_input[j],
 					ft_strlen(in->split_input[j]) + 1));

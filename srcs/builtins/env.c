@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 02:22:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:02:25 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	env(t_input *in)
+void	env(t_input *in, int type)
 {
 	t_list	*aux;
 
@@ -22,10 +22,22 @@ void	env(t_input *in)
 		return ;
 	}
 	aux = *in->env_list;
-	while (aux)
+	if (!type)
 	{
-		printf("%s\n", (char *)aux->content);
-		aux = aux->next;
+		while (aux)
+		{
+			if (ft_strchr(aux->content, '='))
+				printf("%s\n", (char *)aux->content);
+			aux = aux->next;
+		}
+	}
+	else
+	{
+		while (aux)
+		{
+			printf("declare -x %s\n", (char *)aux->content);
+			aux = aux->next;
+		}
 	}
 }
 
@@ -36,6 +48,22 @@ char	*ft_getenv(const char *str, t_input *in)
 	int		size_var;
 	int		total_size;
 
+	aux = *in->env_list;
+	var = NULL;
+	while (aux)
+	{
+		size_var = ft_strlen(str);
+		if (!(ft_strncmp(str, aux->content, size_var)) && ((char *)aux->content)[size_var] == '\0')
+		{
+			var = ft_strdup(aux->content);
+			free(aux->content);
+			aux->content = ft_strjoin(var, "=");
+			free(var);
+			return(ft_getenv(str, in));
+			printf("%s\n", str);
+		}
+		aux = aux->next;
+	}
 	aux = *in->env_list;
 	var = ft_strjoin(str, "=");
 	while (aux)

@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 16:21:07 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:59:53 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*ft_getenv(const char *str, t_input *in);
 int		is_builtin(t_input *in);
 void	cd(t_input *in);
 void	echo(t_input *in);
-void	env(t_input *in);
+void	env(t_input *in, int type);
 void	my_exit(t_input *in);
 void	export(t_input *in);
 void	pwd(void);
