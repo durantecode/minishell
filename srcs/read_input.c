@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 17:49:43 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2021/12/16 10:14:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// void	ft_lstclear2(t_list **lst)
-// {
-// 	t_list	*copy;
-
-// 	copy = NULL;
-// 	if (lst)
-// 	{
-// 		while (*lst)
-// 		{
-// 			copy = (*lst)->next;
-// 			ft_lstdelone(*lst, free);
-// 			*lst = copy;
-// 		}
-// 	}
-// }
 
 int	pair_quotes(t_input *in)
 {

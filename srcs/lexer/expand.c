@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 11:40:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 10:16:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,11 @@ int		replace_var(t_input *in, int front, char *first, char *var)
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"'
 			&& in->split_input[in->flags.j][in->flags.i - 1] == '"')
 				return(1);
-		// else if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
-		// {	
-		// 	// printf("ENTROO\n");
-		// 	if (in->flags.double_q)
-		// 		var = ft_strdup("$");
-		// }
-		// else if (in->split_input[in->flags.j][in->flags.i + 1] == '\'')
-		// {	
-		// 	// printf("ENTROO\n");
-		// 	if (in->flags.single_q)
-		// 		var = ft_strdup("$");
-		// }
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '?')
 			printf("LAST ERROR\n");
-		else if (in->flags.double_q) // || in->flags.single_q)
+		else if (in->flags.double_q)
 		{
 			if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
-				// || (in->split_input[in->flags.j][in->flags.i + 1] == '\''))
 				var = ft_strdup("$");
 		}
 	}
@@ -82,8 +69,6 @@ int		replace_var(t_input *in, int front, char *first, char *var)
 	insert_var(in, var, first, in->flags.j);
 	return (0);
 }
-
-/* CORREGIR ECHO $ Y CUANDO EL STRING TERMINA CON $ */
 
 void	expand_vars(t_input *in)
 {
@@ -107,7 +92,6 @@ void	expand_vars(t_input *in)
 			if (in->split_input[in->flags.j][in->flags.i] == '$'
 				&& (!in->flags.single_q))
 			{
-				// printf("ENTROO\n");
 				if (replace_var(in, front, first, var))
 					break ;
 				in->flags.single_q = 0; // quizá sobra
@@ -115,7 +99,6 @@ void	expand_vars(t_input *in)
 				in->flags.i = -1;
 			}
 			in->flags.i++;
-			// printf("AA: %s\n", in->split_input[in->flags.j]);
 		}
 		in->flags.j++;
 	}

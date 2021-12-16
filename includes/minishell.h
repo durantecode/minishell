@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 23:53:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:48:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct s_flags
 
 typedef struct s_input
 {
+	int		fd_infile;
+	int		fd_outfile;
 	int		path_unset;
 	int		total_pipes;
 	int		n_bytes;
