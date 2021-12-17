@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 14:14:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 00:20:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -120,6 +121,6 @@ void	unset_aux(t_list *aux, char *var, int size_var);
 
 int		count_pipes(t_input *in);
 
-void	catch_signal(int signal, siginfo_t *info, void *context);
+void	sig_handler(int signum);
 
 #endif

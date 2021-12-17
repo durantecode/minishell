@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 19:43:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 00:41:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ int	main(int argc, char **argv, char **environ)
 	t_input	in;
 	t_list	*envp;
 
-	atexit(leaks);
+	// atexit(leaks);
 	envp = NULL;
 	if (argc == 1)
 	{
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
-		// signal(SIGINT, handler);
 		// signal(SIGQUIT, handler);
+		// signal(SIGINT, handler);
 		while (1)
 		{
 			if (!isatty(STDIN_FILENO))

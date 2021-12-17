@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 12:25:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:25:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	here_doc(t_input *in, int i)
 	char	*delimiter;
 	char	**full_doc;
 	char	*line;
+	int		tmp_fd;
 
+	tmp_fd = open(".tmp", O_CREAT | O_WRONLY | O_APPEND, 0666);
 	line = ft_strdup("");
 	full_doc = malloc(sizeof(char *));
 	full_doc[0] = NULL;
@@ -58,10 +60,12 @@ void	here_doc(t_input *in, int i)
 		if (!(ft_strncmp(here_doc, delimiter, ft_strlen(delimiter))))
 			break ;
 		// line = ft_strjoin(line, here_doc);
+		// write(tmp_fd, here_doc, ft_strlen(here_doc));
+		// write(tmp_fd, "\n", 1);
 		full_doc = matrix_add_back(full_doc, here_doc);
 	}
 	// write(STDIN_FILENO, line, ft_strlen(line));
-	exec_args(in);
+	// exec_args(in);
 	free(here_doc);
 	remove_heredoc(in, i, full_doc);
 }
