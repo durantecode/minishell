@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:33:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 20:27:16 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:51:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* REVISAR SI ACTUALIZAMOS PWD Y OLDPWD CON NUEVOS VALORES
+/* REVISAR SI ACTUALIZAMOS OLDPWD CON NUEVOS VALORES
 EN LA LISTA */
 
 void	update_pwd(t_input *in)
@@ -40,7 +40,10 @@ void	cd(t_input *in)
 
 	home_path = ft_getenv("HOME", in);
 	if (!in->split_input[1] || !(ft_strncmp(in->split_input[1], "", 2)))
-		chdir(home_path);
+	{
+		if (chdir(home_path) == -1)
+			error_msg(in, ERR_HOME, 0);
+	}
 	else if (in->split_input[1][0] == '~')
 	{
 		if (in->split_input[1][1] == '\0')

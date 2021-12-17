@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 00:41:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:19:28 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	init_structs(t_input *in, t_list **envp)
 	in->cmd_path = NULL;
 	in->n_bytes = 0;
 }
-
-/* REVISAR SHELL LEVEL CUANDO SE HACE UNSET */
 
 void	update_level(t_input *in)
 {

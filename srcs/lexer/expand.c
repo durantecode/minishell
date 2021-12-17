@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 10:16:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:52:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int		replace_var(t_input *in, int front, char *first, char *var)
 			if (in->split_input[in->flags.j][in->flags.i + 1] == '"')
 				var = ft_strdup("$");
 		}
+		else
+			return (1);
 	}
 	else
 	{

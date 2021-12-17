@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 20:28:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:00:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void	read_input(t_input *in)
 				add_history(in->user_input);
 			}
 		}
-		if (in->user_input[0] != '\0')
-			free_matrix(in->split_input);
+		// if (in->user_input[0] != '\0')
+		// 	free_matrix(in->split_input);
 		free(in->user_input);
 		free(in->prompt);
 		free(user);

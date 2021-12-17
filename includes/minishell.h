@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 00:20:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:42:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define ERR_FILE "No such file or directory"
 # define ERR_PERM "Permission denied"
 # define ERR_BIN "cannot execute binary file"
+# define ERR_HOME "HOME not set"
 
 # define ERR_ID "not a valid identifier"
 # define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
