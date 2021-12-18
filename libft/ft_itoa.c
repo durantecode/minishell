@@ -35,6 +35,8 @@ static char	*ft_write(int len, int n, char *str)
 	unsigned int	nb;
 	int				sign;
 
+	nb = 0;
+	sign = 0;
 	if (n < 0)
 	{
 		sign = -1;

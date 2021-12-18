@@ -94,7 +94,7 @@ void	init_arg_list(t_input *in)
 			i[2]++;
 		}
 		args = malloc(sizeof(t_arg));
-		args->arg = malloc(sizeof(char *) * i[2] + 1);
+		args->arg = malloc(sizeof(char *) * (i[2] + 1));
 		i[0] = i[0] - i[2];
 		while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
 		{

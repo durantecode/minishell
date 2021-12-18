@@ -45,11 +45,11 @@ void	here_doc(t_input *in, int i)
 	char	*here_doc;
 	char	*delimiter;
 	char	**full_doc;
-	char	*line;
-	int		tmp_fd;
+	// char	*line;
+	// int		tmp_fd;
 
-	tmp_fd = open(".tmp", O_CREAT | O_WRONLY | O_APPEND, 0666);
-	line = ft_strdup("");
+	// tmp_fd = open(".tmp", O_CREAT | O_WRONLY | O_APPEND, 0666);
+	// line = ft_strdup("");
 	full_doc = malloc(sizeof(char *));
 	full_doc[0] = NULL;
 	delimiter = ft_strdup(in->split_input[i + 2]);

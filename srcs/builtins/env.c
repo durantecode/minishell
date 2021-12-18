@@ -101,10 +101,13 @@ void	dup_env(t_input *in, char **environ)
 	{
 		while (environ[i] != NULL)
 			i++;
-		in->dup_env = malloc(sizeof(char *) * i + 1);
-		i = -1;
-		while (environ[++i])
+		in->dup_env = malloc(sizeof(char *) * (i + 1));
+		i = 0;
+		while (environ[i])
+		{
 			in->dup_env[i] = ft_strdup(environ[i]);
+			i++;
+		}
 		in->dup_env[i] = NULL;
 	}
 }
@@ -114,6 +117,7 @@ void	init_env_list(t_input *in, t_list **envp, char **environ)
 	int		i;
 	int		size;
 
+	size = 0;
 	i = 0;
 	in->old_environ = environ;
 	dup_env(in, environ);

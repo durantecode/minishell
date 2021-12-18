@@ -56,6 +56,7 @@ void	exec_minishell(t_input *in)
 	pid_t	pid;
 
 	pid = fork();
+	//print_matrix(in->dup_env);
 	if (pid < 0)
 		error_msg(in, ERR_FORK, 2);
 	if (pid == 0)

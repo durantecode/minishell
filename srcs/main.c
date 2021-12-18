@@ -64,6 +64,7 @@ int	main(int argc, char **argv, char **environ)
 	envp = NULL;
 	if (argc == 1)
 	{
+		//print_matrix(environ);
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
