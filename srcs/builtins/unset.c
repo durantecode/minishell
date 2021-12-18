@@ -35,6 +35,7 @@ void	unset(t_input *in, int j)
 	char	*var;
 	int		size_var;
 	t_list	*aux;
+	char	*tmp_env;
 
 	aux = *in->env_list;
 	if (in->split_input[1] == NULL)
@@ -45,16 +46,21 @@ void	unset(t_input *in, int j)
 	while (in->split_input[j])
 	{
 		var = ft_strdup(in->split_input[j]);
-		size_var = ft_strlen(var);
-		if (!(ft_strncmp(var, aux->content, size_var)))
-			*in->env_list = (*in->env_list)->next;
-		else
-			unset_aux(aux, var, size_var);
-		if (!(ft_strncmp(var, "PATH=", size_var)))
-			in->path_unset = 1;
-		j++;
+		tmp_env = ft_getenv(var, in);
+		if (tmp_env)
+		{
+			size_var = ft_strlen(var);
+			if (!(ft_strncmp(var, aux->content, size_var)))
+				*in->env_list = (*in->env_list)->next;
+			else
+				unset_aux(aux, var, size_var);
+			if (!(ft_strncmp(var, "PATH=", size_var)))
+				in->path_unset = 1;
+			free_matrix(in->dup_env);
+			in->dup_env = list_to_matrix(*in->env_list);
+			free(tmp_env);
+		}
 		free(var);
-		free_matrix(in->dup_env);
-		in->dup_env = list_to_matrix(*in->env_list);
+		j++;
 	}
 }
