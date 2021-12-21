@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 21:58:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:48:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	exec_minishell(t_input *in)
 	pid = fork();
 	//print_matrix(in->dup_env);
 	if (pid < 0)
-		error_msg(in, ERR_FORK, 2);
+		error_msg(in, ERR_FORK, -1);
 	if (pid == 0)
 		execve(in->split_input[0], in->split_input, in->dup_env);
 	waitpid(pid, NULL, 0);

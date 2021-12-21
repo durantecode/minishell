@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/16 14:14:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:49:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	export(t_input *in)
 		{
 			if (!good_value(aux[0]))
 			{
-				error_msg(in, ERR_ID, 2);
+				error_msg(in, ERR_ID, -1);
 				free(aux);
 				return;
 			}

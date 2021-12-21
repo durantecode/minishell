@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 22:07:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:05:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	**remove_space(t_input *in)
 		if (!ft_isascii(in->split_input[i][0]))
 		{
 			aux = ft_substr(in->split_input[i], 2, size - 1);
+			// free(in->split_input[i]);
 			in->split_input[i] = ft_strdup(aux);
 			free(aux);
 		}	

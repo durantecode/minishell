@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:50:19 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/11 00:25:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:35:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*split_pipes(t_input *in)
 				|| in->user_input[in->flags.i] == '\'')
 			&& in->flags.global_q == 1)
 			in->flags.global_q = 0;
-		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
+		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|'
+		|| in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
 			in->flags.count += 2;
 		in->flags.count++;
 		in->flags.i++;

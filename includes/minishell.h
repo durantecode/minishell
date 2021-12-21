@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 11:42:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:29:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_PIPE "Pipe error"
 # define ERR_FORK "Fork error"
 # define ERR_DUP "Dup error"
-# define ERR_SYNTAX "syntax error near (INSERTAR TOKEN)"
+# define ERR_SYNTAX "syntax error near unexpected token"
 
 # define ERR_CMD "command not found"
 # define ERR_FILE "No such file or directory"
@@ -67,8 +67,8 @@ typedef struct s_flags
 
 typedef struct s_input
 {
-	int		fd_infile;
-	int		fd_outfile;
+	int		fd_in;
+	int		fd_out;
 	int		path_unset;
 	int		total_pipes;
 	int		n_bytes;

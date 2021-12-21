@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 11:37:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:50:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	unset(t_input *in, int j)
 	aux = *in->env_list;
 	if (in->split_input[1] == NULL)
 	{
-		error_msg(in, ERR_ID, 2);
+		error_msg(in, ERR_ID, -1);
 		return ;
 	}
 	while (in->split_input[j])

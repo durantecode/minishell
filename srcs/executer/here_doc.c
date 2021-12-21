@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 11:25:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:43:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	here_doc(t_input *in, int i)
 		full_doc = matrix_add_back(full_doc, here_doc);
 	}
 	// write(STDIN_FILENO, line, ft_strlen(line));
-	// exec_args(in);
 	free(here_doc);
 	remove_heredoc(in, i, full_doc);
+	// exec_args(in);
 }
 
 
