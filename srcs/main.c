@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/19 23:47:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/21 23:37:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,13 @@ int	main(int argc, char **argv, char **environ)
 		// signal(SIGINT, handler);
 		while (1)
 		{
-			if (!isatty(STDIN_FILENO))
-			{
-				ioctl(STDIN_FILENO, FIONREAD, &in.n_bytes);
-				if (in.n_bytes < 1)
-					exit (0);
-			}
+			in.n_bytes = 0;
+			// if (!isatty(STDIN_FILENO))
+			// {
+			// 	ioctl(STDIN_FILENO, FIONREAD, &in.n_bytes);
+			// 	if (in.n_bytes < 1)
+			// 		exit (0);
+			// }
 			read_input(&in);
 		}
 	}

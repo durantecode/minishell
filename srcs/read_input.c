@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/21 01:48:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/21 23:45:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void	read_input_aux(t_input *in, char *aux)
 		check_redirs(in);
 		// print_matrix(in->split_input);
 		// print_matrix(in->dup_env);
-		if (is_builtin(in) && count_pipes(in) == 1)
+		// printf("%d\n", in->n_bytes);
+		if (in->n_bytes)
+			return ;
+		if (is_builtin(in) && count_pipes(in))
 			exec_args(in);
 		else
 			init_arg_list(in);
@@ -142,6 +145,7 @@ void	read_input(t_input *in)
 	}
 	else
 	{
+		// write(0, "exit\n", 5);
 		printf("exit\n");
 		// free_matrix(in->dup_env);
 		// free_matrix(in->old_environ);
@@ -151,6 +155,7 @@ void	read_input(t_input *in)
 		free(user);
 		exit(0);
 	}
+	// dup2(in->fd_in, STDIN_FILENO);
 }
 
 
