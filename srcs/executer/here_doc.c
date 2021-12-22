@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 22:02:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/22 22:23:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	here_doc(t_input *in, int i)
 	if (pid == 0)
 	{
 		write(0, line, ft_strlen(line));
+		dup2(3, 0);
 		exec_args(in);
+		exit(0);
 	}
 	waitpid(pid, NULL, 0);
 	
