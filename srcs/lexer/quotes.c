@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/19 23:05:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:46:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ char	**quotes(t_input *in)
 		free(aux);
 		i++;
 	}
-	remove_space(in);
+	// remove_space(in);
 	return (in->split_input);
 }

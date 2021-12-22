@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 12:52:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:39:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		replace_var(t_input *in, int front, char *first, char *var)
 {
 	if (!(ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])))
 	{
+			printf("AAAA\n");
 		if (in->split_input[in->flags.j][in->flags.i + 1] == '\0')
 			return (1);
 		else if (in->split_input[in->flags.j][in->flags.i + 1] == '"'
