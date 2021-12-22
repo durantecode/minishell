@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_matrix.c                                      :+:      :+:    :+:   */
+/*   del_str_pos.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:35:10 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 19:55:15 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/22 19:55:03 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/22 19:55:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	free_matrix(char **matrix)
+char	*del_str_pos(char *str, int n)
 {
-	int	i;
-
+	int		i;
+	int		j;
+	char	*aux;
+	
 	i = 0;
-	while (matrix[i])
+	j = 0;
+	aux = malloc(ft_strlen(str));
+	while (str[i])
 	{
-		free(matrix[i]);
+		if (i == n)
+			i++;
+		aux[j] = str[i];
 		i++;
+		j++;
 	}
-	free(matrix);
+	aux[j] = '\0';
+	return(aux);
 }

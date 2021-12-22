@@ -6,20 +6,24 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 00:40:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/22 22:02:13 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**remove_heredoc(t_input *in, int i, char **full_doc)
+char	**remove_heredoc(t_input *in, int i)
 {
 	int j;
 
 	j = i;
 	i += 3;
 	if (in->split_input[i] == NULL && in->split_input[0][0] == '<')
+	{
 		in->split_input[0] = ft_strdup("");
+		in->split_input[1] = NULL;
+		
+	}
 	else
 	{
 		while(in->split_input[i])
@@ -30,7 +34,6 @@ char	**remove_heredoc(t_input *in, int i, char **full_doc)
 		}
 		in->split_input[j] = NULL;
 	}
-	free_matrix(full_doc);
 	return(in->split_input);
 }
 
@@ -41,11 +44,11 @@ void	here_doc(t_input *in, int i)
 	char	**full_doc;
 	char	*line;
 	// int		tmp_fd;
+	pid_t	pid;
 
 	line = ft_strdup("");
 	full_doc = malloc(sizeof(char *));
 	full_doc[0] = NULL;
-	// print_matrix(in->split_input);
 	delimiter = in->split_input[i + 2];
 	in->prompt = ft_strdup("> ");
 	while (1)
@@ -58,10 +61,17 @@ void	here_doc(t_input *in, int i)
 		// write(tmp_fd, "\n", 1);
 		full_doc = matrix_add_back(full_doc, here_doc);
 	}
-	write(0, line, ft_strlen(line));
 	// free(here_doc);
-	// remove_heredoc(in, i, full_doc);
-	// exec_args(in);
+	remove_heredoc(in, i);
+	print_matrix(in->split_input);
+	pid = fork();
+	if (pid == 0)
+	{
+		write(0, line, ft_strlen(line));
+		exec_args(in);
+	}
+	waitpid(pid, NULL, 0);
+	
 }
 
 

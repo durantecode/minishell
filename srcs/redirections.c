@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 13:01:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:59:06 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,52 +40,12 @@ char	**remove_redir(t_input *in, int i)
 	return(in->split_input);
 }
 
-char	**del_matrix_pos(char **matrix, int n)
-{
-	int		i;
-	int		j;
-	char	**aux;
-	
-	i = 0;
-	j = 0;
-	aux = malloc(matrix_len(matrix));
-	while (matrix[i])
-	{
-		if (i == n)
-			i++;
-		aux[j] = matrix[i];
-		i++;
-		j++;
-	}
-	aux[j] = NULL;
-	return(aux);
-}
-
-void	join_redirs(t_input *in)
-{
-	if (!(ft_strncmp(in->split_input[0], "", 2)))
-	{
-		in->split_input[0] = ft_strdup(in->split_input[1]);
-		if (in->split_input[2] != NULL)
-		{
-			in->split_input[1] = ft_strdup(in->split_input[2]);
-			if (in->split_input[3] != NULL)
-				in->split_input = del_matrix_pos(in->split_input, 2);
-			else
-				in->split_input = del_matrix_pos(in->split_input, 1);
-		}
-		else
-			in->split_input[1] = NULL;
-	}
-}
-
 void	check_redirs(t_input *in)
 {
 	int i;
 	pid_t pid;
 	
 	i = 0;
-	join_redirs(in);
 	while(in->split_input[i])
 	{
 		if (in->split_input[i][0] == '<')
