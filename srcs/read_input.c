@@ -12,6 +12,9 @@
 
 #include "../includes/minishell.h"
 
+/*Hay que hacer que los errores vayan con la funcion de errores no con printf
+en la misma funcion*/
+
 int	pair_quotes(t_input *in)
 {
 	ft_bzero(&in->flags, sizeof(in->flags));
@@ -72,16 +75,20 @@ int	check_errors(t_input *in)
 				c = in->user_input[in->flags.i];
 			else
 				in->flags.i++;
-			while ((in->user_input[in->flags.i] == c || in->user_input[in->flags.i] == ' ')
+			while ((in->user_input[in->flags.i] == c)
 				&& count <= 2 && in->user_input[in->flags.i])
 			{
 				if (in->user_input[in->flags.i] == c)
 					count++;
 				in->flags.i++;
 			}
+			while (in->user_input[in->flags.i] == ' ' && in->user_input[in->flags.i])
+				in->flags.i++;
+			if (in->user_input[in->flags.i] == c)
+				printf("minishell: syntax error near unexpected token '%c'\n", c);
 			if (count > 2)
 				printf("minishell: syntax error near '%c'\n", c);
-			if (count > 2)
+			if (count > 2 || in->user_input[in->flags.i] == c)
 				return (1);
 		}
 		else
@@ -99,6 +106,7 @@ void	read_input_aux(t_input *in, char *aux)
 	{
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
+		printf("String: %s\n", in->user_input);
 		free(aux);
 		check_args(in);
 		check_redirs(in);
@@ -107,10 +115,10 @@ void	read_input_aux(t_input *in, char *aux)
 		// printf("%d\n", in->n_bytes);
 		if (in->n_bytes)
 			return ;
-		if (is_builtin(in) && count_pipes(in))
-			exec_args(in);
-		else
-			init_arg_list(in);
+		// if (is_builtin(in) && count_pipes(in))
+		// 	exec_args(in);
+		// else
+		// 	init_arg_list(in);
 	}
 }
 
