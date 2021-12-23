@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 21:55:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:10:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* REVISAR FREES, NORMA, IMPLEMENTAR "$?" */
 
-void	insert_var(t_input *in, char *var, char *aux, int j)
+void	insert_var(t_input *in, char **var, char **aux, int j)
 {
 	int		len1;
 	int		len2;
@@ -22,17 +22,17 @@ void	insert_var(t_input *in, char *var, char *aux, int j)
 	char	*last;
 	char	*expanded;
 
-	len1 = ft_strlen(aux);
-	len2 = ft_strlen(var);
+	len1 = ft_strlen(*aux);
+	len2 = ft_strlen(*var);
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
-	expanded = ft_getenv(var, in);
-	free(var);
+	expanded = ft_getenv(*var, in);
+	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
 	in->flags.count = len1 + ft_strlen(expanded);
-	in->split_input[j] = ft_strjoin3(aux, expanded, last);
-	free(aux);
+	in->split_input[j] = ft_strjoin3(*aux, expanded, last);
+	free(*aux);
 	free(expanded);
 	free(last);
 }
@@ -46,7 +46,7 @@ int		check_var(t_input *in)
 			return (2);
 		if (in->split_input[in->flags.j][in->flags.i] == '$')
 		{
-			if (in->split_input[in->flags.j][in->flags.i + 1] != '$'
+			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1]) // != '$'
 				&& in->split_input[in->flags.j][in->flags.i + 1] != '\0')
 				return (0);
 			return (2);
@@ -103,12 +103,13 @@ void	expand_vars(t_input *in)
 					aux = del_str_pos(in->split_input[in->flags.j], in->flags.i - 1);
 					free(in->split_input[in->flags.j]);
 					in->split_input[in->flags.j] = ft_strdup(aux);
+					free(aux);
 				}
 				else if (check == 0)
 				{
 					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
 					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
-					insert_var(in, var, aux, in->flags.j);
+					insert_var(in, &var, &aux, in->flags.j);
 					in->flags.i = in->flags.count - 1;
 				}
 			}
