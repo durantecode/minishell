@@ -31,6 +31,18 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
+void handler2(int code)
+{
+	if (code == SIGINT)
+	{
+		write(2, "\n", 1);
+	}
+	else if (code == SIGQUIT)
+	{
+		write(2, "Quit: 3\n", 8);
+	}
+}
+
 void	pipex(t_input *in, t_list *arg_list)
 {
 	t_arg	*aux;
@@ -46,6 +58,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		if (pipe(fd[index % 2]) == -1)
 			printf("Error pipe\n");
 		aux = (t_arg *)aux_list->content;
+		signal(SIGINT, handler2);
+		signal(SIGQUIT, handler2);
 		pid = fork();
 		if (pid < 0)
 		{

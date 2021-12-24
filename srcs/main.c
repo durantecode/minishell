@@ -51,9 +51,9 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
+		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("",0);
-		printf("\n");
 		rl_redisplay();
 	}
 }
@@ -71,10 +71,10 @@ int	main(int argc, char **argv, char **environ)
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
-		signal(SIGQUIT, handler);
-		signal(SIGINT, handler);
 		while (1)
 		{
+			signal(SIGINT, handler);
+			signal(SIGQUIT, SIG_IGN);
 			in.n_bytes = 0;
 			// if (!isatty(STDIN_FILENO))
 			// {
