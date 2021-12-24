@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 20:06:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/23 19:07:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,19 @@ void	read_input_aux(t_input *in, char *aux)
 	{
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
-		printf("String: %s\n", in->user_input);
+		// printf("String: %s\n", in->user_input);
 		free(aux);
 		check_args(in);
 		check_redirs(in);
 		// print_matrix(in->split_input);
 		// print_matrix(in->dup_env);
-		// printf("%d\n", in->n_bytes);
+		// printf("%d\n", count_pipes(in));
 		if (in->n_bytes)
 			return ;
-		// if (is_builtin(in) && count_pipes(in))
-		// 	exec_args(in);
-		// else
-		// 	init_arg_list(in);
+		if (is_builtin(in) && count_pipes(in) == 1)
+			exec_args(in);
+		else
+			init_arg_list(in);
 	}
 }
 

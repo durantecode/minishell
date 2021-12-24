@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 19:36:28 by ldurante         ###   ########.fr       */
+/*   Created: 2021/12/23 21:36:17 by ldurante          #+#    #+#             */
+/*   Updated: 2021/12/23 21:36:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	error_msg(t_input *in, char *MSG, int n)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (n >= 0)
+	unsigned char	*s1;
+	unsigned char	*s2;
+
+	s1 = (unsigned char *)str1;
+	s2 = (unsigned char *)str2;
+	if (*s1 == 0 || *s2 == 0)
+		return (*s1 - *s2);
+	while (*s1 && *s2)
 	{
-		write(2, SHELL, ft_strlen(SHELL));
-		write(2, in->split_input[n], ft_strlen(in->split_input[n]));
-		write(2, ": ", 2);
-		write(2, MSG, ft_strlen(MSG));
-		write(2, "\n", 1);
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
 	}
-	else
-	{
-		write(2, SHELL, ft_strlen(SHELL));
-		write(2, MSG, ft_strlen(MSG));
-		write(2, "\n", 1);
-	}
-	return (0);
+	return (*s1 - *s2);
 }

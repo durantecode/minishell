@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/21 21:35:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/23 20:18:06 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define R_END 0
 # define W_END 1
 
-# define SHELL "minishell"
+# define SHELL "minishell: "
 # define IS_DIR "is a directory"
 # define ERR_PIPE "Pipe error"
 # define ERR_FORK "Fork error"

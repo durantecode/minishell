@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 16:59:01 by ldurante          #+#    #+#              #
-#    Updated: 2021/12/22 19:56:02 by ldurante         ###   ########.fr        #
+#    Updated: 2021/12/23 21:37:08 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c 
 		 ft_tolower.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c \
 		 ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_split.c \
 		 ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-		 ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_new_node.c \
+		 ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_new_node.c ft_strcmp.c \
 		 get_next_line.c free_matrix.c print_matrix.c ft_strjoin3.c list_to_matrix.c matrix_len.c \
 		 matrix_add_back.c matrix_dup.c del_str_pos.c del_matrix_pos.c \
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 19:59:06 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/24 03:35:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,18 @@ void	check_redirs(t_input *in)
 	i = 0;
 	while(in->split_input[i])
 	{
-		if (in->split_input[i][0] == '<')
+		if (!(ft_strncmp(in->split_input[i], "<<", 3)))
 		{
-			// i++;
 			if (in->split_input[i + 1] != NULL)
-			{
-				if (!(ft_strncmp(in->split_input[i + 1], "<", 2)))
-				{
-					// printf("|%s|\n", in->split_input[2]);
-					if (in->split_input[i + 2] != NULL)
-						// printf("call here_doc\n");
-						here_doc(in, i);
-					else
-						error_msg(in, ERR_SYNTAX, -1);	
-				}
-			}
+				here_doc(in, i);
+				// printf("call here_doc\n");
+			else
+				error_msg(in, ERR_SYNTAX, -1);
 		}
 		i++;
 	}
 	i = 0;
-	while(in->split_input[i])
+	while (in->split_input[i])
 	{
 		if (in->split_input[i][0] == '<')
 		{
@@ -77,33 +69,26 @@ void	check_redirs(t_input *in)
 			else
 			{
 				remove_redir(in, i);
+				print_matrix(in->split_input);
 				pid = fork();
+				if (pid == -1)
+					error_msg(in, ERR_FORK, -1);
 				if (pid == 0)
 				{
-					// print_matrix(in->split_input);
 					dup2(in->fd_in, STDIN_FILENO);
 					if (!(ft_strncmp(in->split_input[0], "", 2)))
 						exit(0);
-					// free(in->user_input);
 					close(in->fd_in);
-					exec_args(in);
-					exit(0);
-					// printf("OEJTE\n");
+					if (is_builtin(in) && count_pipes(in) == 1)
+						exec_args(in);
+					else
+						init_arg_list(in);
+					exit (0);
 				}
 				waitpid(pid, NULL, 0);
+				close(in->fd_in);
 				in->n_bytes = 1;
-				// free(in->user_input);
-				// in->user_input = NULL;
-				// free_matrix(in->split_input);
-				// in->split_input[0] = ft_strdup("");
-				// printf("AA: |%s|\n", in->user_input);
-				// print_matrix(in->split_input);
-				// break ;
-
 			}
-
-
-					// error_msg(in, ERR_SYNTAX, -1);
 		}
 		i++;
 	}

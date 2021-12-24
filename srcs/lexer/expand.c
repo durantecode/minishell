@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 13:10:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/23 19:12:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		check_var(t_input *in)
 			return (2);
 		if (in->split_input[in->flags.j][in->flags.i] == '$')
 		{
-			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1]) // != '$'
+			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])
 				&& in->split_input[in->flags.j][in->flags.i + 1] != '\0')
 				return (0);
 			return (2);
