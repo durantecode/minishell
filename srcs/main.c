@@ -71,9 +71,10 @@ int	main(int argc, char **argv, char **environ)
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
-		signal(SIGINT, handler);
 		while (1)
 		{
+			signal(SIGINT, handler);
+			signal(SIGQUIT, SIG_IGN);
 			in.n_bytes = 0;
 			// if (!isatty(STDIN_FILENO))
 			// {

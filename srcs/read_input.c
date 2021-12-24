@@ -65,6 +65,7 @@ int	check_errors(t_input *in)
 	int		count;
 	int		flag_diff;
 
+	flag_diff = 0;
 	while (in->user_input[in->flags.i])
 	{
 		count = 0;

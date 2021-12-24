@@ -37,6 +37,10 @@ void handler2(int code)
 	{
 		write(2, "\n", 1);
 	}
+	else if (code == SIGQUIT)
+	{
+		write(2, "Quit: 3\n", 8);
+	}
 }
 
 void	pipex(t_input *in, t_list *arg_list)
@@ -54,6 +58,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		if (pipe(fd[index % 2]) == -1)
 			printf("Error pipe\n");
 		aux = (t_arg *)aux_list->content;
+		signal(SIGINT, handler2);
+		signal(SIGQUIT, handler2);
 		pid = fork();
 		if (pid < 0)
 		{
@@ -63,7 +69,6 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
-			//signal(SIGINT, handler2);
 			if (aux_list->next != NULL)
 				dup2(fd[index % 2][W_END], STDOUT_FILENO);
 			close(fd[index % 2][W_END]);
