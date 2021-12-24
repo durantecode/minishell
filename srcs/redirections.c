@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/24 03:35:00 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/24 03:44:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	check_redirs(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 				here_doc(in, i);
-				// printf("call here_doc\n");
 			else
 				error_msg(in, ERR_SYNTAX, -1);
 		}
