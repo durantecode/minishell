@@ -63,6 +63,7 @@ int	check_errors(t_input *in)
 {
 	char	c;
 	int		count;
+	int		flag_diff;
 
 	while (in->user_input[in->flags.i])
 	{
@@ -92,9 +93,20 @@ int	check_errors(t_input *in)
 				return (1);
 		}
 		else
+		{
+			if (in->user_input[in->flags.i] != '<' && in->user_input[in->flags.i] != '|'
+				&& in->user_input[in->flags.i] != '>' && in->user_input[in->flags.i] != ' ')
+				flag_diff = 1;
 			in->flags.i++;
+		}
 	}
-	return (0);
+	if (flag_diff == 1)
+		return (0);
+	else
+	{
+		printf("minishell: syntax error near unexpected token\n");
+		return (1);
+	}
 }
 
 void	read_input_aux(t_input *in, char *aux)

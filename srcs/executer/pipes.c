@@ -31,6 +31,14 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
+void handler2(int code)
+{
+	if (code == SIGINT)
+	{
+		write(2, "\n", 1);
+	}
+}
+
 void	pipex(t_input *in, t_list *arg_list)
 {
 	t_arg	*aux;
@@ -55,6 +63,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
+			//signal(SIGINT, handler2);
 			if (aux_list->next != NULL)
 				dup2(fd[index % 2][W_END], STDOUT_FILENO);
 			close(fd[index % 2][W_END]);
