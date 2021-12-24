@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 20:47:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/24 20:48:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ void	init_arg_list(t_input *in)
 		i[1]++;
 		i[0]++;
 	}
-	// free_matrix(in->split_input);
+	free_matrix(in->split_input);
 	pipex(in, arg_list);
 }

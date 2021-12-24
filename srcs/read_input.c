@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 19:07:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/24 22:39:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,11 @@ int	check_errors(t_input *in)
 			}
 			while (in->user_input[in->flags.i] == ' ' && in->user_input[in->flags.i])
 				in->flags.i++;
-			if (in->user_input[in->flags.i] == c)
-				printf("minishell: syntax error near unexpected token '%c'\n", c);
-			if (count > 2)
-				printf("minishell: syntax error near '%c'\n", c);
 			if (count > 2 || in->user_input[in->flags.i] == c)
+			{
+				error_msg(in, ERR_SYNTAX, -1);
 				return (1);
+			}
 		}
 		else
 			in->flags.i++;
