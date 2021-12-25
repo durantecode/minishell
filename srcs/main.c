@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int err_num;
+
 void	leaks(void)
 {
 	system("leaks -q minishell");
@@ -51,6 +53,7 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
+		err_num = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("",0);
@@ -65,6 +68,7 @@ int	main(int argc, char **argv, char **environ)
 
 	// atexit(leaks);
 	envp = NULL;
+	err_num = 0;
 	if (argc == 1)
 	{
 		//print_matrix(environ);

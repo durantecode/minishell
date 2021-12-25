@@ -14,6 +14,8 @@
 
 /* REVISAR FREES, NORMA, IMPLEMENTAR "$?" */
 
+extern int err_num;
+
 void	insert_var(t_input *in, char **var, char **aux, int j)
 {
 	int		len1;
@@ -62,7 +64,10 @@ int		check_var(t_input *in)
 			&& !in->flags.double_q)
 			return (1);
 		if (in->split_input[in->flags.j][in->flags.i] == '?')
+		{
 			printf("CHECK LAST ERROR\n");
+			return (3);
+		}
 		else
 			return(2);
 	}
@@ -111,6 +116,14 @@ void	expand_vars(t_input *in)
 					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
 					insert_var(in, &var, &aux, in->flags.j);
 					in->flags.i = in->flags.count - 1;
+				}
+				else if (check == 3)
+				{
+					// aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
+					// var = ft_itoa(err_num);
+					// insert_var(in, &var, &aux, in->flags.j);
+					// in->flags.i = in->flags.count - 1;
+					printf("%d\n", err_num);
 				}
 			}
 			in->flags.i++;

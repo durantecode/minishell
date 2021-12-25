@@ -12,6 +12,19 @@
 
 #include "../includes/minishell.h"
 
+/*
+	TIPOS DE ERRORES:
+
+	Comando no encontrado					--> 127
+	Archivo no encontrado o bad argument	--> 2
+	Comando ejecutado satisfactoriamente	--> 0
+	Argumentos invalidos					--> 1
+	Hacer ctrl+c							--> 130
+	Hacer ctrl+\							--> 131
+	Hacer ctrl+d							--> No debe de hacer nada
+
+*/
+
 int	error_msg(t_input *in, char *MSG, int n)
 {
 	if (n >= 0)
