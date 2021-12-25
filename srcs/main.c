@@ -6,11 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 14:22:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 17:04:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int exit_status;
 
 void	leaks(void)
 {
@@ -26,6 +28,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->n_bytes = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
+	exit_status = 0;
 }
 
 void	update_level(t_input *in)
@@ -53,6 +56,7 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
+		exit_status = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("",0);

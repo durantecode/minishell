@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 19:12:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 17:00:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 	len2 = ft_strlen(*var);
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
-	expanded = ft_getenv(*var, in);
+	if (!(ft_strncmp(*var, "?", 2)))
+		expanded = ft_strdup(ft_itoa(exit_status));
+	else
+		expanded = ft_getenv(*var, in);
 	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
@@ -62,7 +65,10 @@ int		check_var(t_input *in)
 			&& !in->flags.double_q)
 			return (1);
 		if (in->split_input[in->flags.j][in->flags.i] == '?')
-			printf("CHECK LAST ERROR\n");
+		{
+			in->flags.i--;
+			return (0);
+		}
 		else
 			return(2);
 	}
@@ -76,6 +82,8 @@ char	*get_var(char *str, int i)
 	int		j;
 	
 	j = i;
+	if (ft_strcmp(str, "?"))
+		return (aux = ft_strdup("?"));
 	while (ft_isalnum(str[i]))
 		i++;
 	aux = ft_substr(str, j, i - j);
@@ -108,7 +116,7 @@ void	expand_vars(t_input *in)
 				else if (check == 0)
 				{
 					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
-					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
+					var = get_var(in->split_input[in->flags.j], in->flags.i);
 					insert_var(in, &var, &aux, in->flags.j);
 					in->flags.i = in->flags.count - 1;
 				}

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 14:22:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 00:42:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			}
 			close(fd[(index + 1) % 2][R_END]);
 			in->split_input = aux->arg;
+			// printf("HOLA\n");
 			exec_args(in);
 			free_matrix(in->split_input);
 			free(in->cmd_path);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 14:28:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 22:29:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ void	here_doc(t_input *in, int i)
 	if (pid == 0)
 	{
 		dup2(fd, STDIN_FILENO);
+		close(fd);
+		// print_matrix(in->split_input);
 		if (!(ft_strncmp(in->split_input[0], "", 2))
 		|| !(ft_strncmp(in->split_input[0], "|", 2)))
 			exit(0);
-		close(fd);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else

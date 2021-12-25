@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 14:20:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 17:25:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 
 # define ERR_ID "not a valid identifier"
 # define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
+
+extern int exit_status;
 
 typedef struct s_arg
 {

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 14:18:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 18:25:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	check_redirs(t_input *in)
 		}
 		i++;
 	}
-	// print_matrix(in->split_input);
 	i = 0;
 	while (in->split_input[i])
 	{
@@ -86,6 +85,7 @@ void	check_redirs(t_input *in)
 				}
 				waitpid(pid, NULL, 0);
 				close(in->fd_in);
+				// in->fd_in = 0;
 				in->n_bytes = 1;
 			}
 		}

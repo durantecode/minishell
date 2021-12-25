@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 03:41:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 17:35:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	exec_cmd(t_input *in)
 	get_path(in);
 	in->cmd_path = NULL;
 	get_cmd_path(in);
-	// print_matrix(in->split_input);
 	if (execve(in->cmd_path, in->split_input, in->dup_env) == -1)
 	{
 		if (in->path_unset == 0)
