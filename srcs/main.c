@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/21 23:37:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:22:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_structs(t_input *in, t_list **envp)
 	in->split_input = NULL;
 	in->cmd_path = NULL;
 	in->n_bytes = 0;
+	in->fd_in = 0;
+	in->fd_out = 0;
 }
 
 void	update_level(t_input *in)

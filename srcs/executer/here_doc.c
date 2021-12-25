@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/24 20:30:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:28:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,19 @@ void	here_doc(t_input *in, int i)
 	}
 	close(fd);
 	remove_heredoc(in, i);
-	in->fd_in = open(".tmp", O_RDONLY);
-	if (in->fd_in == -1)
+	fd = open(".tmp", O_RDONLY);
+	if (fd == -1)
 		error_msg(in, ERR_FILE, -1);
 	pid = fork();
 	if (pid == -1)
 		error_msg(in, ERR_FORK, -1);
 	if (pid == 0)
 	{
-		dup2(in->fd_in, STDIN_FILENO);
-		if (!(ft_strncmp(in->split_input[0], "", 2)))
+		dup2(fd, STDIN_FILENO);
+		if (!(ft_strncmp(in->split_input[0], "", 2))
+		|| !(ft_strncmp(in->split_input[0], "|", 2)))
 			exit(0);
-		close(in->fd_in);
+		close(fd);
 		if (is_builtin(in) && count_pipes(in) == 1)
 			exec_args(in);
 		else
@@ -78,8 +79,7 @@ void	here_doc(t_input *in, int i)
 		exit (0);
 	}
 	waitpid(pid, NULL, 0);
-	// print_matrix(in->split_input);
-	close(in->fd_in);
+	close(fd);
 	in->n_bytes = 1;
 	unlink(".tmp");
 }
