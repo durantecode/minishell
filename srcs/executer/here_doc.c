@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 22:36:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 22:54:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	**remove_redir(t_input *in, int i, char c)
 	if (in->split_input[i] == NULL && in->split_input[0][0] == c)
 	{
 		in->split_input[0] = ft_strdup("");
-		in->split_input[1] = NULL;
-		
+		in->split_input[1] = NULL;	
 	}
 	else
 	{
