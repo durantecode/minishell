@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 22:29:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 01:36:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	here_doc(t_input *in, int i)
 	char	*delimiter;
 	int		fd;
 	char	*here_doc;
-	pid_t	pid;
 
 	fd = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd == -1)
@@ -59,30 +58,13 @@ void	here_doc(t_input *in, int i)
 	}
 	close(fd);
 	remove_heredoc(in, i);
-	fd = open(".tmp", O_RDONLY);
-	if (fd == -1)
-		error_msg(in, ERR_FILE, -1);
-	pid = fork();
-	if (pid == -1)
-		error_msg(in, ERR_FORK, -1);
-	if (pid == 0)
-	{
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		// print_matrix(in->split_input);
-		if (!(ft_strncmp(in->split_input[0], "", 2))
-		|| !(ft_strncmp(in->split_input[0], "|", 2)))
-			exit(0);
-		if (is_builtin(in) && count_pipes(in) == 1)
-			exec_args(in);
-		else
-			init_arg_list(in);
-		exit (0);
-	}
-	waitpid(pid, NULL, 0);
-	close(fd);
-	in->n_bytes = 1;
-	unlink(".tmp");
+	if (!(ft_strncmp(in->split_input[0], "", 2)))
+		exit(0);
+	in->fd_in = open(".tmp", O_RDONLY);
+	if (!is_builtin(in))
+		dup2(in->fd_in, STDIN_FILENO);
+	close(in->fd_in);
+	// unlink(".tmp");
 }
 
 

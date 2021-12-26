@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 18:25:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 01:48:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	**remove_redir(t_input *in, int i)
 void	check_redirs(t_input *in)
 {
 	int i;
-	pid_t pid;
 	
 	i = 0;
 	while(in->split_input[i])
@@ -64,28 +63,15 @@ void	check_redirs(t_input *in)
 		{
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
-				error_msg(in, ERR_FILE, i);
+				error_msg(in, ERR_FILE, i + 1);
 			else
 			{
 				remove_redir(in, i);
-				pid = fork();
-				if (pid == -1)
-					error_msg(in, ERR_FORK, -1);
-				if (pid == 0)
-				{
+				if (!(ft_strncmp(in->split_input[0], "", 2)))
+					exit(0);
+				if (!is_builtin(in))
 					dup2(in->fd_in, STDIN_FILENO);
-					if (!(ft_strncmp(in->split_input[0], "", 2)))
-						exit(0);
-					close(in->fd_in);
-					if (is_builtin(in) && count_pipes(in) == 1)
-						exec_args(in);
-					else
-						init_arg_list(in);
-					exit (0);
-				}
-				waitpid(pid, NULL, 0);
 				close(in->fd_in);
-				// in->fd_in = 0;
 				in->n_bytes = 1;
 			}
 		}
