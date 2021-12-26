@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 15:48:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:52:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* REVISAR FREES, NORMA, IMPLEMENTAR "$?" */
+/* REVISAR FREES, NORMA */
 
 void	insert_var(t_input *in, char **var, char **aux, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 14:53:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 22:09:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,18 +120,18 @@ void	read_input_aux(t_input *in, char *aux)
 		in->user_input = split_pipes(in);
 		free(aux);
 		check_args(in);
-		// check_redirs(in);
 		// print_matrix(in->split_input);
-		// print_matrix(in->dup_env);
-		// printf("%d\n", count_pipes(in));
 		if (is_builtin(in) && count_pipes(in) == 1)
 		{
 			check_redirs(in);
 			exec_args(in);
+			if (in->is_outfile)
+				dup2(in->back_stdout, 1);
+			close(in->back_stdout);
 		}
 		else
 			init_arg_list(in);
-		unlink(".tmp");
+		unlink(".hd_tmp");
 	}
 }
 
@@ -176,7 +176,6 @@ void	read_input(t_input *in)
 		free(user);
 		exit(0);
 	}
-	// dup2(in->fd_in, STDIN_FILENO);
 }
 
 
