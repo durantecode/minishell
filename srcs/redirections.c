@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 14:53:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:34:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	check_redirs(t_input *in)
 				error_msg(in, ERR_SYNTAX, -1);
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
-				error_msg(in, ERR_FILE, i + 1); // Revisar error, da 2 veces
+				error_msg(in, ERR_FILE, i + 1);
 			else
 			{
 				remove_redir(in, i);
