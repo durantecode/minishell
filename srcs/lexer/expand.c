@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 15:31:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:48:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ char	*get_var(char *str, int i)
 	int		j;
 	
 	j = i;
-	if (!(ft_strncmp(str, "$?", 2)))
+	// printf("%s\n", str);
+	if (str[i] == '?')
 		return (aux = ft_strdup("?"));
 	while (ft_isalnum(str[i]))
 		i++;
