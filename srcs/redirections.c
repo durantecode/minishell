@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 01:48:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:53:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	check_redirs(t_input *in)
 	int i;
 	
 	i = 0;
+	in->is_infile = 0;
 	while(in->split_input[i])
 	{
 		if (!(ft_strncmp(in->split_input[i], "<<", 3)))
@@ -61,9 +62,11 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<", 2)))
 		{
+			if (in->split_input[i + 1] == NULL)
+				error_msg(in, ERR_SYNTAX, -1);
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
-				error_msg(in, ERR_FILE, i + 1);
+				error_msg(in, ERR_FILE, i + 1); // Revisar error, da 2 veces
 			else
 			{
 				remove_redir(in, i);
@@ -72,7 +75,7 @@ void	check_redirs(t_input *in)
 				if (!is_builtin(in))
 					dup2(in->fd_in, STDIN_FILENO);
 				close(in->fd_in);
-				in->n_bytes = 1;
+				in->is_infile = 1;
 			}
 		}
 		i++;

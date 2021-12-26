@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 01:51:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:20:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			close(fd[index % 2][W_END]);
 			if (index > 0)
 			{
-				// if (in->fd_in < 3)
-				if (!in->n_bytes)
+				if (!in->is_infile && in->fd_hdoc < 3)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
 			}
 			close(fd[(index + 1) % 2][R_END]);

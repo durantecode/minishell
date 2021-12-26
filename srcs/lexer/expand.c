@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 17:00:58 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:31:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_var(char *str, int i)
 	int		j;
 	
 	j = i;
-	if (ft_strcmp(str, "?"))
+	if (!(ft_strncmp(str, "$?", 2)))
 		return (aux = ft_strdup("?"));
 	while (ft_isalnum(str[i]))
 		i++;
@@ -116,7 +116,7 @@ void	expand_vars(t_input *in)
 				else if (check == 0)
 				{
 					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
-					var = get_var(in->split_input[in->flags.j], in->flags.i);
+					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
 					insert_var(in, &var, &aux, in->flags.j);
 					in->flags.i = in->flags.count - 1;
 				}

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 17:25:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:53:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ typedef struct s_input
 {
 	int		fd_in;
 	int		fd_out;
+	int		fd_hdoc;
+	int		is_infile;
 	int		path_unset;
 	int		total_pipes;
-	int		n_bytes;
 	char	*prompt;
 	char	*user_input;
 	char	*cmd_path;

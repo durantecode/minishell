@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/25 17:04:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:58:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	init_structs(t_input *in, t_list **envp)
 	in->user_input = NULL;
 	in->split_input = NULL;
 	in->cmd_path = NULL;
-	in->n_bytes = 0;
+	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
+	in->fd_hdoc = 0;
 	exit_status = 0;
 }
 
@@ -73,7 +74,6 @@ int	main(int argc, char **argv, char **environ)
 	envp = NULL;
 	if (argc == 1)
 	{
-		//print_matrix(environ);
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
@@ -81,13 +81,6 @@ int	main(int argc, char **argv, char **environ)
 		{
 			signal(SIGINT, handler);
 			signal(SIGQUIT, SIG_IGN);
-			in.n_bytes = 0;
-			// if (!isatty(STDIN_FILENO))
-			// {
-			// 	ioctl(STDIN_FILENO, FIONREAD, &in.n_bytes);
-			// 	if (in.n_bytes < 1)
-			// 		exit (0);
-			// }
 			read_input(&in);
 		}
 	}
