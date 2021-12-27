@@ -14,7 +14,19 @@
 
 /* REVISAR FREES, NORMA, IMPLEMENTAR "$?" */
 
-extern int err_num;
+int str_is_digit(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' && str[i] > '9')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	insert_var(t_input *in, char **var, char **aux, int j)
 {
@@ -24,11 +36,19 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 	char	*last;
 	char	*expanded;
 
+	if (str_is_digit(*var))
+	{
+		expanded = ft_getenv(*var, in);
+		len2 = ft_strlen(*var);
+	}
+	else
+	{
+		expanded = ft_strdup(*var);
+		len2 = 1;
+	}
 	len1 = ft_strlen(*aux);
-	len2 = ft_strlen(*var);
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
-	expanded = ft_getenv(*var, in);
 	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
@@ -65,7 +85,9 @@ int		check_var(t_input *in)
 			return (1);
 		if (in->split_input[in->flags.j][in->flags.i] == '?')
 		{
-			printf("CHECK LAST ERROR\n");
+			// printf("CHECK LAST ERROR\n");
+			// printf("%d", err_num);
+			in->flags.i--;
 			return (3);
 		}
 		else
@@ -119,11 +141,10 @@ void	expand_vars(t_input *in)
 				}
 				else if (check == 3)
 				{
-					// aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
-					// var = ft_itoa(err_num);
-					// insert_var(in, &var, &aux, in->flags.j);
-					// in->flags.i = in->flags.count - 1;
-					printf("%d\n", err_num);
+					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
+					var = ft_itoa(err_num);
+					insert_var(in, &var, &aux, in->flags.j);
+					in->flags.i = in->flags.count - 1;
 				}
 			}
 			in->flags.i++;

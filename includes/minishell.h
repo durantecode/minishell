@@ -46,6 +46,8 @@
 # define ERR_ID "not a valid identifier"
 # define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
 
+extern int err_num;
+
 typedef struct s_arg
 {
 	char	**arg;
