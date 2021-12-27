@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 22:36:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 13:41:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,21 @@ void	unset_aux(t_list *aux, char *var, int size_var);
 
 int		count_pipes(t_input *in);
 
-void	sig_handler(int signum);
+void	handler(int	code);
 
 #endif
+
+/*  TO DO:
+
+	Pipes dobles
+	Redirecciones outfile seguidas
+	
+	Ctrl + D y Ctrl + C en here_doc
+	Error cuando solo escribes espacios
+	
+	Actualizar OLDPWD cuando hacemos CD
+	
+	EXIT STATUS, ver como actualizar a 0
+	Leaks
+	Norma
+	
