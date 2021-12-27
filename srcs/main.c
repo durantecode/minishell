@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/21 23:37:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:58:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int err_num;
+int exit_status;
 
 void	leaks(void)
 {
@@ -25,7 +25,11 @@ void	init_structs(t_input *in, t_list **envp)
 	in->user_input = NULL;
 	in->split_input = NULL;
 	in->cmd_path = NULL;
-	in->n_bytes = 0;
+	in->is_infile = 0;
+	in->fd_in = 0;
+	in->fd_out = 0;
+	in->fd_hdoc = 0;
+	exit_status = 0;
 }
 
 void	update_level(t_input *in)
@@ -53,7 +57,7 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
-		err_num = 130;
+		exit_status = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("",0);
@@ -68,10 +72,8 @@ int	main(int argc, char **argv, char **environ)
 
 	// atexit(leaks);
 	envp = NULL;
-	err_num = 0;
 	if (argc == 1)
 	{
-		//print_matrix(environ);
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
@@ -79,13 +81,6 @@ int	main(int argc, char **argv, char **environ)
 		{
 			signal(SIGINT, handler);
 			signal(SIGQUIT, SIG_IGN);
-			in.n_bytes = 0;
-			// if (!isatty(STDIN_FILENO))
-			// {
-			// 	ioctl(STDIN_FILENO, FIONREAD, &in.n_bytes);
-			// 	if (in.n_bytes < 1)
-			// 		exit (0);
-			// }
 			read_input(&in);
 		}
 	}

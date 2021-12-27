@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 20:18:06 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 22:36:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define ERR_ID "not a valid identifier"
 # define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
 
-extern int err_num;
+extern int exit_status;
 
 typedef struct s_arg
 {
@@ -71,9 +71,12 @@ typedef struct s_input
 {
 	int		fd_in;
 	int		fd_out;
+	int		fd_hdoc;
+	int		is_infile;
+	int		is_outfile;
+	int		back_stdout;
 	int		path_unset;
 	int		total_pipes;
-	int		n_bytes;
 	char	*prompt;
 	char	*user_input;
 	char	*cmd_path;
@@ -96,6 +99,7 @@ void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 void	check_args(t_input *in);
 void	check_redirs(t_input *in);
+char	**remove_redir(t_input *in, int i, char c);
 
 int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);

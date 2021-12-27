@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/23 19:12:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:52:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* REVISAR FREES, NORMA, IMPLEMENTAR "$?" */
+/* REVISAR FREES, NORMA */
 
 int str_is_digit(char *str)
 {
@@ -36,19 +36,14 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 	char	*last;
 	char	*expanded;
 
-	if (str_is_digit(*var))
-	{
-		expanded = ft_getenv(*var, in);
-		len2 = ft_strlen(*var);
-	}
-	else
-	{
-		expanded = ft_strdup(*var);
-		len2 = 1;
-	}
 	len1 = ft_strlen(*aux);
+	len2 = ft_strlen(*var);
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
+	if (!(ft_strncmp(*var, "?", 2)))
+		expanded = ft_strdup(ft_itoa(exit_status));
+	else
+		expanded = ft_getenv(*var, in);
 	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
@@ -85,10 +80,8 @@ int		check_var(t_input *in)
 			return (1);
 		if (in->split_input[in->flags.j][in->flags.i] == '?')
 		{
-			// printf("CHECK LAST ERROR\n");
-			// printf("%d", err_num);
 			in->flags.i--;
-			return (3);
+			return (0);
 		}
 		else
 			return(2);
@@ -103,6 +96,8 @@ char	*get_var(char *str, int i)
 	int		j;
 	
 	j = i;
+	if (str[i] == '?')
+		return (aux = ft_strdup("?"));
 	while (ft_isalnum(str[i]))
 		i++;
 	aux = ft_substr(str, j, i - j);
@@ -136,13 +131,6 @@ void	expand_vars(t_input *in)
 				{
 					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
 					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
-					insert_var(in, &var, &aux, in->flags.j);
-					in->flags.i = in->flags.count - 1;
-				}
-				else if (check == 3)
-				{
-					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
-					var = ft_itoa(err_num);
 					insert_var(in, &var, &aux, in->flags.j);
 					in->flags.i = in->flags.count - 1;
 				}

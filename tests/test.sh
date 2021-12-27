@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbueno-g <mbueno-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/07 16:58:45 by mbueno-g          #+#    #+#              #
-#    Updated: 2021/11/24 13:26:59 by aperez-b         ###   ########.fr        #
+#    Updated: 2021/12/26 22:06:36 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ if [ "$builtin" = "echo" ] || [ "$builtin" = "all" ] ; then
 	exec_test "echo '\$P'\"W'D'\""
 	exec_test "echo \"\$~\""
 	exec_test "> hola echo hello"
-	exec_test "echo hola \"'adi \$PWD   os' \$PWD\" 'ddj'abc >> \"hello\" < main.c"
+	exec_test "echo hola \"'adi \$PWD   os' \$PWD\" 'ddj'abc >> \"hello\" < infile"
 	exec_test "echo $\"PWD\""
 	exec_test "echo \$''"
 	exec_test "echo \$\"\""
