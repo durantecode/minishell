@@ -64,7 +64,9 @@ int	check_errors(t_input *in)
 	char	c;
 	int		count;
 	int		flag_diff;
+	int		special;
 
+	special = 0;
 	flag_diff = 0;
 	while (in->user_input[in->flags.i])
 	{
@@ -73,6 +75,7 @@ int	check_errors(t_input *in)
 		if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '|'
 			|| in->user_input[in->flags.i] == '>')
 		{
+			special = 1;
 			if (in->flags.double_q == 0 && in->flags.single_q == 0)
 				c = in->user_input[in->flags.i];
 			else
@@ -94,19 +97,18 @@ int	check_errors(t_input *in)
 		}
 		else
 		{
-			if (in->user_input[in->flags.i] != '<' && in->user_input[in->flags.i] != '|'
-				&& in->user_input[in->flags.i] != '>' && in->user_input[in->flags.i] != ' ')
+			if (in->user_input[in->flags.i] != ' ')
 				flag_diff = 1;
 			in->flags.i++;
 		}
 	}
-	if (flag_diff == 1)
-		return (0);
-	else
+	if (special == 1 && flag_diff == 0)
 	{
 		printf("minishell: syntax error near unexpected token\n");
 		return (1);
 	}
+	else
+		return (0);
 }
 
 void	read_input_aux(t_input *in, char *aux)
@@ -119,21 +121,22 @@ void	read_input_aux(t_input *in, char *aux)
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
 		free(aux);
-		check_args(in);
-		// print_matrix(in->split_input);
-		if (is_builtin(in) && count_pipes(in) == 1)
+		if (check_args(in))
 		{
-			check_redirs(in);
-			exec_args(in);
-			if (in->is_outfile)
-			{			
-				dup2(in->back_stdout, STDOUT_FILENO);
-				close(in->back_stdout);
+			if (is_builtin(in) && count_pipes(in) == 1)
+			{
+				check_redirs(in);
+				exec_args(in);
+				if (in->is_outfile)
+				{			
+					dup2(in->back_stdout, STDOUT_FILENO);
+					close(in->back_stdout);
+				}
 			}
+			else
+				init_arg_list(in);
+			unlink(".hd_tmp");
 		}
-		else
-			init_arg_list(in);
-		unlink(".hd_tmp");
 	}
 }
 

@@ -97,7 +97,7 @@ void	init_arg_list(t_input *in);
 
 void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
-void	check_args(t_input *in);
+int		check_args(t_input *in);
 void	check_redirs(t_input *in);
 char	**remove_redir(t_input *in, int i, char c);
 
