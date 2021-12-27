@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 22:36:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 13:01:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	check_redirs(t_input *in)
 				remove_redir(in, i, '>');
 				if (!(ft_strncmp(in->split_input[0], "", 2)))
 					exit(0);
-				in->back_stdout = dup(1);
+				in->back_stdout = dup(STDOUT_FILENO);
 				dup2(in->fd_out, STDOUT_FILENO);
 				close(in->fd_out);
 				in->is_outfile = 1;
