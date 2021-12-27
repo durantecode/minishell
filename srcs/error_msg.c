@@ -6,11 +6,23 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 15:24:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 22:13:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	update_exit_status(char *ERR)
+{
+	if (ERR == ERR_CMD)
+		return (127);
+	if (ERR == ERR_FILE)
+		return (1);
+	if (ERR == ERR_SYNTAX)
+		return (258);
+	else
+		return(1);
+}
 
 int	error_msg(t_input *in, char *MSG, int n)
 {
@@ -29,7 +41,7 @@ int	error_msg(t_input *in, char *MSG, int n)
 		write(2, "\n", 1);
 	}
 	if (!is_builtin(in))
-		exit(0);
-	// exit_status = 127;
+		exit(update_exit_status(MSG));
+	exit_status = update_exit_status(MSG);
 	return (0);
 }

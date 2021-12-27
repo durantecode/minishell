@@ -6,33 +6,25 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 13:31:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 20:51:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**remove_redir(t_input *in, int i, char c)
+char	**remove_redir(t_input *in, int i)
 {
 	int j;
 
 	j = i;
 	i += 2;
-	if (in->split_input[i] == NULL && in->split_input[0][0] == c)
+	while(in->split_input[i])
 	{
-		in->split_input[0] = ft_strdup("");
-		in->split_input[1] = NULL;	
+		in->split_input[j] = ft_strdup(in->split_input[i]);
+		j++;
+		i++;
 	}
-	else
-	{
-		while(in->split_input[i])
-		{
-			in->split_input[j] = ft_strdup(in->split_input[i]);
-			j++;
-			i++;
-		}
-		in->split_input[j] = NULL;
-	}
+	in->split_input[j] = NULL;
 	return(in->split_input);
 }
 
@@ -57,13 +49,14 @@ void	here_doc(t_input *in, int i)
 		free(here_doc);
 	}
 	close(fd);
-	remove_redir(in, i, '<');
+	remove_redir(in, i);
 	if (!(ft_strncmp(in->split_input[0], "", 2)))
 		exit(0);
 	in->fd_hdoc = open(".hd_tmp", O_RDONLY);
 	if (!is_builtin(in))
 		dup2(in->fd_hdoc, STDIN_FILENO);
 	close(in->fd_hdoc);
+	in->is_hdoc = 1;
 }
 
 

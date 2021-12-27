@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 13:31:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:52:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	pipex(t_input *in, t_list *arg_list)
 	pid_t	pid;
 	int		index;
 	int		fd[2][2];
+	int		status;
 
 	index = 0;
 	aux_list = arg_list;
@@ -71,12 +72,13 @@ void	pipex(t_input *in, t_list *arg_list)
 		{
 			in->split_input = aux->arg;
 			check_redirs(in);
+			// print_matrix(in->split_input);
 			if (aux_list->next != NULL)
 					dup2(fd[index % 2][W_END], STDOUT_FILENO);
 			close(fd[index % 2][W_END]);
 			if (index > 0)
 			{
-				if (!in->is_infile && in->fd_hdoc < 3)
+				if (!in->is_infile && !in->is_hdoc)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
 			}
 			close(fd[(index + 1) % 2][R_END]);
@@ -85,7 +87,8 @@ void	pipex(t_input *in, t_list *arg_list)
 			free(in->cmd_path);
 			exit (0);
 		}
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
 		aux_list = aux_list->next;
 		index++;
