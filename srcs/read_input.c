@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 22:09:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/27 13:13:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,11 @@ void	read_input_aux(t_input *in, char *aux)
 		{
 			check_redirs(in);
 			exec_args(in);
-			// if (in->is_outfile)
-			// 	dup2(in->back_stdout, 1);
-			// close(in->back_stdout);
+			if (in->is_outfile)
+			{			
+				dup2(in->back_stdout, STDOUT_FILENO);
+				close(in->back_stdout);
+			}
 		}
 		else
 			init_arg_list(in);
