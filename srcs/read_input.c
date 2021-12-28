@@ -122,7 +122,9 @@ void	read_input_aux(t_input *in, char *aux)
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
 		free(aux);
-		if (check_args(in))
+		check_args(in);
+		// print_matrix(in->split_input);
+		if (is_builtin(in) && count_pipes(in) == 1)
 		{
 			check_redirs(in);
 			if (!in->is_err)
@@ -135,6 +137,9 @@ void	read_input_aux(t_input *in, char *aux)
 			if (!in->is_err)
 				exit_status = 0;
 		}
+		else
+			init_arg_list(in);
+		unlink(".hd_tmp");
 	}
 }
 

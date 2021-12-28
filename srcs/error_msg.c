@@ -14,11 +14,11 @@
 
 int	update_exit_status(char *ERR)
 {
-	if (!ft_strncmp(ERR, "ERR_CMD", 8))
+	if (!ft_strncmp(ERR, "command not found", 18))
 		return (127);
-	if (!ft_strncmp(ERR, "ERR_FILE", 9))
+	if (!ft_strncmp(ERR, "No such file or directory", 26))
 		return (1);
-	if (!ft_strncmp(ERR, "ERR_SYNTAX", 11))
+	if (!ft_strncmp(ERR, "syntax error near unexpected token", 35))
 		return (258);
 	else
 		return(1);

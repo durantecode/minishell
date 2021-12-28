@@ -136,12 +136,12 @@ void	handler(int	code);
 
 // TO DO:
 
-// 	Pipes dobles (Debe dar error y ya está)
 //  Revisar tema de permisos cuando abrimos archivos?
 	
 // 	Ctrl + D y Ctrl + C en here_doc
 	
 // 	Actualizar OLDPWD cuando hacemos CD
-
+//	Revisar cuando hay un pipe suelto al final
+//	Revisar cuando ponemos mas de una redireccion seguida que error debe de dar
 // 	Leaks
 // 	Norma
