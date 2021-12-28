@@ -6,14 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/28 13:39:16 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 20:11:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*Hay que hacer que los errores vayan con la funcion de errores no con printf
-en la misma funcion*/
 
 int	pair_quotes(t_input *in)
 {
@@ -91,8 +88,7 @@ int	check_errors(t_input *in)
 				in->flags.i++;
 			if (count > 2 || in->user_input[in->flags.i] == c || (count > 1 && c == '|'))
 			{
-
-				printf("minishell: syntax error near unexpected token\n");
+				error_msg(in, ERR_SYNTAX, -1);
 				return (1);
 			}
 		}
@@ -105,7 +101,7 @@ int	check_errors(t_input *in)
 	}
 	if ((special == 1 && flag_diff == 0))
 	{
-		printf("minishell: syntax error near unexpected token\n");
+		error_msg(in, ERR_SYNTAX, -1);
 		return (1);
 	}
 	else
@@ -122,24 +118,26 @@ void	read_input_aux(t_input *in, char *aux)
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
 		free(aux);
-		check_args(in);
-		// print_matrix(in->split_input);
-		if (is_builtin(in) && count_pipes(in) == 1)
+		if (check_args(in))
 		{
-			check_redirs(in);
-			if (!in->is_err)
-				exec_args(in);
-			if (in->is_outfile)
+			// print_matrix(in->split_input);
+			if (is_builtin(in) && count_pipes(in) == 1)
 			{
-				dup2(in->back_stdout, STDOUT_FILENO);
-				close(in->back_stdout);
+				check_redirs(in);
+				if (!in->is_err)
+					exec_args(in);
+				if (in->is_outfile)
+				{
+					dup2(in->back_stdout, STDOUT_FILENO);
+					close(in->back_stdout);
+				}
+				if (!in->is_err)
+					exit_status = 0;
 			}
-			if (!in->is_err)
-				exit_status = 0;
+			else
+				init_arg_list(in);
+			unlink(".hd_tmp");
 		}
-		else
-			init_arg_list(in);
-		unlink(".hd_tmp");
 	}
 }
 

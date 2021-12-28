@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 14:58:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 19:23:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	update_level(t_input *in)
 	free(number);
 	export(in);
 	free_matrix(in->split_input);
+	in->split_input = NULL;
 }
 
 void	handler(int	code)

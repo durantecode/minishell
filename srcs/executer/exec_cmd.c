@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 21:51:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:56:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	exec_minishell(t_input *in)
 	if (pid < 0)
 		error_msg(in, ERR_FORK, -1);
 	if (pid == 0)
-		execve(in->split_input[0], in->split_input, in->dup_env);
+	{	
+		if (execve(in->split_input[0], in->split_input, in->dup_env) == -1)
+			error_msg(in, ERR_CMD, 0);
+	}
 	waitpid(pid, NULL, 0);
 }
 
@@ -78,7 +81,7 @@ void	exec_absolute(t_input *in)
 		else
 		{
 			if ((access(in->split_input[0], X_OK)) == 0)
-				execve(in->split_input[0], in->split_input, in->old_environ);
+				execve(in->split_input[0], in->split_input, in->dup_env);
 			else
 				error_msg(in, ERR_PERM, 0);
 		}
