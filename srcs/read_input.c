@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 22:16:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:39:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,15 @@ void	read_input_aux(t_input *in, char *aux)
 		if (is_builtin(in) && count_pipes(in) == 1)
 		{
 			check_redirs(in);
-			exec_args(in);
+			if (!in->is_err)
+				exec_args(in);
 			if (in->is_outfile)
 			{
 				dup2(in->back_stdout, STDOUT_FILENO);
 				close(in->back_stdout);
 			}
-			exit_status = 0;
+			if (!in->is_err)
+				exit_status = 0;
 		}
 		else
 			init_arg_list(in);
@@ -149,6 +151,7 @@ void	read_input(t_input *in)
 		user = ft_strdup("guest");
 	in->prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(in->prompt);
+	in->is_err = 0;
 	if (in->user_input)
 	{
 		if ((ft_strncmp(in->user_input, "", 1)))

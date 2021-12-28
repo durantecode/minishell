@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 21:21:52 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:41:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_input
 	int		fd_in;
 	int		fd_out;
 	int		fd_hdoc;
+	int		is_err;
 	int		is_infile;
 	int		is_outfile;
 	int		is_hdoc;
@@ -133,16 +134,14 @@ void	handler(int	code);
 
 #endif
 
-// TO DO: 
+// TO DO:
 
 // 	Pipes dobles (Debe dar error y ya está)
 //  Revisar tema de permisos cuando abrimos archivos?
 	
 // 	Ctrl + D y Ctrl + C en here_doc
-// 	Error cuando solo escribes espacios
 	
 // 	Actualizar OLDPWD cuando hacemos CD
-	
-// 	EXIT STATUS, ver como actualizar a 0
+
 // 	Leaks
 // 	Norma

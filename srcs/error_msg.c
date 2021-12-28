@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 22:13:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:07:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int	error_msg(t_input *in, char *MSG, int n)
 	if (!is_builtin(in))
 		exit(update_exit_status(MSG));
 	exit_status = update_exit_status(MSG);
+	in->is_err = 1;
 	return (0);
 }
