@@ -89,7 +89,7 @@ int	check_errors(t_input *in)
 			}
 			while (in->user_input[in->flags.i] == ' ' && in->user_input[in->flags.i])
 				in->flags.i++;
-			if (count > 2 || in->user_input[in->flags.i] == c)
+			if (count > 2 || in->user_input[in->flags.i] == c || (count > 1 && c == '|'))
 			{
 
 				printf("minishell: syntax error near unexpected token\n");

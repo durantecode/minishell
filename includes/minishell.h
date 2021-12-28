@@ -138,7 +138,6 @@ void	handler(int	code);
 	Redirecciones outfile seguidas
 	
 	Ctrl + D y Ctrl + C en here_doc
-	Error cuando solo escribes espacios
 	
 	Actualizar OLDPWD cuando hacemos CD
 	
