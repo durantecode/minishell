@@ -6,24 +6,23 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 15:24:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:07:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-	TIPOS DE ERRORES:
-
-	Comando no encontrado					--> 127
-	Archivo no encontrado o bad argument	--> 2
-	Comando ejecutado satisfactoriamente	--> 0
-	Argumentos invalidos					--> 1
-	Hacer ctrl+c							--> 130
-	Hacer ctrl+\							--> 131
-	Hacer ctrl+d							--> No debe de hacer nada
-
-*/
+int	update_exit_status(char *ERR)
+{
+	if (!ft_strncmp(ERR, "ERR_CMD", 8))
+		return (127);
+	if (!ft_strncmp(ERR, "ERR_FILE", 9))
+		return (1);
+	if (!ft_strncmp(ERR, "ERR_SYNTAX", 11))
+		return (258);
+	else
+		return(1);
+}
 
 int	error_msg(t_input *in, char *MSG, int n)
 {
@@ -42,7 +41,8 @@ int	error_msg(t_input *in, char *MSG, int n)
 		write(2, "\n", 1);
 	}
 	if (!is_builtin(in))
-		exit(0);
-	// exit_status = 127;
+		exit(update_exit_status(MSG));
+	exit_status = update_exit_status(MSG);
+	in->is_err = 1;
 	return (0);
 }

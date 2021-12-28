@@ -6,15 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 13:01:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:41:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/* REVISAR TERMAS DE PERMISOS */
-
-// in->fd_in = open(".tmp", O_CREAT | O_WRONLY | O_APPEND, 0666);
 
 void	check_redirs(t_input *in)
 {
@@ -23,6 +19,7 @@ void	check_redirs(t_input *in)
 	i = 0;
 	in->is_infile = 0;
 	in->is_outfile = 0;
+	in->is_hdoc = 0;
 	while(in->split_input[i])
 	{
 		if (!(ft_strncmp(in->split_input[i], "<<", 3)))
@@ -31,6 +28,7 @@ void	check_redirs(t_input *in)
 				here_doc(in, i);
 			else
 				error_msg(in, ERR_SYNTAX, -1);
+			i--;
 		}
 		i++;
 	}
@@ -44,13 +42,14 @@ void	check_redirs(t_input *in)
 				error_msg(in, ERR_FILE, i + 1);
 			else
 			{
-				remove_redir(in, i, '<');
+				remove_redir(in, i);
 				if (!(ft_strncmp(in->split_input[0], "", 2)))
 					exit(0);
-				if (!is_builtin(in))
+				if (!is_builtin(in) && !in->is_hdoc)
 					dup2(in->fd_in, STDIN_FILENO);
 				close(in->fd_in);
 				in->is_infile = 1;
+				i--;
 			}
 		}
 		i++;
@@ -65,16 +64,18 @@ void	check_redirs(t_input *in)
 			if (!(ft_strncmp(in->split_input[i], ">>", 3)))
 				in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
 			if (in->fd_out == -1)
-				error_msg(in, ERR_FILE, i + 1);
+				error_msg(in, ERR_PERM, i + 1);
 			else
 			{
-				remove_redir(in, i, '>');
+				remove_redir(in, i);
 				if (!(ft_strncmp(in->split_input[0], "", 2)))
 					exit(0);
-				in->back_stdout = dup(STDOUT_FILENO);
+				if (!in->is_outfile)
+					in->back_stdout = dup(STDOUT_FILENO);
 				dup2(in->fd_out, STDOUT_FILENO);
 				close(in->fd_out);
 				in->is_outfile = 1;
+				i--;
 			}
 		}
 		i++;

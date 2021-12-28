@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 13:41:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 13:41:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ typedef struct s_input
 	int		fd_in;
 	int		fd_out;
 	int		fd_hdoc;
+	int		is_err;
 	int		is_infile;
 	int		is_outfile;
+	int		is_hdoc;
 	int		back_stdout;
 	int		path_unset;
 	int		total_pipes;
@@ -99,7 +101,7 @@ void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
-char	**remove_redir(t_input *in, int i, char c);
+char	**remove_redir(t_input *in, int i);
 
 int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);
@@ -132,16 +134,14 @@ void	handler(int	code);
 
 #endif
 
-/*  TO DO:
+// TO DO:
 
-	Pipes dobles
-	Redirecciones outfile seguidas
+// 	Pipes dobles (Debe dar error y ya está)
+//  Revisar tema de permisos cuando abrimos archivos?
 	
-	Ctrl + D y Ctrl + C en here_doc
+// 	Ctrl + D y Ctrl + C en here_doc
 	
-	Actualizar OLDPWD cuando hacemos CD
-	
-	EXIT STATUS, ver como actualizar a 0
-	Leaks
-	Norma
-*/
+// 	Actualizar OLDPWD cuando hacemos CD
+
+// 	Leaks
+// 	Norma
