@@ -91,7 +91,8 @@ int	check_errors(t_input *in)
 				in->flags.i++;
 			if (count > 2 || in->user_input[in->flags.i] == c)
 			{
-				error_msg(in, ERR_SYNTAX, -1);
+
+				printf("minishell: syntax error near unexpected token\n");
 				return (1);
 			}
 		}
@@ -102,7 +103,7 @@ int	check_errors(t_input *in)
 			in->flags.i++;
 		}
 	}
-	if (special == 1 && flag_diff == 0)
+	if ((special == 1 && flag_diff == 0))
 	{
 		printf("minishell: syntax error near unexpected token\n");
 		return (1);
