@@ -122,24 +122,26 @@ void	read_input_aux(t_input *in, char *aux)
 		aux = in->user_input;
 		in->user_input = split_pipes(in);
 		free(aux);
-		check_args(in);
-		// print_matrix(in->split_input);
-		if (is_builtin(in) && count_pipes(in) == 1)
+		if (check_args(in))
 		{
-			check_redirs(in);
-			if (!in->is_err)
-				exec_args(in);
-			if (in->is_outfile)
+		// print_matrix(in->split_input);
+			if (is_builtin(in) && count_pipes(in) == 1)
 			{
-				dup2(in->back_stdout, STDOUT_FILENO);
-				close(in->back_stdout);
+				check_redirs(in);
+				if (!in->is_err)
+					exec_args(in);
+				if (in->is_outfile)
+				{
+					dup2(in->back_stdout, STDOUT_FILENO);
+					close(in->back_stdout);
+				}
+				if (!in->is_err)
+					exit_status = 0;
 			}
-			if (!in->is_err)
-				exit_status = 0;
+			else
+				init_arg_list(in);
+			unlink(".hd_tmp");
 		}
-		else
-			init_arg_list(in);
-		unlink(".hd_tmp");
 	}
 }
 
