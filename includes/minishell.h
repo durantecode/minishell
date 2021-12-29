@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 20:04:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:32:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,8 @@ void	handler(int	code);
 
 // TO DO:
 
-//  Revisar tema de permisos cuando abrimos archivos?
-//	Revisar cuando archivo es NULL en redirs
-//	probar con comillas "|>" y otros
-//	check redirs ls > file | ls
-
+//	Revisar mensajes de error???
 // 	Ctrl + D y Ctrl + C en here_doc y en ./minishell
 
-//	Revisar cuando hay un pipe suelto al final
-//	Revisar cuando ponemos mas de una redireccion seguida que error debe de dar
 // 	Leaks
 // 	Norma

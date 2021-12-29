@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 22:25:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:31:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,27 @@ void	check_errors_aux(t_input *in)
 		in->flags.single_q = 0;
 }
 
+int	check_errors2(t_input *in)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (in->user_input[i])
+	{
+		if (in->user_input[i] != ' ' && in->user_input[i] != '|')
+			flag = 1;
+		if (in->user_input[i] == '|' && flag == 0)
+		{
+			error_msg(in, ERR_SYNTAX, -1);
+			return (1);
+		}
+		i++;
+	}
+	return(0);
+}
+
 int	check_errors(t_input *in)
 {
 	char	c;
@@ -65,6 +86,7 @@ int	check_errors(t_input *in)
 
 	special = 0;
 	flag_diff = 0;
+
 	while (in->user_input[in->flags.i])
 	{
 		count = 0;
@@ -118,7 +140,7 @@ int	check_errors(t_input *in)
 		error_msg(in, ERR_SYNTAX, -2);
 		return (1);
 	}
-	return (0);
+	return (check_errors2(in));
 }
 
 void	read_input_aux(t_input *in, char *aux)
