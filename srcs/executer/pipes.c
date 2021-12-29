@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/28 18:39:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:47:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	pipex(t_input *in, t_list *arg_list)
 			in->split_input = aux->arg;
 			check_redirs(in);
 			if (aux_list->next != NULL)
+			{
+				if (!in->is_outfile)
 					dup2(fd[index % 2][W_END], STDOUT_FILENO);
+			}
 			close(fd[index % 2][W_END]);
 			if (index > 0)
 			{

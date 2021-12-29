@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 13:15:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:29:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_redirs(t_input *in)
 {
 	int i;
-	
+
 	i = 0;
 	in->is_infile = 0;
 	in->is_outfile = 0;
@@ -24,11 +24,17 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<<", 3)))
 		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
+					break ;
+				else
+					error_msg(in, ERR_SYNTAX, -1);
+			}
 			if (in->split_input[i + 1] != NULL)
 				here_doc(in, i);
 			else
 				error_msg(in, ERR_SYNTAX, -1);
-			// i--;
 		}
 		i++;
 	}
@@ -37,6 +43,13 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<", 2)))
 		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
+					break ;
+				else
+					error_msg(in, ERR_SYNTAX, -1);
+			}
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
 				error_msg(in, ERR_FILE, i + 1);
@@ -57,15 +70,46 @@ void	check_redirs(t_input *in)
 	i = 0;
 	while (in->split_input[i])
 	{
-		if (in->split_input[i][0] == '>')
+		if (!(ft_strncmp(in->split_input[i], ">", 2)))
 		{
-			if (!(ft_strncmp(in->split_input[i], ">", 2)))
+			if (in->split_input[i + 1] == NULL)
+			{
+				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
+					break ;
+				else
+					error_msg(in, ERR_SYNTAX, -1);
+			}
+			else	
 				in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
-			if (!(ft_strncmp(in->split_input[i], ">>", 3)))
+			if (in->fd_out == -1)
+				error_msg(in, ERR_PERM, i + 1);
+			if (in->fd_out > 2)
+			{
+				remove_redir(in, i);
+				if (!(ft_strncmp(in->split_input[0], "", 2)))
+					exit(0);
+				if (!in->is_outfile)
+					in->back_stdout = dup(STDOUT_FILENO);
+				dup2(in->fd_out, STDOUT_FILENO);
+				close(in->fd_out);
+				in->is_outfile = 1;
+				i--;
+			}
+		}
+		else if (!(ft_strncmp(in->split_input[i], ">>", 3)))
+		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
+					break ;
+				else
+					error_msg(in, ERR_SYNTAX, -1);
+			}
+			else	
 				in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
 			if (in->fd_out == -1)
 				error_msg(in, ERR_PERM, i + 1);
-			else
+			if (in->fd_out > 2)
 			{
 				remove_redir(in, i);
 				if (!(ft_strncmp(in->split_input[0], "", 2)))

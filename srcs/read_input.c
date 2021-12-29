@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 12:59:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:25:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pair_quotes(t_input *in)
 void	check_errors_aux(t_input *in)
 {
 	if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
-		&& in->flags.double_q)
+		&& !in->flags.double_q)
 		in->flags.double_q = 1;
 	else if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
 		&& in->flags.double_q)
@@ -69,43 +69,56 @@ int	check_errors(t_input *in)
 	{
 		count = 0;
 		check_errors_aux(in);
-		if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '|'
-			|| in->user_input[in->flags.i] == '>')
+		if (in->flags.double_q == 0 && in->flags.single_q == 0)
 		{
-			special = 1;
-			if (in->flags.double_q == 0 && in->flags.single_q == 0)
+			if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
+				|| in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == ' ')
+			{
+				if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
+					|| in->user_input[in->flags.i] == '|')
+				{
+					if (in->user_input[in->flags.i] == '|' && special == 1 && flag_diff == 0)
+					{
+						error_msg(in, ERR_SYNTAX, -2);
+						return (1);
+					}
+					else if (in->user_input[in->flags.i] == '|')
+					{
+						count = 0;
+						flag_diff = 0;
+					}
+					special = 1;
+				}
 				c = in->user_input[in->flags.i];
-			else
-				in->flags.i++;
-			while ((in->user_input[in->flags.i] == c)
-				&& count <= 2 && in->user_input[in->flags.i])
-			{
-				if (in->user_input[in->flags.i] == c)
+				while (c == in->user_input[in->flags.i] && count <= 2)
+				{
 					count++;
-				in->flags.i++;
+					in->flags.i++;
+				}
+				while (in->user_input[in->flags.i] == ' ')
+					in->flags.i++;
+				if (((c == '<' || c == '>') && count > 2) || (c == '|' && count > 1)
+					|| in->user_input[in->flags.i] == c)
+				{
+					error_msg(in, ERR_SYNTAX, -2);
+					return (1);
+				}
 			}
-			while (in->user_input[in->flags.i] == ' ' && in->user_input[in->flags.i])
-				in->flags.i++;
-			if (count > 2 || in->user_input[in->flags.i] == c || (count > 1 && c == '|'))
+			else
 			{
-				error_msg(in, ERR_SYNTAX, -1);
-				return (1);
+				flag_diff = 1;
+				in->flags.i++;
 			}
 		}
 		else
-		{
-			if (in->user_input[in->flags.i] != ' ')
-				flag_diff = 1;
 			in->flags.i++;
-		}
 	}
-	if ((special == 1 && flag_diff == 0))
+	if (flag_diff == 0 && special == 1)
 	{
-		error_msg(in, ERR_SYNTAX, -1);
+		error_msg(in, ERR_SYNTAX, -2);
 		return (1);
 	}
-	else
-		return (0);
+	return (0);
 }
 
 void	read_input_aux(t_input *in, char *aux)
@@ -161,7 +174,7 @@ void	read_input(t_input *in)
 				read_input_aux(in, aux);
 			else
 			{
-				error_msg(in, ERR_ARG, -1);
+				error_msg(in, ERR_ARG, -2);
 				add_history(in->user_input);
 			}
 		}
