@@ -28,7 +28,7 @@ void	check_redirs(t_input *in)
 				here_doc(in, i);
 			else
 				error_msg(in, ERR_SYNTAX, -1);
-			i--;
+			//i--;
 		}
 		i++;
 	}

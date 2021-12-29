@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/28 13:41:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2021/12/28 20:07:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,8 @@ void	handler(int	code);
 
 //  Revisar tema de permisos cuando abrimos archivos?
 	
-// 	Ctrl + D y Ctrl + C en here_doc
-	
-// 	Actualizar OLDPWD cuando hacemos CD
+// 	Ctrl + D y Ctrl + C en here_doc y en ./minishell
+
 //	Revisar cuando hay un pipe suelto al final
 //	Revisar cuando ponemos mas de una redireccion seguida que error debe de dar
 // 	Leaks
