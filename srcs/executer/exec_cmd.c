@@ -56,6 +56,8 @@ void	exec_minishell(t_input *in)
 	pid_t	pid;
 
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (pid < 0)
 		error_msg(in, ERR_FORK, -1);
 	if (pid == 0)

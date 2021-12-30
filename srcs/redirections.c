@@ -12,6 +12,18 @@
 
 #include "../includes/minishell.h"
 
+void handler3(int code)
+{
+	if (code == SIGINT)
+	{
+		exit(130);
+	}
+	if (code == SIGQUIT)
+	{
+		exit(130);
+	}
+}
+
 void	check_redirs(t_input *in)
 {
 	int i;
@@ -32,7 +44,11 @@ void	check_redirs(t_input *in)
 					error_msg(in, ERR_SYNTAX, -1);
 			}
 			if (in->split_input[i + 1] != NULL)
+			{
+				signal(SIGINT, handler3);
+				signal(SIGQUIT, handler3);
 				here_doc(in, i);
+			}
 			else
 				error_msg(in, ERR_SYNTAX, -1);
 		}
