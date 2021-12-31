@@ -92,10 +92,14 @@ char	**quotes(t_input *in)
 	i = 0;
 	while (in->split_input[i] != NULL)
 	{
-		aux = in->split_input[i];
 		ft_bzero(&in->flags, sizeof(in->flags));
-		in->split_input[i] = delete_quote(in, in->split_input[i]);
-		free(aux);
+		aux = delete_quote(in, in->split_input[i]);
+		if (!ft_strncmp(in->split_input[i], aux, ft_strlen(aux)))
+			in->quote_state[i] = 0;
+		else
+			in->quote_state[i] = 1;
+		free(in->split_input[i]);
+		in->split_input[i] = aux;
 		i++;
 	}
 	remove_space(in);

@@ -21,6 +21,7 @@ int	check_args(t_input *in)
 	ft_bzero(&in->flags, sizeof(in->flags));
 	input_size = count_tokens(in->user_input, in, 0);
 	in->split_input = malloc(sizeof(char *) * (input_size + 1));
+	in->quote_state = malloc(sizeof(int) * input_size);
 	if (!in->split_input)
 		return (0);
 	ft_bzero(&in->flags, sizeof(in->flags));

@@ -34,7 +34,7 @@ void	check_redirs(t_input *in)
 	in->is_hdoc = 0;
 	while(in->split_input[i])
 	{
-		if (!(ft_strncmp(in->split_input[i], "<<", 3)))
+		if (!(ft_strncmp(in->split_input[i], "<<", 3)) && in->quote_state[i] == 0)
 		{
 			if (in->split_input[i + 1] == NULL)
 			{
@@ -57,7 +57,7 @@ void	check_redirs(t_input *in)
 	i = 0;
 	while (in->split_input[i])
 	{
-		if (!(ft_strncmp(in->split_input[i], "<", 2)))
+		if (!(ft_strncmp(in->split_input[i], "<", 2)) && in->quote_state[i] == 0)
 		{
 			if (in->split_input[i + 1] == NULL)
 			{
@@ -86,7 +86,7 @@ void	check_redirs(t_input *in)
 	i = 0;
 	while (in->split_input[i])
 	{
-		if (!(ft_strncmp(in->split_input[i], ">", 2)))
+		if (!(ft_strncmp(in->split_input[i], ">", 2)) && in->quote_state[i] == 0)
 		{
 			if (in->split_input[i + 1] == NULL)
 			{
@@ -112,7 +112,7 @@ void	check_redirs(t_input *in)
 				i--;
 			}
 		}
-		else if (!(ft_strncmp(in->split_input[i], ">>", 3)))
+		else if (!(ft_strncmp(in->split_input[i], ">>", 3)) && in->quote_state[i] == 0)
 		{
 			if (in->split_input[i + 1] == NULL)
 			{

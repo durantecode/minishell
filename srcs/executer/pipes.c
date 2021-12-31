@@ -23,7 +23,7 @@ int	count_pipes(t_input *in)
 	pipes = 1;
 	while (in->split_input[i] != NULL)
 	{
-		if (!(ft_strncmp(in->split_input[i], "|", 2)))
+		if (!(ft_strncmp(in->split_input[i], "|", 2)) && in->quote_state[i] == 0)
 			pipes++;
 		i++;
 	}

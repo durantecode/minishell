@@ -84,6 +84,7 @@ typedef struct s_input
 	char	*cmd_path;
 	char	**split_path;
 	char	**split_input;
+	int		*quote_state;
 	char	**dup_env;
 	char	**old_environ;
 	t_list	**env_list;
@@ -137,7 +138,14 @@ void	handler(int	code);
 // TO DO:
 
 //	Revisar mensajes de error???
-// 	Ctrl + D y Ctrl + C en here_doc y en ./minishell
+
+//	Revisar porque da error "echo << eof"
+
+
+//	Revisar si funcionan bien los pipes (no va a funcionar del todo bien cuando ponemos u
+//	entre comillas y otro sin comillas, hay que comprobar tambien la lista de comillas cuando
+//	hagamos la lista. Si estas leyendo esto solo luis preguntame y te lo explico mas claro :D )
+
 
 // 	Leaks
 // 	Norma
