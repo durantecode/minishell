@@ -40,7 +40,7 @@ int	pair_quotes(t_input *in)
 	return (in->flags.count_double % 2 + in->flags.count % 2);
 }
 
-void	check_errors_aux(t_input *in)
+void	check_quotes(t_input *in)
 {
 	if (in->user_input[in->flags.i] == '"' && !in->flags.single_q
 		&& !in->flags.double_q)
@@ -90,7 +90,7 @@ int	check_errors(t_input *in)
 	while (in->user_input[in->flags.i])
 	{
 		count = 0;
-		check_errors_aux(in);
+		check_quotes(in);
 		if (in->flags.double_q == 0 && in->flags.single_q == 0)
 		{
 			if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'

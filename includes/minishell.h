@@ -119,7 +119,7 @@ void	pwd(void);
 void	unset(t_input *in, int j);
 void	exec_minishell(t_input *in);
 
-void	check_errors_aux(t_input *in);
+void	check_quotes(t_input *in);
 
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);

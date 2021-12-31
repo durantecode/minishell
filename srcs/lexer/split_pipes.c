@@ -18,15 +18,8 @@ static void	split_pipes_aux(t_input *in, char **final_input)
 
 	while (in->user_input[in->flags.i])
 	{
-		if ((in->user_input[in->flags.i] == '"'
-				|| in->user_input[in->flags.i] == '\'')
-			&& in->flags.global_q == 0)
-			in->flags.global_q = 1;
-		else if ((in->user_input[in->flags.i] == '"'
-				|| in->user_input[in->flags.i] == '\'')
-			&& in->flags.global_q == 1)
-			in->flags.global_q = 0;
-		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
+		check_quotes(in);
+		if (in->flags.double_q == 0 && in->flags.single_q == 0 && (in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
 		{
 			c = in->user_input[in->flags.i];
 
@@ -60,15 +53,8 @@ char	*split_pipes(t_input *in)
 	ft_bzero(&in->flags, sizeof(in->flags));
 	while (in->user_input[in->flags.i])
 	{
-		if ((in->user_input[in->flags.i] == '"'
-				|| in->user_input[in->flags.i] == '\'')
-			&& in->flags.global_q == 0)
-			in->flags.global_q = 1;
-		else if ((in->user_input[in->flags.i] == '"'
-				|| in->user_input[in->flags.i] == '\'')
-			&& in->flags.global_q == 1)
-			in->flags.global_q = 0;
-		if (in->flags.global_q == 0 && (in->user_input[in->flags.i] == '|'
+		check_quotes(in);
+		if (in->flags.double_q == 0 && in->flags.single_q == 0 && (in->user_input[in->flags.i] == '|'
 		|| in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'))
 		{
 			c = in->user_input[in->flags.i];
