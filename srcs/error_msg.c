@@ -6,22 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 22:26:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:41:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// int		is_token(t_input *in)
-// {
-// 	if (!ft_strncmp(in->user_input, "<", 1))
-// 		return (1);
-// 	if (!ft_strncmp(in->user_input, ">", 1))
-// 		return (1);
-// 	if (!ft_strncmp(in->user_input, "|", 1))
-// 		return (1);
-// 	return (0);
-// }
 
 int	update_exit_status(char *ERR)
 {

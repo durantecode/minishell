@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 20:04:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:31:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,30 @@ char	**remove_space(t_input *in)
 	return (in->split_input);
 }
 
+void	update_env_var(t_input *in, char *var, char *value)
+{
+	char	**aux_in;
+	char	*tmp;
+
+	aux_in = NULL;
+	if (in->split_input)
+		aux_in = matrix_dup(in->split_input);
+	tmp = ft_strjoin(var, value);
+	// printf("HH\n");
+	// printf("BB: %s\n", tmp);
+	free_matrix(in->split_input);
+	in->split_input = malloc(sizeof(char *) * 3);
+	in->split_input[0] = ft_strdup("export");
+	in->split_input[1] = tmp;
+	in->split_input[2] = NULL;
+	export(in);
+	free_matrix(in->split_input);
+	in->split_input = aux_in;
+}
+
 char	**quotes(t_input *in)
 {
+	int		size;
 	int		i;
 	char	*aux;
 
@@ -103,5 +125,7 @@ char	**quotes(t_input *in)
 		i++;
 	}
 	remove_space(in);
+	size = matrix_len(in->split_input);
+	// update_env_var(in, "_=", in->split_input[size - 1]);
 	return (in->split_input);
 }

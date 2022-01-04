@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 22:32:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:00:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int		error_msg(t_input *in, char *MSG, int n);
 void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	init_flags(t_input *in);
 void	init_arg_list(t_input *in);
+void	update_env_var(t_input *in, char *var, char *value);
+void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
@@ -139,13 +141,7 @@ void	handler(int	code);
 
 //	Revisar mensajes de error???
 
-//	Revisar porque da error "echo << eof"
-
-
-//	Revisar si funcionan bien los pipes (no va a funcionar del todo bien cuando ponemos u
-//	entre comillas y otro sin comillas, hay que comprobar tambien la lista de comillas cuando
-//	hagamos la lista. Si estas leyendo esto solo luis preguntame y te lo explico mas claro :D )
-
+// 	Revisar UNSET previo a ejecutar minishell
 
 // 	Leaks
 // 	Norma

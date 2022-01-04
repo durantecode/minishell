@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/26 15:52:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:59:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ int		check_var(t_input *in)
 			in->flags.i--;
 			return (0);
 		}
+		if (in->split_input[in->flags.j][in->flags.i] == '_')
+		{
+			in->flags.i--;
+			return (0);
+		}
 		else
 			return(2);
 	}
@@ -98,6 +103,8 @@ char	*get_var(char *str, int i)
 	j = i;
 	if (str[i] == '?')
 		return (aux = ft_strdup("?"));
+	if (str[i] == '_')
+		return (aux = ft_strdup("_"));
 	while (ft_isalnum(str[i]))
 		i++;
 	aux = ft_substr(str, j, i - j);

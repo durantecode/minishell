@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/28 19:23:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:00:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	update_level(t_input *in)
 	char	*aux;	
 
 	aux = ft_getenv("SHLVL", in);
+	if (!aux)
+		aux = ft_strdup("0");
 	level = ft_atoi(aux);
 	free(aux);
 	level++;
@@ -78,6 +80,7 @@ int	main(int argc, char **argv, char **environ)
 		init_env_list(&in, &envp, environ);
 		init_structs(&in, &envp);
 		update_level(&in);
+		check_basic_vars(&in);
 		while (1)
 		{
 			signal(SIGINT, handler);

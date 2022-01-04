@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 12:32:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:15:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*ft_getenv(const char *str, t_input *in)
 			aux->content = ft_strjoin(var, "=");
 			free(var);
 			return(ft_getenv(str, in));
-			printf("%s\n", str);
 		}
 		aux = aux->next;
 	}
@@ -81,6 +80,23 @@ char	*ft_getenv(const char *str, t_input *in)
 	return (NULL);
 }
 
+void	check_basic_vars(t_input *in)
+{
+	char	*aux;
+	
+	aux = ft_getenv("PWD", in);
+	printf("AA: %s\n", aux);
+	if (!aux)
+		update_env_var(in, "PWD=", getcwd(NULL, 0));
+	// if (!ft_getenv("PATH", in))
+	// 	update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");	
+	// if (!ft_getenv("SHLVL", in))
+	// 	update_env_var(in, "SHLVL=", "0");
+	// if (!ft_getenv("PWD", in))
+	// if (!ft_getenv("_", in))
+	// 	update_env_var(in, "_=", "env");
+}
+
 void	dup_env(t_input *in, char **environ)
 {
 	int	i;
@@ -94,7 +110,7 @@ void	dup_env(t_input *in, char **environ)
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 		in->dup_env[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
 		in->dup_env[2] = ft_strdup("SHLVL=0");
-		in->dup_env[3] = ft_strdup("_=/usr/bin/env");
+		in->dup_env[3] = ft_strdup("_=env");
 		in->dup_env[4] = NULL;
 	}
 	else
@@ -127,4 +143,5 @@ void	init_env_list(t_input *in, t_list **envp, char **environ)
 		ft_lstadd_back(envp, ft_new_node((void *) in->dup_env[i], size + 1));
 		i++;
 	}
+	// check_basic_vars(in);
 }

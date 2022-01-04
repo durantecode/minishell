@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 22:29:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:59:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<<", 3)) && in->quote_state[i] == 0)
 		{
-			if (in->split_input[i + 1] == NULL)
-			{
-				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
-					break ;
-				else
-					error_msg(in, ERR_SYNTAX, -1);
-			}
 			if (in->split_input[i + 1] != NULL)
 			{
 				signal(SIGINT, handler3);
@@ -59,13 +52,6 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<", 2)) && in->quote_state[i] == 0)
 		{
-			if (in->split_input[i + 1] == NULL)
-			{
-				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
-					break ;
-				else
-					error_msg(in, ERR_SYNTAX, -1);
-			}
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
 				error_msg(in, ERR_FILE, i + 1);
@@ -88,15 +74,7 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], ">", 2)) && in->quote_state[i] == 0)
 		{
-			if (in->split_input[i + 1] == NULL)
-			{
-				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
-					break ;
-				else
-					error_msg(in, ERR_SYNTAX, -1);
-			}
-			else	
-				in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
+			in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
 			if (in->fd_out == -1)
 				error_msg(in, ERR_PERM, i + 1);
 			if (in->fd_out > 2)
@@ -114,15 +92,7 @@ void	check_redirs(t_input *in)
 		}
 		else if (!(ft_strncmp(in->split_input[i], ">>", 3)) && in->quote_state[i] == 0)
 		{
-			if (in->split_input[i + 1] == NULL)
-			{
-				if (!ft_strncmp(in->split_input[i - 1], "echo", 5))
-					break ;
-				else
-					error_msg(in, ERR_SYNTAX, -1);
-			}
-			else	
-				in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
+			in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
 			if (in->fd_out == -1)
 				error_msg(in, ERR_PERM, i + 1);
 			if (in->fd_out > 2)

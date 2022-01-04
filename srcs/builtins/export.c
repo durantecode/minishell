@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/19 23:49:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:22:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	good_value(char *str)
 	i = 0;
 	while(str[i])
 	{
-		if (!(ft_isalnum(str[i])) && str[i] != '=')
+		if (!(ft_isalnum(str[i])) && str[i] != '=' && str[i] != '_')
 			return (0);
 		i++;
 	}
@@ -53,7 +53,7 @@ void	export(t_input *in)
 		{
 			if (!good_value(aux[0]))
 			{
-				error_msg(in, ERR_ID, -1);
+				error_msg(in, ERR_ID, j);
 				free(aux);
 				return;
 			}

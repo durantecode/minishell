@@ -6,13 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/29 21:47:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:22:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* REVISAR LONGITUD FUNCIONES */
 
 int	count_pipes(t_input *in)
 {
@@ -111,7 +109,8 @@ void	init_arg_list(t_input *in)
 	{
 		i[3] = 0;
 		i[2] = 0;
-		while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
+		while (in->split_input[i[0]] != NULL && ((ft_strncmp(in->split_input[i[0]], "|", 2))
+			|| in->quote_state[i[0]] == 1))
 		{
 			i[0]++;
 			i[2]++;
@@ -119,7 +118,8 @@ void	init_arg_list(t_input *in)
 		args = malloc(sizeof(t_arg));
 		args->arg = malloc(sizeof(char *) * (i[2] + 1));
 		i[0] = i[0] - i[2];
-		while (in->split_input[i[0]] != NULL && (ft_strncmp(in->split_input[i[0]], "|", 2)))
+		while (in->split_input[i[0]] != NULL && ((ft_strncmp(in->split_input[i[0]], "|", 2))
+			|| in->quote_state[i[0]] == 1))
 		{
 			args->arg[i[3]] = ft_strdup(in->split_input[i[0]]);
 			i[0]++;
