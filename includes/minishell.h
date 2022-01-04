@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 19:00:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:03:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_input
 {
 	int		fd_in;
 	int		fd_out;
-	int		fd_hdoc;
 	int		is_err;
 	int		is_infile;
 	int		is_outfile;
@@ -140,8 +139,6 @@ void	handler(int	code);
 // TO DO:
 
 //	Revisar mensajes de error???
-
-// 	Revisar UNSET previo a ejecutar minishell
 
 // 	Leaks
 // 	Norma

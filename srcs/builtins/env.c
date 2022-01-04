@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 19:15:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:48:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,14 @@ char	*ft_getenv(const char *str, t_input *in)
 
 void	check_basic_vars(t_input *in)
 {
-	char	*aux;
-	
-	aux = ft_getenv("PWD", in);
-	printf("AA: %s\n", aux);
-	if (!aux)
+	if (!ft_getenv("PATH", in))
+		update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	if (!ft_getenv("SHLVL", in))
+		update_env_var(in, "SHLVL=", "0");
+	if (!ft_getenv("PWD", in))
 		update_env_var(in, "PWD=", getcwd(NULL, 0));
-	// if (!ft_getenv("PATH", in))
-	// 	update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");	
-	// if (!ft_getenv("SHLVL", in))
-	// 	update_env_var(in, "SHLVL=", "0");
-	// if (!ft_getenv("PWD", in))
-	// if (!ft_getenv("_", in))
-	// 	update_env_var(in, "_=", "env");
+	if (!ft_getenv("_", in))
+		update_env_var(in, "_=", "env");
 }
 
 void	dup_env(t_input *in, char **environ)

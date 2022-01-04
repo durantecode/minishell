@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/27 20:51:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:01:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	here_doc(t_input *in, int i)
 	remove_redir(in, i);
 	if (!(ft_strncmp(in->split_input[0], "", 2)))
 		exit(0);
-	in->fd_hdoc = open(".hd_tmp", O_RDONLY);
+	fd = open(".hd_tmp", O_RDONLY);
 	if (!is_builtin(in))
-		dup2(in->fd_hdoc, STDIN_FILENO);
-	close(in->fd_hdoc);
+		dup2(fd, STDIN_FILENO);
+	close(fd);
 	in->is_hdoc = 1;
 }
 
