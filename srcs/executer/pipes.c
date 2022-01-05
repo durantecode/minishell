@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 17:18:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:21:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ void	pipex(t_input *in, t_list *arg_list)
 	int		index;
 	int		fd[2][2];
 	int		status;
-	int		size;
 
-	size = 0;
 	index = 0;
 	aux_list = arg_list;
 	while (aux_list)
