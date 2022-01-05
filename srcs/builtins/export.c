@@ -54,7 +54,7 @@ void	export(t_input *in)
 			if (!good_value(aux[0]))
 			{
 				error_msg(in, ERR_ID, j);
-				free(aux);
+				free_matrix(aux);
 				return;
 			}
 			env_value = ft_getenv(aux[0], in);

@@ -19,6 +19,7 @@ void	my_exit(t_input *in)
 	if (in->total_pipes == 1)
 		printf("%s\n", "exit");
 	free_matrix(in->split_input);
+	free(in->quote_state);
 	ft_lstclear(in->env_list, free);
 	free(in->prompt);
 	exit(0);

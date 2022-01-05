@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 17:59:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:58:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,19 @@ void	handler(int	code);
 
 #endif
 
+/*
 // TO DO:
 
-// 	Leaks
+//	Revisar mensajes de error???
+
+// 	Leaks comprobados:
+	Todo hasta ejecucion de comandos.
+	Echo con y sin expand parece estar libre de leaks.
+	CD tambien funciona y OLDPWD y PWD tambien.
+	Unset parece que funciona.
+	Export parece que tambien.
+	Env parece que tambien.
+	
+	Seguiremo informando
 // 	Norma
+*/

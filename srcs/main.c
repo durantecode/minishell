@@ -43,6 +43,7 @@ void	update_level(t_input *in)
 	level++;
 	number = ft_itoa(level);
 	update_env_var(in, "SHLVL=", number);
+	free(number);
 }
 
 void	handler(int	code)
