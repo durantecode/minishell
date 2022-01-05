@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 20:05:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:21:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,6 @@ void	update_level(t_input *in)
 	level++;
 	number = ft_itoa(level);
 	update_env_var(in, "SHLVL=", number);
-	// aux = ft_strjoin("SHLVL=", number);
-	// in->split_input = malloc(sizeof(char *) * 3);
-	// in->split_input[0] = ft_strdup("export");
-	// in->split_input[1] = aux;
-	// in->split_input[2] = NULL;
-	// free(number);
-	// export(in);
-	// free_matrix(in->split_input);
-	// in->split_input = NULL;
 }
 
 void	handler(int	code)

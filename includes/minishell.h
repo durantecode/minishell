@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 20:03:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:52:32 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ extern int exit_status;
 
 typedef struct s_arg
 {
+	int		*quotes;
 	char	**arg;
 }	t_arg;
 
@@ -78,6 +79,7 @@ typedef struct s_input
 	int		back_stdout;
 	int		path_unset;
 	int		total_pipes;
+	int		q_state_size;
 	char	*prompt;
 	char	*user_input;
 	char	*cmd_path;
