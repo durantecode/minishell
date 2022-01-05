@@ -41,13 +41,14 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
 	if (!(ft_strncmp(*var, "?", 2)))
-		expanded = ft_strdup(ft_itoa(exit_status));
+		expanded = ft_itoa(exit_status);
 	else
 		expanded = ft_getenv(*var, in);
 	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
 	in->flags.count = len1 + ft_strlen(expanded);
+	free(in->split_input[j]);
 	in->split_input[j] = ft_strjoin3(*aux, expanded, last);
 	free(*aux);
 	free(expanded);
@@ -68,7 +69,7 @@ int		check_var(t_input *in)
 				return (0);
 			return (2);
 		}
-		if (in->split_input[in->flags.j][in->flags.i] == '"'
+		if (in->flags.i > 1 && in->split_input[in->flags.j][in->flags.i] == '"'
 			&& in->split_input[in->flags.j][in->flags.i - 2] == '"')
 			return (2);
 		if (in->split_input[in->flags.j][in->flags.i] == '"' && !in->flags.double_q)

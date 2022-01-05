@@ -49,9 +49,7 @@ void	pipex(t_input *in, t_list *arg_list)
 	int		index;
 	int		fd[2][2];
 	int		status;
-	int		size;
 
-	size = 0;
 	index = 0;
 	aux_list = arg_list;
 	while (aux_list)
@@ -70,9 +68,10 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
-			in->split_input = aux->arg;
+			in->split_input = aux->arg; 
 			in->quote_state = aux->quotes;
 			check_redirs(in);
+			close(fd[index % 2][R_END]);
 			if (aux_list->next != NULL)
 			{
 				if (!in->is_outfile)
@@ -85,19 +84,38 @@ void	pipex(t_input *in, t_list *arg_list)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
 				close(fd[(index + 1) % 2][R_END]);
 			}
+			close(fd[index % 2][W_END]);
 			exec_args(in);
-			free_matrix(in->split_input);
-			free(in->cmd_path);
+			// free_matrix(in->split_input);
+			// free(in->cmd_path);
 			exit (0);
 		}
 		waitpid(pid, &status, 0);
 		exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
+		if (index == 0 && aux_list->next == NULL)
+			close(fd[index % 2][R_END]);
 		aux_list = aux_list->next;
 		index++;
 		in->split_input = aux->arg;
 	}
 }
+
+// void	free_list(t_list *head)
+// {
+// 	t_list	*tmp;
+// 	t_arg	*aux;
+
+//  	while (head != NULL)
+//     {
+//        tmp = head;
+// 	   aux = (t_arg *)head->content;
+//        head = head->next;
+//        free(aux->quotes);
+// 	   free_matrix(aux->arg);
+// 	   free(tmp);
+//     }
+// }
 
 void	init_arg_list(t_input *in)
 {
@@ -140,4 +158,5 @@ void	init_arg_list(t_input *in)
 	}
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
+	//free_list(arg_list);
 }

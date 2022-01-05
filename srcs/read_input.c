@@ -200,8 +200,10 @@ void	read_input(t_input *in)
 				add_history(in->user_input);
 			}
 		}
-		// if (in->user_input[0] != '\0')
-		// 	free_matrix(in->split_input);
+		
+		if (in->user_input[0] != '\0')
+			free_matrix(in->split_input);
+		free(in->quote_state);
 		free(in->user_input);
 		free(in->prompt);
 		free(user);

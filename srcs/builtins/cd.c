@@ -12,45 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-// void	update_oldpwd(t_input *in, char *old_pwd)
-// {
-// 	char	*update_old_pwd;
-
-// 	update_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
-// 	free(old_pwd);
-// 	free_matrix(in->split_input);
-// 	in->split_input = malloc(sizeof(char *) * 3);
-// 	in->split_input[0] = ft_strdup("export");
-// 	in->split_input[1] = update_old_pwd;
-// 	in->split_input[2] = NULL;
-// 	export(in);
-// }
-
-// void	update_pwd(t_input *in)
-// {
-// 	char	*new_pwd;
-// 	char	*aux;
-	
-// 	aux = getcwd(NULL, 0);
-// 	new_pwd = ft_strjoin("PWD=", aux);
-// 	free(aux);
-// 	free_matrix(in->split_input);
-// 	in->split_input = malloc(sizeof(char *) * 3);
-// 	in->split_input[0] = ft_strdup("export");
-// 	in->split_input[1] = new_pwd;
-// 	in->split_input[2] = NULL;
-// 	export(in);
-// }
-
 void	cd(t_input *in)
 {
 	char	*home_path;
 	char	*aux;
 	char	*full_path;
-	char	*old_pwd;
+	char	*pwd;
 
 	home_path = ft_getenv("HOME", in);
-	old_pwd = getcwd(NULL, 0);
+	pwd = getcwd(NULL, 0);
 	if (!in->split_input[1] || !(ft_strncmp(in->split_input[1], "", 2)))
 	{
 		if (chdir(home_path) == -1)
@@ -74,6 +44,9 @@ void	cd(t_input *in)
 	else if (chdir(in->split_input[1]) != 0)
 		error_msg(in, ERR_FILE, 1);
 	free(home_path);
-	update_env_var(in, "OLDPWD=", old_pwd);
-	update_env_var(in, "PWD=", getcwd(NULL, 0));
+	update_env_var(in, "OLDPWD=", pwd);
+	free(pwd);
+	pwd = getcwd(NULL, 0);
+	update_env_var(in, "PWD=", pwd);
+	free(pwd);
 }

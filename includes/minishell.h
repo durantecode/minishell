@@ -138,9 +138,19 @@ void	handler(int	code);
 
 #endif
 
+/*
 // TO DO:
 
 //	Revisar mensajes de error???
 
-// 	Leaks
+// 	Leaks comprobados:
+	Todo hasta ejecucion de comandos.
+	Echo con y sin expand parece estar libre de leaks.
+	CD tambien funciona y OLDPWD y PWD tambien.
+	Unset parece que funciona.
+	Export parece que tambien.
+	Env parece que tambien.
+	
+	Seguiremo informando
 // 	Norma
+*/

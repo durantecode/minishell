@@ -82,14 +82,33 @@ char	*ft_getenv(const char *str, t_input *in)
 
 void	check_basic_vars(t_input *in)
 {
-	if (!ft_getenv("PATH", in))
+	char	*aux;
+	char	*pwd;
+	
+	aux = ft_getenv("PATH", in);
+	if (!aux)
 		update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	if (!ft_getenv("SHLVL", in))
+	else
+		free(aux);
+	aux = ft_getenv("SHLVL", in);
+	if (!aux)
 		update_env_var(in, "SHLVL=", "0");
-	if (!ft_getenv("PWD", in))
-		update_env_var(in, "PWD=", getcwd(NULL, 0));
-	if (!ft_getenv("_", in))
+	else
+		free(aux);
+	aux = ft_getenv("PWD", in);
+	if (!aux)
+	{
+		pwd = getcwd(NULL, 0);
+		update_env_var(in, "PWD=", pwd);
+		free(pwd);
+	}
+	else
+		free(aux);
+	aux = ft_getenv("_", in);
+	if (!aux)
 		update_env_var(in, "_=", "env");
+	else
+		free(aux);
 }
 
 void	dup_env(t_input *in, char **environ)

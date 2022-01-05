@@ -67,7 +67,8 @@ int	count_tokens(char *s, t_input *in, int split)
 				if (start)
 				{
 					// printf("HOLAAAA\n");
-					in->split_input[in->flags.j] = ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
+					in->split_input[in->flags.j] =
+						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
 					in->flags.j++;
 				}
 				while (s[in->flags.i] == ' ' && s[in->flags.i])
@@ -79,12 +80,8 @@ int	count_tokens(char *s, t_input *in, int split)
 				in->flags.i++;
 				if (s[in->flags.i] == '\0')
 				{
-					// printf("DD: %d\n", in->flags.start);
-					// printf("ii: %d\n", in->flags.i);
-					// printf("SS: %s\n", s);
-					// printf("jj: %d\n", in->flags.j);
-					
-					in->split_input[in->flags.j] = ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
+					in->split_input[in->flags.j] =
+						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
 					// printf("JJ: %s\n", in->split_input[in->flags.j]);
 					in->flags.start = in->flags.i;
 					in->flags.j++;
