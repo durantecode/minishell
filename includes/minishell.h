@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 03:32:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 18:57:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,12 @@ void	handler(int	code);
 // TO DO:
 
 //	Revisar mensajes de error???
+
+SEGFAULT ENCONTRADO:
+
+Cuando eliminamos todas las variables de entorno peta
+revisar también si cuando no existe HOME, al hacer cd
+debería crear la OLDPWD y PWD o no...
 
 // 	Leaks comprobados:
 	En principio todos los builtins sencillos no tienen leaks

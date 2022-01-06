@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 03:27:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:17:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void	read_input(t_input *in)
 	in->prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(in->prompt);
 	in->is_err = 0;
+	in->quote_state = malloc(1);
 	if (in->user_input)
 	{
 		if ((ft_strncmp(in->user_input, "", 1)))
@@ -202,7 +203,10 @@ void	read_input(t_input *in)
 		}
 		// if (in->user_input[0] != '\0')
 		if (in->split_input)
+		{	
 			free_matrix(in->split_input);
+			in->split_input = NULL;
+		}
 		free(in->user_input);
 		free(in->quote_state);
 		free(in->prompt);

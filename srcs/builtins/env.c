@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 19:48:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:03:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,18 @@ void	check_basic_vars(t_input *in)
 
 void	dup_env(t_input *in, char **environ)
 {
-	int	i;
+	int		i;
+	char	*pwd;
 
 	i = 0;
 	in->dup_env = NULL;
+	pwd = getcwd(NULL, 0);
 	if (!(*environ))
 	{
 		in->dup_env = malloc(sizeof(char *) * 5);
 		in->dup_env[0]
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-		in->dup_env[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		in->dup_env[1] = ft_strjoin("PWD=", pwd);
 		in->dup_env[2] = ft_strdup("SHLVL=0");
 		in->dup_env[3] = ft_strdup("_=env");
 		in->dup_env[4] = NULL;
@@ -140,6 +142,7 @@ void	dup_env(t_input *in, char **environ)
 		}
 		in->dup_env[i] = NULL;
 	}
+	free(pwd);
 }
 
 void	init_env_list(t_input *in, t_list **envp, char **environ)

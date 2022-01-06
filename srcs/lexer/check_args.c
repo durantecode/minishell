@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 11:48:41 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 18:12:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	check_args(t_input *in)
 	input_size = count_tokens(in->user_input, in, 0);
 	in->split_input = malloc(sizeof(char *) * (input_size + 1));
 	in->q_state_size = input_size;
+	free(in->quote_state);
 	in->quote_state = malloc(sizeof(int) * in->q_state_size);
 	if (!in->split_input)
 		return (0);
