@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 20:01:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 01:15:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**remove_redir(t_input *in, int i)
 	i += 2;
 	while(in->split_input[i])
 	{
+		free(in->split_input[j]);
 		in->split_input[j] = ft_strdup(in->split_input[i]);
 		j++;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 19:58:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/06 03:32:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,12 +144,11 @@ void	handler(int	code);
 //	Revisar mensajes de error???
 
 // 	Leaks comprobados:
-	Todo hasta ejecucion de comandos.
-	Echo con y sin expand parece estar libre de leaks.
-	CD tambien funciona y OLDPWD y PWD tambien.
-	Unset parece que funciona.
-	Export parece que tambien.
-	Env parece que tambien.
+	En principio todos los builtins sencillos no tienen leaks
+	con system leaks he conseguido quitar todos los de FD
+	y usando pipes, mezclados con builtins. queda probar cosas
+	sobre todo con el here_doc. A ver si valgrind no detecta 
+	mucha más mierda
 	
 	Seguiremo informando
 // 	Norma
