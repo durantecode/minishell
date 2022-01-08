@@ -86,8 +86,10 @@ void	pipex(t_input *in, t_list *arg_list)
 				close(fd[(index + 1) % 2][R_END]);
 			}
 			exec_args(in);
-			free_matrix(in->split_input);
-			in->split_input = NULL;
+			// free(in->quote_state);
+			// in->quote_state = NULL;
+			// free_matrix(in->split_input);
+			// in->split_input = NULL;
 			exit (0);
 		}
 		waitpid(pid, &status, 0);
@@ -163,8 +165,10 @@ void	init_arg_list(t_input *in)
 		i[1]++;
 		i[0]++;
 	}
+	free(in->quote_state);
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
 	free_list(arg_list);
+	in->quote_state = NULL;
 	in->split_input = NULL;
 }

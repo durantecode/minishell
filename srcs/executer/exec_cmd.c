@@ -73,7 +73,7 @@ void	exec_absolute(t_input *in)
 	DIR	*dir;
 
 	if ((access(in->split_input[0], F_OK)) == 0)
-	{
+	{		
 		dir = opendir(in->split_input[0]);
 		if (dir)
 		{
@@ -83,7 +83,9 @@ void	exec_absolute(t_input *in)
 		else
 		{
 			if ((access(in->split_input[0], X_OK)) == 0)
+			{
 				execve(in->split_input[0], in->split_input, in->dup_env);
+			}
 			else
 				error_msg(in, ERR_PERM, 0);
 		}

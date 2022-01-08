@@ -204,11 +204,11 @@ void	read_input(t_input *in)
 		// if (in->user_input[0] != '\0')
 		if (in->split_input)
 		{	
+			free(in->quote_state);
 			free_matrix(in->split_input);
 			in->split_input = NULL;
 		}
 		free(in->user_input);
-		free(in->quote_state);
 		free(in->prompt);
 		free(user);
 	}

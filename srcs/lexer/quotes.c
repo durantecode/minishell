@@ -125,6 +125,6 @@ char	**quotes(t_input *in)
 	}
 	remove_space(in);
 	size = matrix_len(in->split_input);
-	// update_env_var(in, "_=", in->split_input[size - 1]);
+	update_env_var(in, "_=", in->split_input[size - 1]);
 	return (in->split_input);
 }
