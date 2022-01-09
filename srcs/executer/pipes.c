@@ -68,33 +68,28 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
-			in->split_input = aux->arg; 
-			in->quote_state = aux->quotes;
+			in->split_input = aux->arg;
 			check_redirs(in);
-			close(fd[index % 2][R_END]);
 			if (aux_list->next != NULL)
 			{
 				if (!in->is_outfile)
 					dup2(fd[index % 2][W_END], STDOUT_FILENO);
-				close(fd[index % 2][W_END]);
 			}
+			close(fd[index % 2][W_END]);
 			if (index > 0)
 			{
 				if (!in->is_infile && !in->is_hdoc)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
-				close(fd[(index + 1) % 2][R_END]);
 			}
-			close(fd[index % 2][W_END]);
+			close(fd[(index + 1) % 2][R_END]);
 			exec_args(in);
-			// free_matrix(in->split_input);
-			// free(in->cmd_path);
+			free_matrix(in->split_input);
+			free(in->cmd_path);
 			exit (0);
 		}
 		waitpid(pid, &status, 0);
 		exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
-		if (index == 0 && aux_list->next == NULL)
-			close(fd[index % 2][R_END]);
 		aux_list = aux_list->next;
 		index++;
 		in->split_input = aux->arg;
