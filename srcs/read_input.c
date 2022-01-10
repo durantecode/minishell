@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 19:17:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 01:34:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,19 @@ void	read_input(t_input *in)
 {
 	char	*user;
 	char	*aux;
+	char	*color;
 
 	aux = NULL;
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	in->prompt = ft_strjoin(user, "@minishell> $ ");
+	if (exit_status != 0)
+		color = ft_strdup("\033[0;31m$ \033[0m");
+	else
+		color = ft_strdup("\033[0;32m$ \033[0m");
+	// in->prompt = ft_strjoin(user, "@minishell> $ ");
+	in->prompt = ft_strjoin3(user, "@minishell> ", color);
+	free(color);
 	in->user_input = readline(in->prompt);
 	in->is_err = 0;
 	in->quote_state = malloc(1);

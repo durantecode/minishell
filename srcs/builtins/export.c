@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 18:22:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 04:16:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	export(t_input *in)
 			{
 				error_msg(in, ERR_ID, j);
 				free_matrix(aux);
-				return;
+				return ;
 			}
 			env_value = ft_getenv(aux[0], in);
 			if (env_value)
@@ -72,9 +72,11 @@ void	export(t_input *in)
 				free(var);
 			}
 			else
+			{
 				ft_lstadd_back(in->env_list,
 					ft_new_node((void *) in->split_input[j],
 					ft_strlen(in->split_input[j]) + 1));
+			}
 		}
 		free_matrix(aux);
 		j++;
