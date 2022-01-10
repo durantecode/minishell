@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 18:57:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:24:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define ERR_HOME "HOME not set"
 
 # define ERR_ID "not a valid identifier"
-# define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
+# define ERR_ARG "Syntax error near argument"
 
 extern int exit_status;
 
@@ -105,7 +105,7 @@ void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
-char	**remove_redir(t_input *in, int i);
+void	remove_redir(t_input *in, int i);
 
 int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);
@@ -130,7 +130,7 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 
-void	unset_aux(t_list *aux, char *var, int size_var);
+void	unset_aux(t_input *in, char *var, int size_var);
 
 int		count_pipes(t_input *in);
 
@@ -145,17 +145,11 @@ void	handler(int	code);
 
 SEGFAULT ENCONTRADO:
 
-Cuando eliminamos todas las variables de entorno peta
 revisar también si cuando no existe HOME, al hacer cd
 debería crear la OLDPWD y PWD o no...
 
 // 	Leaks comprobados:
-	En principio todos los builtins sencillos no tienen leaks
-	con system leaks he conseguido quitar todos los de FD
-	y usando pipes, mezclados con builtins. queda probar cosas
-	sobre todo con el here_doc. A ver si valgrind no detecta 
-	mucha más mierda
+	Algún leak raro en here_doc
 	
-	Seguiremo informando
 // 	Norma
 */

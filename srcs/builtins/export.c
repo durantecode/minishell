@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 04:16:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 13:05:57 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	export(t_input *in)
 					var = ft_strjoin(aux[0], "=");
 				else
 					var = ft_strdup(aux[0]);
-				unset_aux(*in->env_list, var, ft_strlen(var));
+				unset_aux(in, var, ft_strlen(var));
 				ft_lstadd_back(in->env_list,
 					ft_new_node((void *) in->split_input[j],
 					ft_strlen(in->split_input[j]) + 1));

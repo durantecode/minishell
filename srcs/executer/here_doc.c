@@ -6,27 +6,36 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 01:15:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 17:39:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**remove_redir(t_input *in, int i)
+void	remove_redir(t_input *in, int i)
 {
 	int j;
+	char **aux;
 
-	j = i;
-	i += 2;
+	j = 0;
+	aux = malloc(sizeof(char *) * (matrix_len(in->split_input) - 1));
+	while(in->split_input[j] && j < i)
+	{
+		aux[j] = ft_strdup(in->split_input[j]);
+		j++;
+	}
+	i += 2; 
 	while(in->split_input[i])
 	{
-		free(in->split_input[j]);
-		in->split_input[j] = ft_strdup(in->split_input[i]);
+		aux[j] = ft_strdup(in->split_input[i]);
+		in->quote_state[j] = in->quote_state[i];
 		j++;
 		i++;
 	}
-	in->split_input[j] = NULL;
-	return(in->split_input);
+	aux[j] = NULL;
+	free_matrix(in->split_input);
+	in->split_input = NULL;
+	in->split_input = aux;
 }
 
 void	here_doc(t_input *in, int i)
@@ -39,6 +48,7 @@ void	here_doc(t_input *in, int i)
 	if (fd == -1)
 		error_msg(in, ERR_FILE, -1);
 	delimiter = in->split_input[i + 1];
+	free(in->prompt);
 	in->prompt = ft_strdup("> ");
 	while (1)
 	{
@@ -50,9 +60,9 @@ void	here_doc(t_input *in, int i)
 		free(here_doc);
 	}
 	close(fd);
+	free(here_doc);
 	remove_redir(in, i);
-	if (!(ft_strncmp(in->split_input[0], "", 2)))
-		exit(0);
+	check_redirs(in);
 	fd = open(".hd_tmp", O_RDONLY);
 	if (!is_builtin(in))
 		dup2(fd, STDIN_FILENO);

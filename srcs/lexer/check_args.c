@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 18:12:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:14:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_args(t_input *in)
+int	check_args(t_input *in) 
 {
 	int		input_size;
 

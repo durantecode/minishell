@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 14:15:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:16:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	count_tokens(char *s, t_input *in, int split)
 				start = 1;
 			if (s[in->flags.i] == ' ' && in->flags.single_q == 0 && in->flags.double_q == 0)
 			{
-				// printf("HOLAAAA\n");
 				if (start)
 					in->flags.count++;
 				while (s[in->flags.i] == ' ' && s[in->flags.i])
@@ -42,7 +41,7 @@ int	count_tokens(char *s, t_input *in, int split)
 			{
 				in->flags.i++;
 				if (s[in->flags.i] == '\0')
-					in->flags.count++; // REVISAR SI RETORNAMOS 1 o 0 con solo espacios
+					in->flags.count++;
 			}
 		}
 	}	
@@ -66,7 +65,6 @@ int	count_tokens(char *s, t_input *in, int split)
 			{
 				if (start)
 				{
-					// printf("HOLAAAA\n");
 					in->split_input[in->flags.j] =
 						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
 					in->flags.j++;
@@ -82,7 +80,6 @@ int	count_tokens(char *s, t_input *in, int split)
 				{
 					in->split_input[in->flags.j] =
 						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
-					// printf("JJ: %s\n", in->split_input[in->flags.j]);
 					in->flags.start = in->flags.i;
 					in->flags.j++;
 				}

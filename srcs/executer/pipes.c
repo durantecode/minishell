@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 18:04:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:33:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,6 @@ void	pipex(t_input *in, t_list *arg_list)
 				close(fd[(index + 1) % 2][R_END]);
 			}
 			exec_args(in);
-			// free(in->quote_state);
-			// in->quote_state = NULL;
-			// free_matrix(in->split_input);
-			// in->split_input = NULL;
 			exit (0);
 		}
 		waitpid(pid, &status, 0);

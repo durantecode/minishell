@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 18:05:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:13:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_path(t_input *in)
 	return (in->path_unset);
 }
 
-void	get_cmd_path(t_input *in)
+int	get_cmd_path(t_input *in)
 {
 	int		i;
 	char	*aux;
@@ -44,11 +44,12 @@ void	get_cmd_path(t_input *in)
 			in->cmd_path = ft_strdup(path);
 			free(aux);
 			free(path);
-			break ;
+			return (1);
 		}
 		free(aux);
 		free(path);
 	}
+	return (0);
 }
 
 void	exec_minishell(t_input *in)
@@ -83,9 +84,7 @@ void	exec_absolute(t_input *in)
 		else
 		{
 			if ((access(in->split_input[0], X_OK)) == 0)
-			{
 				execve(in->split_input[0], in->split_input, in->dup_env);
-			}
 			else
 				error_msg(in, ERR_PERM, 0);
 		}
@@ -98,8 +97,9 @@ void	exec_cmd(t_input *in)
 {
 	get_path(in);
 	in->cmd_path = NULL;
-	get_cmd_path(in);
-	if (execve(in->cmd_path, in->split_input, in->dup_env) == -1)
+	if (get_cmd_path(in))
+		execve(in->cmd_path, in->split_input, in->dup_env);
+	else
 	{
 		if (in->path_unset == 0)
 			error_msg(in, ERR_CMD, 0);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/06 18:13:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:35:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	init_structs(t_input *in, t_list **envp)
 	in->fd_in = 0;
 	in->fd_out = 0;
 	exit_status = 0;
-	// in->quote_state = malloc(1);
 }
 
 void	update_level(t_input *in)
