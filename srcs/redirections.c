@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 17:15:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 20:27:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	check_redirs(t_input *in)
 				signal(SIGINT, handler3);
 				signal(SIGQUIT, handler3);
 				here_doc(in, i);
+				i--;
 			}
 			else
 				error_msg(in, ERR_SYNTAX, -1);

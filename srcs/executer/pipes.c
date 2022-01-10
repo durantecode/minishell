@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 17:18:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:33:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		else if (pid == 0)
 		{
 			in->split_input = aux->arg;
+			in->quote_state = aux->quotes;
 			check_redirs(in);
 			if (aux_list->next != NULL)
 			{
@@ -78,39 +79,46 @@ void	pipex(t_input *in, t_list *arg_list)
 			close(fd[index % 2][W_END]);
 			if (index > 0)
 			{
+				close(fd[index % 2][W_END]);
 				if (!in->is_infile && !in->is_hdoc)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
 			}
-			close(fd[(index + 1) % 2][R_END]);
 			exec_args(in);
-			free_matrix(in->split_input);
-			free(in->cmd_path);
 			exit (0);
 		}
 		waitpid(pid, &status, 0);
 		exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
+		if (index == 0 && aux_list->next == NULL)
+			close(fd[index % 2][R_END]);
+		if (index > 0 && aux_list->next != NULL)
+			close(fd[(index + 1) % 2][R_END]);
+		if (index > 0 && aux_list->next == NULL)
+		{
+			close(fd[index % 2][R_END]);
+			close(fd[(index + 1) % 2][R_END]);
+		}
 		aux_list = aux_list->next;
 		index++;
 		in->split_input = aux->arg;
 	}
 }
 
-// void	free_list(t_list *head)
-// {
-// 	t_list	*tmp;
-// 	t_arg	*aux;
+void	free_list(t_list *arg_list)
+{
+	t_arg	*aux;
+	t_list	*aux_list;
 
-//  	while (head != NULL)
-//     {
-//        tmp = head;
-// 	   aux = (t_arg *)head->content;
-//        head = head->next;
-//        free(aux->quotes);
-// 	   free_matrix(aux->arg);
-// 	   free(tmp);
-//     }
-// }
+	aux_list = arg_list;
+ 	while (aux_list)
+    {
+		aux = (t_arg *)aux_list->content;
+		free_matrix(aux->arg);
+    	free(aux->quotes);
+		aux_list = aux_list->next;
+    }
+	ft_lstclear(&arg_list, free);
+}
 
 void	init_arg_list(t_input *in)
 {
@@ -151,7 +159,10 @@ void	init_arg_list(t_input *in)
 		i[1]++;
 		i[0]++;
 	}
+	free(in->quote_state);
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
-	//free_list(arg_list);
+	free_list(arg_list);
+	in->quote_state = NULL;
+	in->split_input = NULL;
 }

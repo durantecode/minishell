@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 12:52:32 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:24:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define ERR_HOME "HOME not set"
 
 # define ERR_ID "not a valid identifier"
-# define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
+# define ERR_ARG "Syntax error near argument"
 
 extern int exit_status;
 
@@ -105,7 +105,7 @@ void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
-char	**remove_redir(t_input *in, int i);
+void	remove_redir(t_input *in, int i);
 
 int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);
@@ -130,7 +130,7 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 
-void	unset_aux(t_list *aux, char *var, int size_var);
+void	unset_aux(t_input *in, char *var, int size_var);
 
 int		count_pipes(t_input *in);
 
@@ -143,14 +143,13 @@ void	handler(int	code);
 
 //	Revisar mensajes de error???
 
+SEGFAULT ENCONTRADO:
+
+revisar también si cuando no existe HOME, al hacer cd
+debería crear la OLDPWD y PWD o no...
+
 // 	Leaks comprobados:
-	Todo hasta ejecucion de comandos.
-	Echo con y sin expand parece estar libre de leaks.
-	CD tambien funciona y OLDPWD y PWD tambien.
-	Unset parece que funciona.
-	Export parece que tambien.
-	Env parece que tambien.
+	Algún leak raro en here_doc
 	
-	Seguiremo informando
 // 	Norma
 */

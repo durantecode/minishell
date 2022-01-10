@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 16:46:29 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/01/10 21:08:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* REVISAR SI HACER FREES EN ESTA FUNCIÓN */
 
 void	my_exit(t_input *in)
 {

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 01:53:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 14:31:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ char	**quotes(t_input *in)
 			in->quote_state[i] = 0;
 		else
 			in->quote_state[i] = 1;
-		// printf("%d\n", in->quote_state[i]);
 		free(in->split_input[i]);
 		in->split_input[i] = aux;
 		i++;

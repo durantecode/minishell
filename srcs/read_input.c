@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 01:33:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 01:34:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,14 +180,22 @@ void	read_input(t_input *in)
 {
 	char	*user;
 	char	*aux;
+	char	*color;
 
 	aux = NULL;
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
-	in->prompt = ft_strjoin(user, "@minishell> $ ");
+	if (exit_status != 0)
+		color = ft_strdup("\033[0;31m$ \033[0m");
+	else
+		color = ft_strdup("\033[0;32m$ \033[0m");
+	// in->prompt = ft_strjoin(user, "@minishell> $ ");
+	in->prompt = ft_strjoin3(user, "@minishell> ", color);
+	free(color);
 	in->user_input = readline(in->prompt);
 	in->is_err = 0;
+	in->quote_state = malloc(1);
 	if (in->user_input)
 	{
 		if ((ft_strncmp(in->user_input, "", 1)))
@@ -200,10 +208,13 @@ void	read_input(t_input *in)
 				add_history(in->user_input);
 			}
 		}
-		
-		if (in->user_input[0] != '\0')
+		// if (in->user_input[0] != '\0')
+		if (in->split_input)
+		{	
+			free(in->quote_state);
 			free_matrix(in->split_input);
-		free(in->quote_state);
+			in->split_input = NULL;
+		}
 		free(in->user_input);
 		free(in->prompt);
 		free(user);
