@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 16:37:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 21:34:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,58 @@ int	get_cmd_path(t_input *in)
 	return (0);
 }
 
+char	**dup_new_env(char **matrix, int size)
+{
+	char	**out;
+	int		i;
+	int		j;
+
+	i = 0;
+	out = malloc(sizeof(char *) * (size + 1));
+	if (!out)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (matrix[i])
+	{
+		if (ft_strchr(matrix[i], '='))
+		{
+			out[j] = ft_strdup(matrix[i]);
+			j++;
+		}
+		i++;
+	}
+	out[j] = NULL;
+	return (out);
+}
+
 void	exec_minishell(t_input *in)
 {
 	pid_t	pid;
+	char	**new_env;
+	int		size;
+	int		i;
 
+	size = 0;
+	i = -1;
+	while (in->dup_env[++i])
+	{
+		if (ft_strchr(in->dup_env[i], '='))
+			size++;
+	}
+	new_env = dup_new_env(in->dup_env, size);
 	pid = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (pid < 0)
 		error_msg(in, ERR_FORK, -1);
 	if (pid == 0)
-	{	
-		if (execve(in->split_input[0], in->split_input, in->dup_env) == -1)
+	{
+		if (execve(in->split_input[0], in->split_input, new_env) == -1)
 			error_msg(in, ERR_CMD, 0);
 	}
 	waitpid(pid, NULL, 0);
+	free_matrix(new_env);
 }
 
 void	exec_absolute(t_input *in)

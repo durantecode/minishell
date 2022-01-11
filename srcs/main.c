@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 17:34:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:50:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->split_input = NULL;
 	in->cmd_path = NULL;
 	in->is_infile = 0;
+	// in->is_hdoc = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
 	exit_status = 0;

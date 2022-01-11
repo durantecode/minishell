@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 17:34:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:53:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	here_doc(t_input *in, int i)
 		free(here_doc);
 	}
 	close(fd);
-	free(here_doc);
+	if (here_doc)
+		free(here_doc);
 	remove_redir(in, i);
 	check_redirs(in);
 	fd = open(".hd_tmp", O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 18:21:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:06:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void	init_env_list(t_input *in, t_list **envp, char **environ)
 
 	size = 0;
 	i = 0;
-	in->old_environ = environ;
 	dup_env(in, environ);
 	while (in->dup_env[i] != NULL)
 	{

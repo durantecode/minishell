@@ -6,11 +6,28 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 17:46:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:38:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	check_hdoc(t_input *in)
+{
+	int i;
+
+	i = 0;
+	in->is_hdoc = 0;
+	while(in->split_input[i])
+	{
+		if (!(ft_strncmp(in->split_input[i], "<<", 3)) && in->quote_state[i] == 0)
+		{
+			if (in->split_input[i + 1] != NULL)
+				in->is_hdoc = 1;
+		}
+		i++;
+	}
+}
 
 void	check_redirs(t_input *in)
 {
@@ -27,10 +44,12 @@ void	check_redirs(t_input *in)
 			if (in->split_input[i + 1] != NULL)
 			{
 				if (!is_builtin(in))
+				{	
 					signal(SIGINT, handler4);
+					signal(SIGQUIT, handler3);
+				}
 				else
 					signal(SIGINT, SIG_IGN);
-				signal(SIGQUIT, SIG_IGN);
 				here_doc(in, i);
 				i--;
 			}

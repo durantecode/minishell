@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 19:38:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:59:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_input
 	char	**split_input;
 	int		*quote_state;
 	char	**dup_env;
-	char	**old_environ;
 	t_list	**env_list;
 	t_flags	flags;
 }	t_input;
@@ -129,6 +128,7 @@ void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
+void	check_hdoc(t_input *in);
 
 void	unset_aux(t_input *in, char *var, int size_var);
 
@@ -144,7 +144,11 @@ void	handler4(int code);
 /*
 	TO DO:
 
-	Ejecución de here_doc en paralelo
+	ctrl + C sin nada no actualiza el exit status
+	hasta que das a enter.
+
+	exit con opciones?
+	argc debe dar error o lanzar el minishell?
 
 	Leaks
 	Norma

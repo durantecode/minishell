@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 15:34:34 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:42:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* REVISAR FREES, NORMA */
-
-int str_is_digit(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' && str[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	insert_var(t_input *in, char **var, char **aux, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 13:05:57 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 21:06:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	export(t_input *in)
 	flag = 0;
 	if (in->split_input[1] == NULL)
 	{
-		// error_msg(in, ERR_ID, 2);
 		env(in, 1);
 		return ;
 	}
