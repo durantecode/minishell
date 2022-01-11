@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 20:27:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 13:51:56 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void handler3(int code)
-{
-	if (code == SIGINT)
-	{
-		exit(130);
-	}
-	if (code == SIGQUIT)
-	{
-		exit(130);
-	}
-}
 
 void	check_redirs(t_input *in)
 {
@@ -38,8 +26,11 @@ void	check_redirs(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 			{
-				signal(SIGINT, handler3);
-				signal(SIGQUIT, handler3);
+				if (!is_builtin(in))
+					signal(SIGINT, handler4);
+				else
+					signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, SIG_IGN);
 				here_doc(in, i);
 				i--;
 			}

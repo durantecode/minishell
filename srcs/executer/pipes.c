@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 19:33:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:01:25 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ int	count_pipes(t_input *in)
 	}
 	in->total_pipes = pipes;
 	return (pipes);
-}
-
-void handler2(int code)
-{
-	if (code == SIGINT)
-	{
-		write(2, "\n", 1);
-	}
-	else if (code == SIGQUIT)
-	{
-		write(2, "Quit: 3\n", 8);
-	}
 }
 
 void	pipex(t_input *in, t_list *arg_list)
@@ -83,11 +71,13 @@ void	pipex(t_input *in, t_list *arg_list)
 				if (!in->is_infile && !in->is_hdoc)
 					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
 			}
-			exec_args(in);
-			exit (0);
+			if (exit_status == 0)
+				exec_args(in);
+			exit (exit_status);
 		}
 		waitpid(pid, &status, 0);
-		exit_status = WEXITSTATUS(status);
+		if (WIFEXITED(status) != 0)
+			exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(fd[index % 2][R_END]);

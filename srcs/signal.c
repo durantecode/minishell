@@ -3,25 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/17 00:39:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 13:51:14 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	catch_signal(int signal, siginfo_t *info, void *context)
+void	handler(int	code)
 {
-	if (signal == SIGINT)
+	if (code == SIGINT)
 	{
-		printf("\n");
+		exit_status = 130;
+		write(2, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		rl_replace_line("",0);
 		rl_redisplay();
 	}
-	(void)signal;
-	(void)context;
-	(void)info;
+}
+
+void handler2(int code)
+{
+	if (code == SIGINT)
+	{
+		write(2, "\n", 1);
+		exit_status = 130;
+	}
+	else if (code == SIGQUIT)
+	{
+		write(2, "Quit: 3\n", 8);
+		exit_status = 131;
+	}
+}
+
+void handler3(int code)
+{
+	if (code == SIGINT)
+	{
+		exit(130);
+	}
+	if (code == SIGQUIT)
+	{
+		exit(131);
+	}
+}
+
+void handler4(int code)
+{
+	if (code == SIGINT)
+		exit(1);
 }

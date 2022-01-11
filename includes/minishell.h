@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 18:24:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 13:51:37 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,21 +135,23 @@ void	unset_aux(t_input *in, char *var, int size_var);
 int		count_pipes(t_input *in);
 
 void	handler(int	code);
+void	handler2(int code);
+void	handler3(int code);
+void	handler4(int code);
 
 #endif
 
 /*
-// TO DO:
+	TO DO:
 
-//	Revisar mensajes de error???
+	Revisar mensajes de error???
 
-SEGFAULT ENCONTRADO:
+	Revisar mensaje de error cuando ejecutamos con argc
+	algunos signals no actualizan bien el exit_status
+	depende de si es builtin o está en un child process
 
-revisar también si cuando no existe HOME, al hacer cd
-debería crear la OLDPWD y PWD o no...
-
-// 	Leaks comprobados:
+	Leaks comprobados:
 	Algún leak raro en here_doc
 	
-// 	Norma
+	Norma
 */
