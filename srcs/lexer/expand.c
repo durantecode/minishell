@@ -61,7 +61,10 @@ int		check_var(t_input *in)
 	if(!ft_isalnum(in->split_input[in->flags.j][in->flags.i]))
 	{
 		if (in->split_input[in->flags.j][in->flags.i] == '\0')
+		{
+			in->flags.i--;
 			return (2);
+		}
 		if (in->split_input[in->flags.j][in->flags.i] == '$')
 		{
 			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])
@@ -100,7 +103,7 @@ char	*get_var(char *str, int i)
 {
 	char *aux;
 	int		j;
-	
+
 	j = i;
 	if (str[i] == '?')
 		return (aux = ft_strdup("?"));
