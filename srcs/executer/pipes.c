@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 11:40:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 15:46:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	pipex(t_input *in, t_list *arg_list)
 			exec_args(in);
 			exit (0);
 		}
-		waitpid(pid, &status, 0);
-		exit_status = WEXITSTATUS(status);
+		// waitpid(pid, &status, 0);
+		// exit_status = WEXITSTATUS(status);
 		close(fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(fd[index % 2][R_END]);
@@ -92,6 +92,16 @@ void	pipex(t_input *in, t_list *arg_list)
 		index++;
 		in->split_input = aux->arg;
 	}
+	waitpid(-1, &status, 0);
+	exit_status = WEXITSTATUS(status);
+	in->total_pipes--;
+	while (in->total_pipes > 0)
+	{
+		waitpid(-1, &status, 0);
+		// exit_status = WEXITSTATUS(status);
+		in->total_pipes--;
+	}
+	// waitpid(-1, &status, 0);
 }
 
 void	free_list(t_list *arg_list)

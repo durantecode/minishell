@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 12:06:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:07:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ void	remove_redir(t_input *in, int i)
 	in->split_input = aux;
 }
 
+// static char	*read_line(void)
+// {
+// 	char	*line;
+
+// 	line = NULL;
+// 	get_next_line(0, &line);
+// 	return (line);
+// }
+
 void	here_doc(t_input *in, int i)
 {
 	char	*eof;
@@ -53,8 +62,7 @@ void	here_doc(t_input *in, int i)
 	exit_status = 0;
 	while (1)
 	{
-		if (exit_status == 0)
-			here_doc = readline(in->prompt);
+		here_doc = readline(in->prompt);
 		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
 			break ;
 		write(fd, here_doc, ft_strlen(here_doc));
@@ -62,7 +70,7 @@ void	here_doc(t_input *in, int i)
 		free(here_doc);
 	}
 	close(fd);
-	// free(here_doc);
+	free(here_doc);
 	remove_redir(in, i);
 	check_redirs(in);
 	fd = open(".hd_tmp", O_RDONLY);
