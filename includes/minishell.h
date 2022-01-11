@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 01:41:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:39:06 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	unset_aux(t_input *in, char *var, int size_var);
 int		count_pipes(t_input *in);
 
 void	handler(int	code);
+void	handler2(int code);
+void	handler3(int code);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 00:53:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:38:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ void	update_level(t_input *in)
 	number = ft_itoa(level);
 	update_env_var(in, "SHLVL=", number);
 	free(number);
-}
-
-void	handler(int	code)
-{
-	if (code == SIGINT)
-	{
-		exit_status = 130;
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("",0);
-		rl_redisplay();
-	}
 }
 
 int	main(int argc, char **argv, char **environ)

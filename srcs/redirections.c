@@ -6,23 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 01:44:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 12:06:52 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void handler3(int code)
-{
-	if (code == SIGINT)
-	{
-		exit(130);
-	}
-	if (code == SIGQUIT)
-	{
-		exit(131);
-	}
-}
 
 void	check_redirs(t_input *in)
 {
@@ -38,7 +26,11 @@ void	check_redirs(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 			{
-				signal(SIGINT, handler3);
+				if (!is_builtin(in))
+					signal(SIGINT, handler3);
+				else
+					signal(SIGINT, handler);
+				
 				signal(SIGQUIT, handler3);
 				here_doc(in, i);
 				i--;

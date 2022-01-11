@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 23:19:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 12:06:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ void	here_doc(t_input *in, int i)
 	eof = in->split_input[i + 1];
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
+	exit_status = 0;
 	while (1)
 	{
-		here_doc = readline(in->prompt);
+		if (exit_status == 0)
+			here_doc = readline(in->prompt);
 		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
 			break ;
 		write(fd, here_doc, ft_strlen(here_doc));
@@ -60,7 +62,7 @@ void	here_doc(t_input *in, int i)
 		free(here_doc);
 	}
 	close(fd);
-	free(here_doc);
+	// free(here_doc);
 	remove_redir(in, i);
 	check_redirs(in);
 	fd = open(".hd_tmp", O_RDONLY);

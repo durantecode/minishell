@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 00:54:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:41:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,11 @@ void	read_input_aux(t_input *in, char *aux)
 					exit_status = 0;
 			}
 			else
+			{
+				// signal(SIGINT, handler3);
+				// signal(SIGQUIT, handler3);
 				init_arg_list(in);
+			}
 			unlink(".hd_tmp");
 		}
 	}
