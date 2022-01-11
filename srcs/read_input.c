@@ -212,16 +212,17 @@ void	read_input(t_input *in)
 		}
 		if (in->split_input)
 		{	
-			free(in->quote_state);
 			free_matrix(in->split_input);
 			in->split_input = NULL;
 		}
+		free(in->quote_state);
 		free(in->user_input);
 		free(in->prompt);
 		free(user);
 	}
 	else
 	{
+		free(in->quote_state);
 		write(1, "exit\n", 5);
 		ft_lstclear(in->env_list, free);
 		free(in->prompt);
