@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 14:44:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 00:56:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	update_exit_status(char *ERR)
 {
 	if (!ft_strncmp(ERR, "command not found", 18))
 		return (127);
+	if (!ft_strncmp(ERR, "is a directory", 14))
+		return (126);
 	if (!ft_strncmp(ERR, "syntax error near unexpected token", 35))
 		return (258);
 	else

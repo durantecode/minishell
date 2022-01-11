@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 20:27:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 01:44:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void handler3(int code)
 	}
 	if (code == SIGQUIT)
 	{
-		exit(130);
+		exit(131);
 	}
 }
 

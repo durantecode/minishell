@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 19:33:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 01:25:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void handler2(int code)
 	if (code == SIGINT)
 	{
 		write(2, "\n", 1);
+		exit_status = 130;
 	}
 	else if (code == SIGQUIT)
 	{
 		write(2, "Quit: 3\n", 8);
+		exit_status = 131;
 	}
 }
 

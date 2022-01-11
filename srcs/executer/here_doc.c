@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 17:39:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/10 23:19:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ void	remove_redir(t_input *in, int i)
 
 void	here_doc(t_input *in, int i)
 {
-	char	*delimiter;
+	char	*eof;
 	int		fd;
 	char	*here_doc;
 
 	fd = open(".hd_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd == -1)
 		error_msg(in, ERR_FILE, -1);
-	delimiter = in->split_input[i + 1];
+	eof = in->split_input[i + 1];
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
 	while (1)
 	{
 		here_doc = readline(in->prompt);
-		if (!(ft_strncmp(here_doc, delimiter, ft_strlen(delimiter))))
+		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
 			break ;
 		write(fd, here_doc, ft_strlen(here_doc));
 		write(fd, "\n", 1);

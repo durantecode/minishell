@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 01:34:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 00:54:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	check_errors(t_input *in)
 
 	special = 0;
 	flag_diff = 0;
-
 	while (in->user_input[in->flags.i])
 	{
 		count = 0;
@@ -208,7 +207,6 @@ void	read_input(t_input *in)
 				add_history(in->user_input);
 			}
 		}
-		// if (in->user_input[0] != '\0')
 		if (in->split_input)
 		{	
 			free(in->quote_state);
@@ -221,11 +219,7 @@ void	read_input(t_input *in)
 	}
 	else
 	{
-		// write(0, "exit\n", 5);
-		printf("exit\n");
-		// free_matrix(in->dup_env);
-		// free_matrix(in->old_environ);
-		//free_matrix(in->split_input);
+		write(1, "exit\n", 5);
 		ft_lstclear(in->env_list, free);
 		free(in->prompt);
 		free(user);
