@@ -35,7 +35,6 @@ int	is_builtin(t_input *in)
 
 void	exec_args(t_input *in)
 {
-
 	if (!(ft_strncmp(in->split_input[0], "pwd", 4)))
 		pwd();
 	else if (!(ft_strncmp(in->split_input[0], "env", 4)))

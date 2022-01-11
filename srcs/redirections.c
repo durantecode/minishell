@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 13:31:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:46:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	check_redirs(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 			{
-				// if (!is_builtin(in))
-					signal(SIGINT, handler3);
-				// else
-					// signal(SIGINT, handler);
-				signal(SIGQUIT, handler3);
+				if (!is_builtin(in))
+					signal(SIGINT, handler4);
+				else
+					signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, SIG_IGN);
 				here_doc(in, i);
 				i--;
 			}

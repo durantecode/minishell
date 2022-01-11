@@ -40,7 +40,7 @@ void	unset(t_input *in, int j)
 {
 	char	*var;
 	int		size_var;
-	t_list	*aux;
+	// t_list	*aux;
 	char	*tmp_env;
 
 	if (in->split_input[1] == NULL)
@@ -50,7 +50,7 @@ void	unset(t_input *in, int j)
 	}
 	while (in->split_input[j])
 	{
-		aux = *in->env_list;
+		// aux = *in->env_list;
 		var = ft_strdup(in->split_input[j]);
 		tmp_env = ft_getenv(var, in);
 		if (tmp_env)

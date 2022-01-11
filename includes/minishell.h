@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 14:07:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:43:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int		count_pipes(t_input *in);
 void	handler(int	code);
 void	handler2(int code);
 void	handler3(int code);
+void	handler4(int code);
 
 #endif
 
@@ -145,12 +146,7 @@ void	handler3(int code);
 
 	Revisar mensajes de error???
 
-	Revisar mensaje de error cuando ejecutamos con argc
-	algunos signals no actualizan bien el exit_status
-	depende de si es builtin o está en un child process
-
 	Leaks comprobados:
-	Algún leak raro en here_doc
-	
+	 	
 	Norma
-*/
+*/ 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 14:07:16 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:34:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@ void	remove_redir(t_input *in, int i)
 	in->split_input = aux;
 }
 
-// static char	*read_line(void)
-// {
-// 	char	*line;
-
-// 	line = NULL;
-// 	get_next_line(0, &line);
-// 	return (line);
-// }
-
 void	here_doc(t_input *in, int i)
 {
 	char	*eof;
@@ -59,7 +50,6 @@ void	here_doc(t_input *in, int i)
 	eof = in->split_input[i + 1];
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
-	exit_status = 0;
 	while (1)
 	{
 		here_doc = readline(in->prompt);
