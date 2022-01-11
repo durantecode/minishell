@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 17:43:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:38:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ void	handler4(int code);
 /*
 	TO DO:
 
-	Revisar mensajes de error???
+	Ejecución de here_doc en paralelo
 
-	Leaks comprobados:
-	 	
+	Leaks
 	Norma
 */ 
