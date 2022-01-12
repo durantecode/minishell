@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 22:50:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:09:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,6 @@ void	pipex(t_input *in, t_list *arg_list)
 		waitpid(-1, &status, 0);
 		if (WIFEXITED(status))
 			exit_status = WEXITSTATUS(status);
-		// else if (WIFSIGNALED(status))
-		// 	exit_status = WTERMSIG(status);
-		// exit_status = WEXITSTATUS(status);
 		in->total_pipes--;
 	}
 }

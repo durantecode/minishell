@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 21:57:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/12 11:50:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handler(int	code)
 		exit_status = 130;
 		write(2, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("",0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
