@@ -35,14 +35,14 @@ void	pipex(t_input *in, t_list *arg_list)
 	t_list	*aux_list;
 	pid_t	pid;
 	int		index;
-	int		fd[2][2];
 	int		status;
 
+	status = 0;
 	index = 0;
 	aux_list = arg_list;
 	while (aux_list)
 	{
-		if (pipe(fd[index % 2]) == -1)
+		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1);
 		aux = (t_arg *)aux_list->content;
 		in->split_input = aux->arg;
@@ -53,39 +53,43 @@ void	pipex(t_input *in, t_list *arg_list)
 		pid = fork();
 		if (pid < 0)
 		{
-			close(fd[index % 2][W_END]);
-			close(fd[index % 2][R_END]);
+			close(in->fd[index % 2][W_END]);
+			close(in->fd[index % 2][R_END]);
 			error_msg(in, ERR_FORK, -1);
 		}
 		else if (pid == 0)
 		{
+			find_hdoc(in);
 			check_redirs(in);
 			if (aux_list->next != NULL)
 			{
 				if (!in->is_outfile)
-					dup2(fd[index % 2][W_END], STDOUT_FILENO);
+					dup2(in->fd[index % 2][W_END], STDOUT_FILENO);
 			}
-			close(fd[index % 2][W_END]);
+			close(in->fd[index % 2][W_END]);
 			if (index > 0)
 			{
-				close(fd[index % 2][W_END]);
+				close(in->fd[index % 2][W_END]);
 				if (!in->is_infile && !in->is_hdoc)
-					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
+					dup2(in->fd[(index + 1) % 2][R_END], STDIN_FILENO);
+				close(in->fd[(index + 1) % 2][R_END]);
 			}
-			exec_args(in);
+			close(in->fd[index % 2][R_END]);
+			if (in->split_input[0])
+				exec_args(in);
 			exit (exit_status);
 		}
 		if (in->is_hdoc)
 			waitpid(pid, NULL, 0);
-		close(fd[index % 2][W_END]);
+		close(in->fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
-			close(fd[index % 2][R_END]);
+			close(in->fd[index % 2][R_END]);
 		if (index > 0 && aux_list->next != NULL)
-			close(fd[(index + 1) % 2][R_END]);
+			close(in->fd[(index + 1) % 2][R_END]);
 		if (index > 0 && aux_list->next == NULL)
 		{
-			close(fd[index % 2][R_END]);
-			close(fd[(index + 1) % 2][R_END]);
+			close(in->fd[index % 2][R_END]);
+			close(in->fd[(index + 1) % 2][R_END]);
 		}
 		aux_list = aux_list->next;
 		index++;

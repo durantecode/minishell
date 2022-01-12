@@ -19,6 +19,7 @@ void	my_exit(t_input *in)
 	if (in->split_input[1])
 		printf("minishell: exit: too many arguments\n");
 	free_matrix(in->split_input);
+	//free_matrix(in->dup_env);
 	free(in->quote_state);
 	ft_lstclear(in->env_list, free);
 	free(in->prompt);

@@ -63,26 +63,26 @@ static char	*delete_quote(t_input *in, char *str)
 	return (final_str);
 }
 
-char	**remove_space(t_input *in)
-{
-	int i;
-	int size;
-	char *aux;
+// char	**remove_space(t_input *in)
+// {
+// 	int i;
+// 	int size;
+// 	char *aux;
 
-	i = 0;
-	while (in->split_input[i] != NULL)
-	{
-		size = ft_strlen(in->split_input[i]);
-		if (!ft_isascii(in->split_input[i][0]))
-		{
-			aux = ft_substr(in->split_input[i], 2, size - 1);
-			in->split_input[i] = ft_strdup(aux);
-			free(aux);
-		}	
-		i++;
-	}
-	return (in->split_input);
-}
+// 	i = 0;
+// 	while (in->split_input[i] != NULL)
+// 	{
+// 		size = ft_strlen(in->split_input[i]);
+// 		if (!ft_isascii(in->split_input[i][0]))
+// 		{
+// 			aux = ft_substr(in->split_input[i], 2, size - 1);
+// 			in->split_input[i] = ft_strdup(aux);
+// 			free(aux);
+// 		}	
+// 		i++;
+// 	}
+// 	return (in->split_input);
+// }
 
 void	update_env_var(t_input *in, char *var, char *value)
 {
@@ -123,7 +123,7 @@ char	**quotes(t_input *in)
 		in->split_input[i] = aux;
 		i++;
 	}
-	remove_space(in);
+	//remove_space(in);
 	size = matrix_len(in->split_input);
 	update_env_var(in, "_=", in->split_input[size - 1]);
 	return (in->split_input);

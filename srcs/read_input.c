@@ -156,6 +156,7 @@ void	read_input_aux(t_input *in, char *aux)
 		{
 			if (is_builtin(in) && count_pipes(in) == 1)
 			{
+				find_hdoc(in);
 				check_redirs(in);
 				if (!in->is_err)
 					exec_args(in);

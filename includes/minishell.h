@@ -70,6 +70,7 @@ typedef struct s_flags
 
 typedef struct s_input
 {
+	int		fd[2][2];
 	int		fd_in;
 	int		fd_out;
 	int		is_err;
@@ -129,6 +130,7 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 void	check_hdoc(t_input *in);
+void	find_hdoc(t_input *in);
 
 void	unset_aux(t_input *in, char *var, int size_var);
 
@@ -138,6 +140,8 @@ void	handler(int	code);
 void	handler2(int code);
 void	handler3(int code);
 void	handler4(int code);
+
+
 
 #endif
 
