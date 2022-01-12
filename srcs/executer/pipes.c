@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 12:09:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:09:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ void	pipex(t_input *in, t_list *arg_list)
 	pid_t	pid;
 	int		index;
 	int		status;
+	int 	flag;
 
 	status = 0;
 	index = 0;
+	flag = 0;
 	aux_list = arg_list;
 	while (aux_list)
 	{
@@ -55,7 +57,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		{
 			close(in->fd[index % 2][W_END]);
 			close(in->fd[index % 2][R_END]);
-			error_msg(in, ERR_FORK, -1);
+			flag = 1;
 		}
 		else if (pid == 0)
 		{
@@ -94,6 +96,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		aux_list = aux_list->next;
 		index++;
 	}
+	if (flag)
+		error_msg(in, ERR_FORK, -2);
 	while (in->total_pipes > 0)
 	{
 		waitpid(-1, &status, 0);
