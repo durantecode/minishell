@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 17:11:52 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 17:30:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ int	valid_id(char *str)
 void	export(t_input *in)
 {
   	int		j;
-	int		flag;
 	char	*env_value;
 	char	**aux;
 	char	*var;
-	
-	flag = 0;
+
 	if (in->split_input[1] == NULL)
 	{
 		env(in, 1);

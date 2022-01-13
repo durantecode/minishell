@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 19:42:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 18:28:25 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ void	expand_vars(t_input *in)
 		}
 		in->flags.j++;
 	}
+	// print_matrix(in->split_input);
 	in->split_input = quotes(in);
 }
