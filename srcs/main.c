@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 17:51:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 12:27:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **environ)
 	else
 	{
 		in.split_input = argv;
-		error_msg(&in, ERR_ARG, -1);
+		error_msg(&in, ERR_ARG, -1, 0);
 	}
 	return (0);
 }

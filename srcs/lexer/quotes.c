@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 02:37:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:37:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*delete_quote(t_input *in, char *str)
 // 	{
 // 		size = ft_strlen(in->split_input[i]);
 // 		c = in->split_input[i][0];
-// 		if (c > 254)
+// 		if (c > 127)
 // 		{
 // 			aux = ft_substr(in->split_input[i], 2, size - 1);
 // 			in->split_input[i] = ft_strdup(aux);
@@ -93,7 +93,7 @@ void	update_env_var(t_input *in, char *var, char *value)
 
 	aux_in = NULL;
 	if (in->split_input)
-		aux_in = matrix_dup(in->split_input);
+		aux_in = matrix_dup(in->split_input); 
 	tmp = ft_strjoin(var, value);
 	if (in->split_input)
 		free_matrix(in->split_input);

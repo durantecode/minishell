@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:44:57 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 11:52:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	export(t_input *in)
 			if (aux)
 			{
 				if (!valid_id(aux[0]))
-					error_msg(in, ERR_ID, j);
+					error_msg(in, ERR_ID, j, 0);
 				else
 				{		
 					env_value = ft_getenv(aux[0], in);
@@ -79,7 +79,7 @@ void	export(t_input *in)
 			free_matrix(aux);
 		}
 		else
-			error_msg(in, ERR_ID2, -1);
+			error_msg(in, ERR_ID2, -1, 0);
 		j++;
 	}
 	free_matrix(in->dup_env);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:18:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 12:00:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	update_exit_status(char *ERR, int is_abs)
 		return (126);
 	else if (!ft_strcmp(ERR, ERR_PERM))
 	{
-		if (is_abs == 999)
+		if (is_abs == 1)
 			return (126);
 	}
 	else if (!ft_strcmp(ERR, ERR_FILE))
 	{
-		if (is_abs == 999)
+		if (is_abs == 1)
 			return (127);
 	}
 	else if (!ft_strcmp(ERR, ERR_CMD))
@@ -33,15 +33,10 @@ int	update_exit_status(char *ERR, int is_abs)
 	return(1);
 }
 
-int	error_msg(t_input *in, char *MSG, int n)
+int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 {
-	int is_abs;
-
-	is_abs = n;
 	if (n >= 0)
 	{
-		if (n == 999)
-			n = 0;
 		write(2, SHELL, ft_strlen(SHELL));
 		write(2, in->split_input[n], ft_strlen(in->split_input[n]));
 		write(2, ": ", 2);

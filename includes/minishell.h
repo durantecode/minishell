@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:21:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 12:45:28 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ typedef struct s_input
 }	t_input;
 
 int		main(int argc, char **argv, char **environ);
-int		error_msg(t_input *in, char *MSG, int n);
+int		error_msg(t_input *in, char *MSG, int n, int is_abs);
+int		char_space(char c);
 
 void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	init_flags(t_input *in);

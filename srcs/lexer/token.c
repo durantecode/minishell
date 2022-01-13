@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 18:16:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 12:47:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ int	count_tokens(char *s, t_input *in, int split)
 		while (s[in->flags.i] != '\0')
 		{
 			quotes_state(in, s);
-			if (s[in->flags.i] == ' ' && !start)
+			if (char_space(s[in->flags.i]) && !start)
 			{
-				while (s[in->flags.i] == ' ' && s[in->flags.i])
+				while (char_space(s[in->flags.i]) && s[in->flags.i])
 					in->flags.i++;
 				start = 1;
 			}
-			else if (s[in->flags.i] != ' ')
+			else if (!char_space(s[in->flags.i]))
 				start = 1;
-			if (s[in->flags.i] == ' ' && in->flags.single_q == 0 && in->flags.double_q == 0)
+			if (char_space(s[in->flags.i]) && in->flags.single_q == 0 && in->flags.double_q == 0)
 			{
 				if (start)
 					in->flags.count++;
-				while (s[in->flags.i] == ' ' && s[in->flags.i])
+				while (char_space(s[in->flags.i]) && s[in->flags.i])
 					in->flags.i++;
 			}
 			else if (s[in->flags.i] != '\0')
@@ -52,16 +52,16 @@ int	count_tokens(char *s, t_input *in, int split)
 		while (s[in->flags.i] != '\0')
 		{
 			quotes_state(in, s);
-			if (s[in->flags.i] == ' ' && !start)
+			if (char_space(s[in->flags.i]) && !start)
 			{
-				while (s[in->flags.i] == ' ' && s[in->flags.i])
+				while (char_space(s[in->flags.i]) && s[in->flags.i])
 					in->flags.i++;
 				in->flags.start = in->flags.i;
 				start = 1;
 			}
-			else if (s[in->flags.i] != ' ')
+			else if (!char_space(s[in->flags.i]))
 				start = 1;
-			if (s[in->flags.i] == ' ' && in->flags.single_q == 0 && in->flags.double_q == 0)
+			if (char_space(s[in->flags.i]) && in->flags.single_q == 0 && in->flags.double_q == 0)
 			{
 				if (start)
 				{
@@ -69,7 +69,7 @@ int	count_tokens(char *s, t_input *in, int split)
 						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
 					in->flags.j++;
 				}
-				while (s[in->flags.i] == ' ' && s[in->flags.i])
+				while (char_space(s[in->flags.i]) && s[in->flags.i])
 					in->flags.i++;
 				in->flags.start = in->flags.i;
 			}
