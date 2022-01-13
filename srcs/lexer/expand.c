@@ -6,27 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 17:59:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:42:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* REVISAR FREES, NORMA */
-
-int str_is_digit(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' && str[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	insert_var(t_input *in, char **var, char **aux, int j)
 {
@@ -61,7 +45,10 @@ int		check_var(t_input *in)
 	if(!ft_isalnum(in->split_input[in->flags.j][in->flags.i]))
 	{
 		if (in->split_input[in->flags.j][in->flags.i] == '\0')
+		{
+			in->flags.i--;
 			return (2);
+		}
 		if (in->split_input[in->flags.j][in->flags.i] == '$')
 		{
 			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])
@@ -100,13 +87,13 @@ char	*get_var(char *str, int i)
 {
 	char *aux;
 	int		j;
-	
+
 	j = i;
 	if (str[i] == '?')
 		return (aux = ft_strdup("?"));
 	if (str[i] == '_')
 		return (aux = ft_strdup("_"));
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	aux = ft_substr(str, j, i - j);
 	return (aux);

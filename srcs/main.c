@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/04 20:21:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:51:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,6 @@ void	update_level(t_input *in)
 	free(number);
 }
 
-void	handler(int	code)
-{
-	if (code == SIGINT)
-	{
-		exit_status = 130;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("",0);
-		rl_redisplay();
-	}
-}
-
 int	main(int argc, char **argv, char **environ)
 {
 	t_input	in;
@@ -76,6 +64,7 @@ int	main(int argc, char **argv, char **environ)
 			signal(SIGINT, handler);
 			signal(SIGQUIT, SIG_IGN);
 			read_input(&in);
+			unlink(".hd_tmp");
 		}
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 12:52:32 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 00:21:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@
 # define ERR_HOME "HOME not set"
 
 # define ERR_ID "not a valid identifier"
-# define ERR_ARG "Syntax error near (INSERTAR QUOTES)"
+# define ERR_ID2 "minishell: `': not a valid identifier"
+# define ERR_ARG "Syntax error near argument"
 
 extern int exit_status;
 
@@ -70,6 +71,7 @@ typedef struct s_flags
 
 typedef struct s_input
 {
+	int		fd[2][2];
 	int		fd_in;
 	int		fd_out;
 	int		is_err;
@@ -87,7 +89,6 @@ typedef struct s_input
 	char	**split_input;
 	int		*quote_state;
 	char	**dup_env;
-	char	**old_environ;
 	t_list	**env_list;
 	t_flags	flags;
 }	t_input;
@@ -105,7 +106,7 @@ void	read_input(t_input *in);
 char	*split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
-char	**remove_redir(t_input *in, int i);
+void	remove_redir(t_input *in, int i);
 
 int		count_tokens(char *s, t_input *in, int split);
 char	**quotes(t_input *in);
@@ -129,28 +130,25 @@ void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
+void	check_hdoc(t_input *in);
+void	find_hdoc(t_input *in);
 
-void	unset_aux(t_list *aux, char *var, int size_var);
+void	unset_aux(t_input *in, char *var, int size_var);
 
 int		count_pipes(t_input *in);
 
 void	handler(int	code);
+void	handler2(int code);
+void	handler3(int code);
+void	handler4(int code);
+
+
 
 #endif
 
 /*
-// TO DO:
+	TO DO:
 
-//	Revisar mensajes de error???
-
-// 	Leaks comprobados:
-	Todo hasta ejecucion de comandos.
-	Echo con y sin expand parece estar libre de leaks.
-	CD tambien funciona y OLDPWD y PWD tambien.
-	Unset parece que funciona.
-	Export parece que tambien.
-	Env parece que tambien.
-	
-	Seguiremo informando
-// 	Norma
-*/
+	Leaks
+	Norma
+*/ 

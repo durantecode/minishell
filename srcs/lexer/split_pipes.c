@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:50:19 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/20 17:35:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:51:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	split_pipes_aux(t_input *in, char **final_input)
+void	split_pipes_aux(t_input *in, char **final_input)
 {
 	char	c;
 
@@ -35,11 +35,13 @@ static void	split_pipes_aux(t_input *in, char **final_input)
 				(*final_input)[in->flags.count++] = in->user_input[in->flags.i];
 				(*final_input)[in->flags.count++] = in->user_input[in->flags.i];
 				(*final_input)[in->flags.count] = ' ';
-				in->flags.i++;
+				in->flags.i += 1;
 			}
 		}
 		else
+		{
 			(*final_input)[in->flags.count] = in->user_input[in->flags.i];
+		}
 		in->flags.count++;
 		in->flags.i++;
 	}
@@ -66,9 +68,12 @@ char	*split_pipes(t_input *in)
 		in->flags.i++;
 	}
 	final_input = malloc(sizeof(char) * in->flags.count + 1);
+	// printf("Principio: %d\n", in->flags.count);
 	in->flags.count = 0;
 	in->flags.i = 0;
 	split_pipes_aux(in, &final_input);
 	final_input[in->flags.count] = '\0';
+	// printf("Final: %d\n", in->flags.count);
+	// printf("Final string: |%s|\n", final_input);
 	return (final_input);
 }

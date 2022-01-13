@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 17:18:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:32:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,88 +29,99 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
-void handler2(int code)
-{
-	if (code == SIGINT)
-	{
-		write(2, "\n", 1);
-	}
-	else if (code == SIGQUIT)
-	{
-		write(2, "Quit: 3\n", 8);
-	}
-}
-
 void	pipex(t_input *in, t_list *arg_list)
 {
 	t_arg	*aux;
 	t_list	*aux_list;
 	pid_t	pid;
 	int		index;
-	int		fd[2][2];
 	int		status;
+	int 	flag;
 
+	status = 0;
 	index = 0;
+	flag = 0;
 	aux_list = arg_list;
 	while (aux_list)
 	{
-		if (pipe(fd[index % 2]) == -1)
+		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1);
 		aux = (t_arg *)aux_list->content;
+		in->split_input = aux->arg;
+		in->quote_state = aux->quotes;
+		check_hdoc(in);
 		signal(SIGINT, handler2);
 		signal(SIGQUIT, handler2);
 		pid = fork();
 		if (pid < 0)
 		{
-			close(fd[index % 2][W_END]);
-			close(fd[index % 2][R_END]);
-			error_msg(in, ERR_FORK, -1);
+			close(in->fd[index % 2][W_END]);
+			close(in->fd[index % 2][R_END]);
+			flag = 1;
 		}
 		else if (pid == 0)
 		{
-			in->split_input = aux->arg;
+			find_hdoc(in);
 			check_redirs(in);
 			if (aux_list->next != NULL)
 			{
 				if (!in->is_outfile)
-					dup2(fd[index % 2][W_END], STDOUT_FILENO);
+					dup2(in->fd[index % 2][W_END], STDOUT_FILENO);
 			}
-			close(fd[index % 2][W_END]);
+			close(in->fd[index % 2][W_END]);
 			if (index > 0)
 			{
+				close(in->fd[index % 2][W_END]);
 				if (!in->is_infile && !in->is_hdoc)
-					dup2(fd[(index + 1) % 2][R_END], STDIN_FILENO);
+					dup2(in->fd[(index + 1) % 2][R_END], STDIN_FILENO);
+				close(in->fd[(index + 1) % 2][R_END]);
 			}
-			close(fd[(index + 1) % 2][R_END]);
-			exec_args(in);
-			free_matrix(in->split_input);
-			free(in->cmd_path);
-			exit (0);
+			close(in->fd[index % 2][R_END]);
+			if (in->split_input[0])
+				exec_args(in);
+			exit (exit_status);
 		}
-		waitpid(pid, &status, 0);
-		exit_status = WEXITSTATUS(status);
-		close(fd[index % 2][W_END]);
+		if (in->is_hdoc)
+			waitpid(pid, &status, 0);
+		close(in->fd[index % 2][W_END]);
+		if (index == 0 && aux_list->next == NULL)
+			close(in->fd[index % 2][R_END]);
+		if (index > 0 && aux_list->next != NULL)
+			close(in->fd[(index + 1) % 2][R_END]);
+		if (index > 0 && aux_list->next == NULL)
+		{
+			close(in->fd[index % 2][R_END]);
+			close(in->fd[(index + 1) % 2][R_END]);
+		}
 		aux_list = aux_list->next;
 		index++;
-		in->split_input = aux->arg;
+	}
+	if (flag)
+		error_msg(in, ERR_FORK, -2);
+	while (in->total_pipes > 0)
+	{
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			exit_status = WEXITSTATUS(status);
+		in->total_pipes--;
 	}
 }
 
-// void	free_list(t_list *head)
-// {
-// 	t_list	*tmp;
-// 	t_arg	*aux;
+void	free_list(t_list *arg_list)
+{
+	t_arg	*aux;
+	t_list	*aux_list;
 
-//  	while (head != NULL)
-//     {
-//        tmp = head;
-// 	   aux = (t_arg *)head->content;
-//        head = head->next;
-//        free(aux->quotes);
-// 	   free_matrix(aux->arg);
-// 	   free(tmp);
-//     }
-// }
+	aux_list = arg_list;
+ 	while (aux_list)
+    {
+		aux = (t_arg *)aux_list->content;
+		free_matrix(aux->arg);
+    	free(aux->quotes);
+		aux_list = aux_list->next;
+    }
+	ft_lstclear(&arg_list, free);
+}
 
 void	init_arg_list(t_input *in)
 {
@@ -151,7 +162,10 @@ void	init_arg_list(t_input *in)
 		i[1]++;
 		i[0]++;
 	}
+	free(in->quote_state);
 	free_matrix(in->split_input);
 	pipex(in, arg_list);
-	//free_list(arg_list);
+	free_list(arg_list);
+	in->quote_state = NULL;
+	in->split_input = NULL;
 }

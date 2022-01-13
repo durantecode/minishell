@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/05 01:33:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:08:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	check_errors(t_input *in)
 
 	special = 0;
 	flag_diff = 0;
-
 	while (in->user_input[in->flags.i])
 	{
 		count = 0;
@@ -155,9 +154,9 @@ void	read_input_aux(t_input *in, char *aux)
 		free(aux);
 		if (check_args(in))
 		{
-			// print_matrix(in->split_input);
 			if (is_builtin(in) && count_pipes(in) == 1)
 			{
+				find_hdoc(in);
 				check_redirs(in);
 				if (!in->is_err)
 					exec_args(in);
@@ -171,7 +170,6 @@ void	read_input_aux(t_input *in, char *aux)
 			}
 			else
 				init_arg_list(in);
-			unlink(".hd_tmp");
 		}
 	}
 }
@@ -188,6 +186,7 @@ void	read_input(t_input *in)
 	in->prompt = ft_strjoin(user, "@minishell> $ ");
 	in->user_input = readline(in->prompt);
 	in->is_err = 0;
+	in->quote_state = malloc(1);
 	if (in->user_input)
 	{
 		if ((ft_strncmp(in->user_input, "", 1)))
@@ -200,9 +199,11 @@ void	read_input(t_input *in)
 				add_history(in->user_input);
 			}
 		}
-		
-		if (in->user_input[0] != '\0')
+		if (in->split_input)
+		{	
 			free_matrix(in->split_input);
+			in->split_input = NULL;
+		}
 		free(in->quote_state);
 		free(in->user_input);
 		free(in->prompt);
@@ -210,11 +211,8 @@ void	read_input(t_input *in)
 	}
 	else
 	{
-		// write(0, "exit\n", 5);
-		printf("exit\n");
-		// free_matrix(in->dup_env);
-		// free_matrix(in->old_environ);
-		//free_matrix(in->split_input);
+		free(in->quote_state);
+		write(2, "exit\n", 5);
 		ft_lstclear(in->env_list, free);
 		free(in->prompt);
 		free(user);

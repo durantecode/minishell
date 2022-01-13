@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 12:06:37 by ldurante         ###   ########.fr       */
+/*   Created: 2022/01/11 20:56:45 by ldurante          #+#    #+#             */
+/*   Updated: 2022/01/11 20:57:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	my_exit(t_input *in)
+t_list	*ft_lstdup(t_list *lst)
 {
-	if (in->total_pipes == 1)
-		printf("%s\n", "exit");
-	if (in->split_input[1])
-		printf("minishell: exit: too many arguments\n");
-	free_matrix(in->split_input);
-	//free_matrix(in->dup_env);
-	free(in->quote_state);
-	ft_lstclear(in->env_list, free);
-	free(in->prompt);
-	exit(0);
+	t_list	*new_lst;
+	t_list	*tmp;
+
+	new_lst = 0;
+	while (lst)
+	{
+		tmp = ft_lstnew(lst->content);
+		if (!tmp)
+			return (0);
+		ft_lstadd_back(&new_lst, tmp);
+		lst = lst->next;
+	}
+	return (new_lst);
 }
