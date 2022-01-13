@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 17:34:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:51:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	here_doc(t_input *in, int i)
 	if (!in->split_input[0])
 		return ;
 	fd = open(".hd_tmp", O_RDONLY);
-
 	if (!is_builtin(in))
 		dup2(fd, STDIN_FILENO);
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 18:09:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:32:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			exit (exit_status);
 		}
 		if (in->is_hdoc)
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &status, 0);
 		close(in->fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(in->fd[index % 2][R_END]);

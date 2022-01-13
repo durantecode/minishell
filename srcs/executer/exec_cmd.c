@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 21:34:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 00:18:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	exec_absolute(t_input *in)
 		dir = opendir(in->split_input[0]);
 		if (dir)
 		{
-			error_msg(in, IS_DIR, 0);
+			error_msg(in, IS_DIR, 999);
 			closedir(dir);
 		}
 		else
@@ -123,11 +123,11 @@ void	exec_absolute(t_input *in)
 			if ((access(in->split_input[0], X_OK)) == 0)
 				execve(in->split_input[0], in->split_input, in->dup_env);
 			else
-				error_msg(in, ERR_PERM, 0);
+				error_msg(in, ERR_PERM, 999);
 		}
 	}
 	else
-		error_msg(in, ERR_FILE, 0);
+		error_msg(in, ERR_FILE, 999);
 }
 
 void	exec_cmd(t_input *in)

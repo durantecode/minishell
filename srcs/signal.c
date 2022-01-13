@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 11:50:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:55:16 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
-		exit_status = 130;
+		exit_status = 1;
 		write(2, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -24,7 +24,7 @@ void	handler(int	code)
 	}
 }
 
-void handler2(int code)
+void	handler2(int code)
 {
 	if (code == SIGINT)
 	{
@@ -38,7 +38,7 @@ void handler2(int code)
 	}
 }
 
-void handler3(int code)
+void	handler3(int code)
 {
 	if (code == SIGINT)
 	{
@@ -50,7 +50,7 @@ void handler3(int code)
 	}
 }
 
-void handler4(int code)
+void	handler4(int code)
 {
 	if (code == SIGINT)
 		exit(1);

@@ -6,28 +6,42 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/11 16:52:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 00:18:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	update_exit_status(char *ERR)
+int	update_exit_status(char *ERR, int is_abs)
 {
-	if (!ft_strncmp(ERR, "command not found", 18))
-		return (127);
-	if (!ft_strncmp(ERR, "is a directory", 14))
+	if (!ft_strcmp(ERR, IS_DIR))
 		return (126);
-	if (!ft_strncmp(ERR, "syntax error near unexpected token", 35))
+	else if (!ft_strcmp(ERR, ERR_PERM))
+	{
+		if (is_abs == 999)
+			return (126);
+	}
+	else if (!ft_strcmp(ERR, ERR_FILE))
+	{
+		if (is_abs == 999)
+			return (127);
+	}
+	else if (!ft_strcmp(ERR, ERR_CMD))
+		return (127);
+	else if (!ft_strcmp(ERR, ERR_SYNTAX))
 		return (258);
-	else
-		return(1);
+	return(1);
 }
 
 int	error_msg(t_input *in, char *MSG, int n)
 {
+	int is_abs;
+
+	is_abs = n;
 	if (n >= 0)
 	{
+		if (n == 999)
+			n = 0;
 		write(2, SHELL, ft_strlen(SHELL));
 		write(2, in->split_input[n], ft_strlen(in->split_input[n]));
 		write(2, ": ", 2);
@@ -41,8 +55,8 @@ int	error_msg(t_input *in, char *MSG, int n)
 		write(2, "\n", 1);
 	}
 	if (in->split_input && !is_builtin(in) && n != -2)
-		exit(update_exit_status(MSG));
-	exit_status = update_exit_status(MSG);
+		exit(update_exit_status(MSG, is_abs));
+	exit_status = update_exit_status(MSG, is_abs);
 	in->is_err = 1;
 	return (0);
 }

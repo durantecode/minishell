@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 14:31:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:37:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,14 @@ static char	*delete_quote(t_input *in, char *str)
 // 	int i;
 // 	int size;
 // 	char *aux;
+// 	int c;
 
 // 	i = 0;
 // 	while (in->split_input[i] != NULL)
 // 	{
 // 		size = ft_strlen(in->split_input[i]);
-// 		if (!ft_isascii(in->split_input[i][0]))
+// 		c = in->split_input[i][0];
+// 		if (c > 254)
 // 		{
 // 			aux = ft_substr(in->split_input[i], 2, size - 1);
 // 			in->split_input[i] = ft_strdup(aux);
@@ -101,6 +103,7 @@ void	update_env_var(t_input *in, char *var, char *value)
 	in->split_input[2] = NULL;
 	export(in);
 	free_matrix(in->split_input);
+	in->split_input = NULL;
 	in->split_input = aux_in;
 }
 
@@ -123,7 +126,7 @@ char	**quotes(t_input *in)
 		in->split_input[i] = aux;
 		i++;
 	}
-	//remove_space(in);
+	// remove_space(in);
 	size = matrix_len(in->split_input);
 	update_env_var(in, "_=", in->split_input[size - 1]);
 	return (in->split_input);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/10 13:05:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 01:23:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,53 @@ void	unset_aux(t_input *in, char *var, int size_var)
 	}
 }
 
+int	valid_id2(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (!(ft_isalnum(str[i])) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	unset(t_input *in, int j)
 {
 	char	*var;
 	int		size_var;
-	// t_list	*aux;
 	char	*tmp_env;
 
 	if (in->split_input[1] == NULL)
-	{
-		error_msg(in, ERR_ID, -1);
 		return ;
-	}
 	while (in->split_input[j])
 	{
-		// aux = *in->env_list;
-		var = ft_strdup(in->split_input[j]);
-		tmp_env = ft_getenv(var, in);
-		if (tmp_env)
-		{
-			size_var = ft_strlen(var);
-			unset_aux(in, var, size_var);
-			if (!(ft_strncmp(var, "PATH=", size_var)))
-				in->path_unset = 1;
-			free_matrix(in->dup_env);
-			in->dup_env = list_to_matrix(*in->env_list);
-			free(tmp_env);
+		if (ft_strlen(in->split_input[j]) != 0)
+		{	
+			if (!valid_id2(in->split_input[j]))
+				error_msg(in, ERR_ID, j);
+			else
+			{
+				var = ft_strdup(in->split_input[j]);
+				tmp_env = ft_getenv(var, in);
+				if (tmp_env)
+				{
+					size_var = ft_strlen(var);
+					unset_aux(in, var, size_var);
+					if (!(ft_strncmp(var, "PATH=", size_var)))
+						in->path_unset = 1;
+					free_matrix(in->dup_env);
+					in->dup_env = list_to_matrix(*in->env_list);
+					free(tmp_env);
+				}
+				free(var);
+			}
 		}
-		free(var);
+		else
+			error_msg(in, ERR_ID2, -1);
 		j++;
 	}
 }

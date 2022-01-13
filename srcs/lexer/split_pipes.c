@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:50:19 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/20 17:35:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:51:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	split_pipes_aux(t_input *in, char **final_input)
 				(*final_input)[in->flags.count++] = in->user_input[in->flags.i];
 				(*final_input)[in->flags.count++] = in->user_input[in->flags.i];
 				(*final_input)[in->flags.count] = ' ';
-				in->flags.i += 2;
+				in->flags.i += 1;
 			}
 		}
 		else

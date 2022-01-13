@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 12:10:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 00:21:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define ERR_HOME "HOME not set"
 
 # define ERR_ID "not a valid identifier"
+# define ERR_ID2 "minishell: `': not a valid identifier"
 # define ERR_ARG "Syntax error near argument"
 
 extern int exit_status;

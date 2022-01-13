@@ -6,15 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 18:10:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 00:44:57 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* Revisar leaks y longitud de funciones */
-
-int	good_value(char *str)
+int	valid_id(char *str)
 {
 	int	i;
 
@@ -52,7 +50,7 @@ void	export(t_input *in)
 			aux = ft_split(in->split_input[j], '=');
 			if (aux)
 			{
-				if (!good_value(aux[0]))
+				if (!valid_id(aux[0]))
 					error_msg(in, ERR_ID, j);
 				else
 				{		
@@ -81,7 +79,7 @@ void	export(t_input *in)
 			free_matrix(aux);
 		}
 		else
-			printf("minishell: `': not a valid identifier\n");
+			error_msg(in, ERR_ID2, -1);
 		j++;
 	}
 	free_matrix(in->dup_env);
