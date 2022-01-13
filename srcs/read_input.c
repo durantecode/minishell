@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 13:03:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 16:17:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,8 @@ void	read_input_aux(t_input *in, char *aux)
 
 int		char_space(char c)
 {
-	if (c != '\f' && c != '\r' && c != '\n'
-	&& c != '\t' && c != '\v' && c != ' ')
+	if (c != '\t' && c != ' ' && c != '\n'
+	&& c != '\f' && c != '\v' && c != '\r')
 		return (0);
 	return (1);
 }
@@ -191,8 +191,8 @@ int		is_space(char *str)
 	while (str[i])
 	{
 		c = str[i];
-		if (c != '\f' && c != '\r' && c != '\n'
-    	&& c != '\t' && c != '\v' && c != ' ')
+		if (c != '\t' && c != ' ' && c != '\n'
+		&& c != '\f' && c != '\v' && c != '\r')
 			return (0);
 		i++;
 	}

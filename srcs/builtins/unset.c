@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 15:15:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 17:12:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ void	unset_aux(t_input *in, char *var, int size_var)
 	char	*str;
 
 	aux = *in->env_list;
- 	if (!(ft_strncmp(var, aux->content, size_var)))
+	str = (char *)aux->content;
+ 	if (!(ft_strncmp(var, str, size_var)) && str[size_var] == '=')
 		*in->env_list = (*in->env_list)->next;
 	else
 	{
-		while (aux->next)
+		while (aux)
 		{
-			str = (char *)aux->next->content;
+			if (aux->next != NULL)
+				str = (char *)aux->next->content;
 			if (!(ft_strncmp(var, str, size_var)) && str[size_var] == '=')
 			{
-				printf("%s\n", str);
 				tmp = aux->next;
 				aux->next = aux->next->next;
 				ft_lstdelone(tmp, free);
