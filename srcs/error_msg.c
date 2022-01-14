@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 12:00:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:22:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	update_exit_status(char *ERR, int is_abs)
 
 int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 {
+	// if (exit_status == 130 && WIFSIGNALED(in->status))
+	// 	return(0);
 	if (n >= 0)
 	{
 		write(2, SHELL, ft_strlen(SHELL));

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 12:27:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:03:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ void	update_level(t_input *in)
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
+	if (level <= 0)
+	{
+		ft_putstr_fd(SHELL, 2);
+		if (level == -1)
+			level++;
+		ft_putendl_fd(ERR_SHLVL, 2);
+	}
 	free(aux);
 	level++;
 	number = ft_itoa(level);

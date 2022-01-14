@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 12:45:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:47:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define ERR_ID "not a valid identifier"
 # define ERR_ID2 "minishell: `': not a valid identifier"
 # define ERR_ARG "Syntax error near argument"
+# define ERR_SHLVL "warning: shell level too high, resetting to 1"
 
 extern int exit_status;
 
@@ -72,6 +73,7 @@ typedef struct s_flags
 typedef struct s_input
 {
 	int		fd[2][2];
+	int		status;
 	int		fd_in;
 	int		fd_out;
 	int		is_err;
@@ -132,7 +134,7 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 void	check_hdoc(t_input *in);
-void	find_hdoc(t_input *in);
+void	exec_hdoc(t_input *in);
 
 void	unset_aux(t_input *in, char *var, int size_var);
 

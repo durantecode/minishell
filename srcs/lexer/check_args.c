@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 18:28:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:41:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_args(t_input *in)
 	ft_bzero(&in->flags, sizeof(in->flags));
 	count_tokens(in->user_input, in, 1);
 	in->split_input[input_size] = NULL;
-	// print_matrix(in->split_input);
 	expand_vars(in);
 	return (input_size);
 }

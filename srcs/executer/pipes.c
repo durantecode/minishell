@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 11:53:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:44:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,20 @@ void	pipex(t_input *in, t_list *arg_list)
 	t_list	*aux_list;
 	pid_t	pid;
 	int		index;
-	int		status;
 	int 	flag;
 
-	status = 0;
+	in->status = 0;
 	index = 0;
 	flag = 0;
 	aux_list = arg_list;
-	while (aux_list)
+	exit_status = 0;
+	while (aux_list && exit_status != 130)
 	{
 		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1, 0);
 		aux = (t_arg *)aux_list->content;
 		in->split_input = aux->arg;
 		in->quote_state = aux->quotes;
-		check_hdoc(in);
 		signal(SIGINT, handler2);
 		signal(SIGQUIT, handler2);
 		pid = fork();
@@ -61,7 +60,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
-			find_hdoc(in);
+			check_hdoc(in);
+			exec_hdoc(in);
 			check_redirs(in);
 			if (aux_list->next != NULL)
 			{
@@ -82,7 +82,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			exit (exit_status);
 		}
 		if (in->is_hdoc)
-			waitpid(pid, &status, 0);
+			waitpid(pid, &in->status, 0);
 		close(in->fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(in->fd[index % 2][R_END]);
@@ -100,9 +100,9 @@ void	pipex(t_input *in, t_list *arg_list)
 		error_msg(in, ERR_FORK, -2, 0);
 	while (in->total_pipes > 0)
 	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
+		waitpid(-1, &in->status, 0);
+		if (WIFEXITED(in->status))
+			exit_status = WEXITSTATUS(in->status);
 		in->total_pipes--;
 	}
 }
