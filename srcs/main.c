@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 16:03:00 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 14:49:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
+	in->fd_error = 2; 
 	exit_status = 0;
 }
 
@@ -72,6 +73,7 @@ int	main(int argc, char **argv, char **environ)
 			signal(SIGQUIT, SIG_IGN);
 			read_input(&in);
 			unlink(".hd_tmp");
+			unlink(".err_tmp");
 		}
 	}
 	else

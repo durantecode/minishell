@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 19:43:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:18:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	check_hdoc(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 				in->is_hdoc = 1;
+			else
+				error_msg(in, ERR_SYNTAX, -1, 0);
 		}
 		i++;
 	}

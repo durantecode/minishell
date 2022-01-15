@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 19:44:45 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:41:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	count_pipes(t_input *in)
 	int	pipes;
 
 	i = 0;
-	pipes = 1;
+	pipes = 0;
 	while (in->split_input[i] != NULL)
 	{
 		if (!(ft_strncmp(in->split_input[i], "|", 2)) && in->quote_state[i] == 0)
@@ -27,6 +27,29 @@ int	count_pipes(t_input *in)
 	}
 	in->total_pipes = pipes;
 	return (pipes);
+}
+
+int		print_err_pipeline()
+{
+	char	*line;
+	int		ret;
+	int		fd;
+
+	fd = open(".err_tmp", O_RDONLY);
+	if (fd > 2)
+	{
+		ret = get_next_line(fd, &line);
+		while (ret > 0)
+		{
+			ft_putendl_fd(line, 2);
+			free(line);
+			line = NULL;
+			ret = get_next_line(fd, &line);
+		}
+		free(line);
+	}
+	close(fd);
+	return (0);
 }
 
 void	pipex(t_input *in, t_list *arg_list)
@@ -60,7 +83,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		else if (pid == 0)
 		{
-			check_hdoc(in);
+			// check_hdoc(in);
 			exec_hdoc(in);
 			check_redirs(in);
 			if (aux_list->next != NULL)
@@ -83,6 +106,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		if (in->is_hdoc)
 			waitpid(pid, &in->status, 0);
+		if (WIFSIGNALED(in->status))
+			flag = 2;
 		close(in->fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(in->fd[index % 2][R_END]);
@@ -98,13 +123,17 @@ void	pipex(t_input *in, t_list *arg_list)
 	}
 	if (flag)
 		error_msg(in, ERR_FORK, -2, 0);
-	while (in->total_pipes > 0)
+	while (in->total_pipes >= 0)
 	{
 		waitpid(-1, &in->status, 0);
 		if (WIFEXITED(in->status))
 			exit_status = WEXITSTATUS(in->status);
 		in->total_pipes--;
 	}
+	if (exit_status != 255 && exit_status != 131)
+		print_err_pipeline();
+	if (exit_status == 255)
+		exit_status = 1;
 }
 
 void	free_list(t_list *arg_list)
@@ -132,7 +161,7 @@ void	init_arg_list(t_input *in)
 	i[0] = 0;
 	i[1] = 0;
 	arg_list = NULL;
-	while (i[1] < count_pipes(in))
+	while (i[1] <= count_pipes(in))
 	{
 		i[3] = 0;
 		i[2] = 0;

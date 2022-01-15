@@ -73,6 +73,7 @@ typedef struct s_flags
 typedef struct s_input
 {
 	int		fd[2][2];
+	int		fd_error;
 	int		status;
 	int		fd_in;
 	int		fd_out;
@@ -106,7 +107,7 @@ void	update_env_var(t_input *in, char *var, char *value);
 void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
-char	*split_pipes(t_input *in);
+void	split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
 void	remove_redir(t_input *in, int i);

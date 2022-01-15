@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 19:34:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:41:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	handler3(int code)
 void	handler4(int code)
 {
 	if (code == SIGINT)
-		exit(1);
+		exit(255);
 }

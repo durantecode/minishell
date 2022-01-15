@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 12:47:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:04:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	count_tokens(char *s, t_input *in, int split)
 				{
 					in->split_input[in->flags.j] =
 						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
-					in->flags.start = in->flags.i;
-					in->flags.j++;
+					// in->flags.start = in->flags.i;
+					// in->flags.j++;
 				}
 			}
 		}

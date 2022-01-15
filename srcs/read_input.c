@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 19:12:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:03:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,20 +142,18 @@ int	check_errors(t_input *in)
 	return (check_errors2(in));
 }
 
-void	read_input_aux(t_input *in, char *aux)
+void	read_input_aux(t_input *in)
 {
 	if (in->user_input[0] != '\0')
 		add_history(in->user_input);
 	ft_bzero(&in->flags, sizeof(in->flags));
 	if (!check_errors(in))
 	{
-		aux = in->user_input;
-		in->user_input = split_pipes(in);
-		free(aux);
+		split_pipes(in);
 		if (check_args(in))
 		{
 			check_hdoc(in);
-			if (is_builtin(in) && count_pipes(in) == 1 && !in->is_hdoc)
+			if (is_builtin(in) && count_pipes(in) == 0 && !in->is_hdoc)
 			{
 				// exec_hdoc(in);
 				check_redirs(in);
@@ -203,9 +201,7 @@ int		is_space(char *str)
 void	read_input(t_input *in)
 {
 	char	*user;
-	char	*aux;
 
-	aux = NULL;
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
@@ -218,7 +214,7 @@ void	read_input(t_input *in)
 		if (!is_space(in->user_input))
 		{
 			if (pair_quotes(in) == 0)
-				read_input_aux(in, aux);
+				read_input_aux(in);
 			else
 			{
 				error_msg(in, ERR_ARG, -2, 0);
