@@ -72,7 +72,7 @@ typedef struct s_flags
 
 typedef struct s_input
 {
-	int		fd[2][2];
+	int		fd[2][2]; 
 	int		fd_error;
 	int		status;
 	int		fd_in;

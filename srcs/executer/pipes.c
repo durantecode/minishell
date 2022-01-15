@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 19:41:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 20:53:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ void	pipex(t_input *in, t_list *arg_list)
 		}
 		if (in->is_hdoc)
 			waitpid(pid, &in->status, 0);
-		if (WIFSIGNALED(in->status))
-			flag = 2;
 		close(in->fd[index % 2][W_END]);
 		if (index == 0 && aux_list->next == NULL)
 			close(in->fd[index % 2][R_END]);
