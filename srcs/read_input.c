@@ -233,6 +233,9 @@ void	read_input(t_input *in)
 	}
 	else
 	{
+		close(0);
+		close(1);
+		close(2);
 		free(in->quote_state);
 		write(2, "exit\n", 5);
 		ft_lstclear(in->env_list, free);

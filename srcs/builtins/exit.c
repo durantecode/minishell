@@ -23,5 +23,8 @@ void	my_exit(t_input *in)
 	free(in->quote_state);
 	ft_lstclear(in->env_list, free);
 	free(in->prompt);
+	close(0);
+	close(1);
+	close(2);
 	exit(0);
 }

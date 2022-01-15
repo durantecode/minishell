@@ -63,6 +63,7 @@ void	here_doc(t_input *in, int i)
 	free(here_doc);
 	remove_redir(in, i);
 	exec_hdoc(in);
+	free(eof);
 	if (!in->split_input[0])
 		return ;
 	fd = open(".hd_tmp", O_RDONLY);

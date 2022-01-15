@@ -41,9 +41,7 @@ void	handler2(int code)
 void	handler3(int code)
 {
 	if (code == SIGINT)
-	{
 		exit(130);
-	}
 	if (code == SIGQUIT)
 	{
 		exit(131);
