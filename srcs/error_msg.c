@@ -51,9 +51,15 @@ int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 		ft_putstr_fd(SHELL, in->fd_error);
 		ft_putendl_fd(MSG, in->fd_error);
 	}
-	close(in->fd_error);
+	if (in->fd_error != 2)
+		close(in->fd_error);
 	if (in->split_input && !is_builtin(in) && n != -2)
+	{
+		close(0);
+		close(1);
+		close(2);
 		exit(update_exit_status(MSG, is_abs));
+	}
 	exit_status = update_exit_status(MSG, is_abs);
 	in->is_err = 1;
 	return (0);

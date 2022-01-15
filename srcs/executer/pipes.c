@@ -36,6 +36,8 @@ int		print_err_pipeline()
 	int		fd;
 
 	fd = open(".err_tmp", O_RDONLY);
+	if (fd == -1)
+		return (0);
 	if (fd > 2)
 	{
 		ret = get_next_line(fd, &line);
@@ -84,7 +86,10 @@ void	pipex(t_input *in, t_list *arg_list)
 		else if (pid == 0)
 		{
 			// check_hdoc(in);
+
 			exec_hdoc(in);
+			// close(in->fd[(index + 1) % 2][R_END]);
+			// close(in->fd[(index + 1) % 2][W_END]);
 			check_redirs(in);
 			if (aux_list->next != NULL)
 			{
@@ -102,6 +107,9 @@ void	pipex(t_input *in, t_list *arg_list)
 			close(in->fd[index % 2][R_END]);
 			if (in->split_input[0])
 				exec_args(in);
+			close(0);
+			close(1);
+			close(2);
 			exit (exit_status);
 		}
 		if (in->is_hdoc)
