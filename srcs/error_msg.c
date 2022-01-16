@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	update_exit_status(char *ERR, int is_abs)
+int	update_g_exit_status(char *ERR, int is_abs)
 {
 	if (!ft_strcmp(ERR, IS_DIR))
 		return (126);
@@ -58,9 +58,9 @@ int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 		close(0);
 		close(1);
 		close(2);
-		exit(update_exit_status(MSG, is_abs));
+		exit(update_g_exit_status(MSG, is_abs));
 	}
-	exit_status = update_exit_status(MSG, is_abs);
+	g_exit_status = update_g_exit_status(MSG, is_abs);
 	in->is_err = 1;
 	return (0);
 }

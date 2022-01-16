@@ -66,8 +66,8 @@ void	pipex(t_input *in, t_list *arg_list)
 	index = 0;
 	flag = 0;
 	aux_list = arg_list;
-	exit_status = 0;
-	while (aux_list && exit_status != 130)
+	g_exit_status = 0;
+	while (aux_list && g_exit_status != 130)
 	{
 		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1, 0);
@@ -110,7 +110,7 @@ void	pipex(t_input *in, t_list *arg_list)
 			close(0);
 			close(1);
 			close(2);
-			exit (exit_status);
+			exit (g_exit_status);
 		}
 		if (in->is_hdoc)
 			waitpid(pid, &in->status, 0);
@@ -133,13 +133,13 @@ void	pipex(t_input *in, t_list *arg_list)
 	{
 		waitpid(-1, &in->status, 0);
 		if (WIFEXITED(in->status))
-			exit_status = WEXITSTATUS(in->status);
+			g_exit_status = WEXITSTATUS(in->status);
 		in->total_pipes--;
 	}
-	if (exit_status != 255 && exit_status != 131)
+	if (g_exit_status != 255 && g_exit_status != 131)
 		print_err_pipeline();
-	if (exit_status == 255)
-		exit_status = 1;
+	if (g_exit_status == 255)
+		g_exit_status = 1;
 }
 
 void	free_list(t_list *arg_list)

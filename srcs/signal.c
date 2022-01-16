@@ -16,7 +16,7 @@ void	handler(int	code)
 {
 	if (code == SIGINT)
 	{
-		exit_status = 1;
+		g_exit_status = 130;
 		write(2, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -29,12 +29,12 @@ void	handler2(int code)
 	if (code == SIGINT)
 	{
 		write(2, "\n", 1);
-		exit_status = 130;
+		g_exit_status = 130;
 	}
 	else if (code == SIGQUIT)
 	{
 		write(2, "Quit: 3\n", 8);
-		exit_status = 131;
+		g_exit_status = 131;
 	}
 }
 

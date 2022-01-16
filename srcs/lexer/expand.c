@@ -25,7 +25,7 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 	len3 = ft_strlen(in->split_input[j]);
 	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
 	if (!(ft_strncmp(*var, "?", 2)))
-		expanded = ft_itoa(exit_status);
+		expanded = ft_itoa(g_exit_status);
 	else if (j > 1 && !(ft_strncmp(in->split_input[j - 1], "<<", 3)))
 		expanded = ft_strdup(in->split_input[j]);
 	else

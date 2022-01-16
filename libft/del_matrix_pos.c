@@ -17,7 +17,7 @@ char	**del_matrix_pos(char **matrix, int pos)
 	int		i;
 	int		j;
 	char	**aux;
-	
+
 	i = 0;
 	j = 0;
 	aux = malloc(matrix_len(matrix));
@@ -30,5 +30,5 @@ char	**del_matrix_pos(char **matrix, int pos)
 		j++;
 	}
 	aux[j] = NULL;
-	return(aux);
+	return (aux);
 }

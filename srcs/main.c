@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int exit_status;
+int	g_exit_status;
 
 void	leaks(void)
 {
@@ -28,8 +28,8 @@ void	init_structs(t_input *in, t_list **envp)
 	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
-	in->fd_error = 2; 
-	exit_status = 0;
+	in->fd_error = 2;
+	g_exit_status = 0;
 }
 
 void	update_level(t_input *in)
@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **environ)
 	t_input	in;
 	t_list	*envp;
 
-	// atexit(leaks);
 	envp = NULL;
 	if (argc == 1)
 	{
@@ -83,3 +82,7 @@ int	main(int argc, char **argv, char **environ)
 	}
 	return (0);
 }
+
+/*
+	Mirar que se inicializan correctamente todas las variables al iniciar el programa.
+*/

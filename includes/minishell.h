@@ -48,7 +48,7 @@
 # define ERR_ARG "Syntax error near argument"
 # define ERR_SHLVL "warning: shell level too high, resetting to 1"
 
-extern int exit_status;
+extern int g_exit_status;
 
 typedef struct s_arg
 {
