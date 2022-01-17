@@ -6,19 +6,19 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:36:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 13:32:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	char_space(char c)
-{
-	if (c != '\t' && c != ' ' && c != '\n'
-		&& c != '\f' && c != '\v' && c != '\r')
-		return (0);
-	return (1);
-}
+// int	char_space(char c)
+// {
+// 	if (c != '\t' && c != ' ' && c != '\n'
+// 		&& c != '\f' && c != '\v' && c != '\r')
+// 		return (0);
+// 	return (1);
+// }
 
 int	count_tokens(char *s, t_input *in, int split)
 {
