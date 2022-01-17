@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 12:47:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:59:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,15 @@
 # define ERR_PIPE "Pipe error"
 # define ERR_FORK "Fork error"
 # define ERR_DUP "Dup error"
-# define ERR_SYNTAX "syntax error near unexpected token"
-
+# define ERR_SYNTAX "Syntax error near unexpected token"
 # define ERR_CMD "command not found"
 # define ERR_FILE "No such file or directory"
 # define ERR_PERM "Permission denied"
 # define ERR_BIN "cannot execute binary file"
 # define ERR_HOME "HOME not set"
-
 # define ERR_ID "not a valid identifier"
 # define ERR_ID2 "minishell: `': not a valid identifier"
-# define ERR_ARG "Syntax error near argument"
+# define ERR_ARG "Syntax error: unpaired quotes"
 # define ERR_ARG2 "too many arguments"
 # define ERR_SHLVL "warning: shell level too high, resetting to 1"
 
@@ -100,7 +98,7 @@ typedef struct s_input
 
 int		main(int argc, char **argv, char **environ);
 int		error_msg(t_input *in, char *MSG, int n, int is_abs);
-int		print_err_pipeline();
+int		print_err_pipeline(void);
 int		char_space(char c);
 
 void	init_env_list(t_input *in, t_list **envp, char **environ);
