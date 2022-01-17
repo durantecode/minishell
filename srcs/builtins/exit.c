@@ -6,22 +6,76 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 12:06:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 03:16:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int		str_is_char(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (!ft_isalpha(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		str_is_digit(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		check_exit_args(t_input *in)
+{
+	if (str_is_digit(in->split_input[1]) && !in->split_input[2])
+		exit_status = (ft_atoi(in->split_input[1]));
+	else if (!str_is_digit(in->split_input[1]) && !in->split_input[2])
+	{
+		ft_putstr_fd(SHELL, 2);
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(in->split_input[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd("numeric argument requiered", 2);
+		exit_status = 1;
+	}	
+	else if (str_is_digit(in->split_input[1]) && in->split_input[2])
+	{
+		error_msg(in, ERR_ARG2, 0, 0);
+		return (1);
+	}
+	return (0);
+}
+
 void	my_exit(t_input *in)
 {
-	if (in->total_pipes == 1)
-		printf("%s\n", "exit");
+	if (!in->total_pipes)
+		ft_putendl_fd("exit", 2);
 	if (in->split_input[1])
-		printf("minishell: exit: too many arguments\n");
+	{
+		if (check_exit_args(in))
+			return ;
+	}
 	free_matrix(in->split_input);
-	//free_matrix(in->dup_env);
 	free(in->quote_state);
 	ft_lstclear(in->env_list, free);
 	free(in->prompt);
-	exit(0);
+	close(0);
+	close(1);
+	close(2);
+	exit(exit_status);
 }

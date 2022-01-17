@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:18:00 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:30:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_cmd_path(t_input *in)
 	{
 		aux = ft_strjoin(in->split_path[i], "/");
 		path = ft_strjoin(aux, in->split_input[0]);
-		if ((access(path, F_OK)) == 0)
+		if ((access(path, F_OK)) == 0 && !ft_strncmp(path, "/", 1))
 		{
 			in->cmd_path = ft_strdup(path);
 			free(aux);
@@ -96,11 +96,11 @@ void	exec_minishell(t_input *in)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (pid < 0)
-		error_msg(in, ERR_FORK, -1);
+		error_msg(in, ERR_FORK, -1, 0);
 	if (pid == 0)
 	{
 		if (execve(in->split_input[0], in->split_input, new_env) == -1)
-			error_msg(in, ERR_CMD, 0);
+			error_msg(in, ERR_CMD, 0, 0);
 	}
 	waitpid(pid, NULL, 0);
 	free_matrix(new_env);
@@ -115,7 +115,7 @@ void	exec_absolute(t_input *in)
 		dir = opendir(in->split_input[0]);
 		if (dir)
 		{
-			error_msg(in, IS_DIR, 999);
+			error_msg(in, IS_DIR, 0, 0);
 			closedir(dir);
 		}
 		else
@@ -123,11 +123,11 @@ void	exec_absolute(t_input *in)
 			if ((access(in->split_input[0], X_OK)) == 0)
 				execve(in->split_input[0], in->split_input, in->dup_env);
 			else
-				error_msg(in, ERR_PERM, 999);
+				error_msg(in, ERR_PERM, 0, 1);
 		}
 	}
 	else
-		error_msg(in, ERR_FILE, 999);
+		error_msg(in, ERR_FILE, 0, 1);
 }
 
 void	exec_cmd(t_input *in)
@@ -139,8 +139,8 @@ void	exec_cmd(t_input *in)
 	else
 	{
 		if (in->path_unset == 0)
-			error_msg(in, ERR_CMD, 0);
+			error_msg(in, ERR_CMD, 0, 0);
 		else
-			error_msg(in, ERR_FILE, 0);
+			error_msg(in, ERR_FILE, 0, 0);
 	}
 }

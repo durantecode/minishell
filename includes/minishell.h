@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:21:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:47:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define ERR_ID "not a valid identifier"
 # define ERR_ID2 "minishell: `': not a valid identifier"
 # define ERR_ARG "Syntax error near argument"
+# define ERR_ARG2 "too many arguments"
+# define ERR_SHLVL "warning: shell level too high, resetting to 1"
 
 extern int exit_status;
 
@@ -71,7 +73,9 @@ typedef struct s_flags
 
 typedef struct s_input
 {
-	int		fd[2][2];
+	int		fd[2][2]; 
+	int		fd_error;
+	int		status;
 	int		fd_in;
 	int		fd_out;
 	int		is_err;
@@ -94,7 +98,8 @@ typedef struct s_input
 }	t_input;
 
 int		main(int argc, char **argv, char **environ);
-int		error_msg(t_input *in, char *MSG, int n);
+int		error_msg(t_input *in, char *MSG, int n, int is_abs);
+int		char_space(char c);
 
 void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	init_flags(t_input *in);
@@ -103,7 +108,7 @@ void	update_env_var(t_input *in, char *var, char *value);
 void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
-char	*split_pipes(t_input *in);
+void	split_pipes(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
 void	remove_redir(t_input *in, int i);
@@ -131,7 +136,7 @@ void	exec_cmd(t_input *in);
 void	exec_absolute(t_input *in);
 void	here_doc(t_input *in, int i);
 void	check_hdoc(t_input *in);
-void	find_hdoc(t_input *in);
+void	exec_hdoc(t_input *in);
 
 void	unset_aux(t_input *in, char *var, int size_var);
 

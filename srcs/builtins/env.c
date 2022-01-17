@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:23:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:37:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	env(t_input *in, int type)
 
 	if (in->split_input[1] != NULL)
 	{
-		error_msg(in, ERR_FILE, 999);
+		error_msg(in, ERR_FILE, 0, 0);
 		return ;
 	}
 	aux = *in->env_list;
@@ -159,5 +159,4 @@ void	init_env_list(t_input *in, t_list **envp, char **environ)
 		ft_lstadd_back(envp, ft_new_node((void *) in->dup_env[i], size + 1));
 		i++;
 	}
-	// check_basic_vars(in);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 02:37:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:46:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,6 @@ static char	*delete_quote(t_input *in, char *str)
 	return (final_str);
 }
 
-// char	**remove_space(t_input *in)
-// {
-// 	int i;
-// 	int size;
-// 	char *aux;
-// 	int c;
-
-// 	i = 0;
-// 	while (in->split_input[i] != NULL)
-// 	{
-// 		size = ft_strlen(in->split_input[i]);
-// 		c = in->split_input[i][0];
-// 		if (c > 254)
-// 		{
-// 			aux = ft_substr(in->split_input[i], 2, size - 1);
-// 			in->split_input[i] = ft_strdup(aux);
-// 			free(aux);
-// 		}	
-// 		i++;
-// 	}
-// 	return (in->split_input);
-// }
-
 void	update_env_var(t_input *in, char *var, char *value)
 {
 	char	**aux_in;
@@ -93,7 +70,7 @@ void	update_env_var(t_input *in, char *var, char *value)
 
 	aux_in = NULL;
 	if (in->split_input)
-		aux_in = matrix_dup(in->split_input);
+		aux_in = matrix_dup(in->split_input); 
 	tmp = ft_strjoin(var, value);
 	if (in->split_input)
 		free_matrix(in->split_input);
@@ -126,7 +103,6 @@ char	**quotes(t_input *in)
 		in->split_input[i] = aux;
 		i++;
 	}
-	// remove_space(in);
 	size = matrix_len(in->split_input);
 	update_env_var(in, "_=", in->split_input[size - 1]);
 	return (in->split_input);

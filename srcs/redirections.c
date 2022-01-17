@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 02:28:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:18:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,33 @@ void	check_hdoc(t_input *in)
 		{
 			if (in->split_input[i + 1] != NULL)
 				in->is_hdoc = 1;
+			else
+				error_msg(in, ERR_SYNTAX, -1, 0);
 		}
 		i++;
 	}
 }
 
-void	find_hdoc(t_input *in)
+void	exec_hdoc(t_input *in)
 {
 	int	i;
 
 	i = 0;
-	in->is_hdoc = 0;
 	while(in->split_input[i])
 	{
 		if (!(ft_strncmp(in->split_input[i], "<<", 3)) && in->quote_state[i] == 0)
 		{
 			if (in->split_input[i + 1] != NULL)
 			{
-				if (!is_builtin(in))
-				{	
 					signal(SIGINT, handler4);
 					signal(SIGQUIT, handler3);
-				}
-				else
-					signal(SIGINT, SIG_IGN);
+					// signal(SIGINT, SIG_IGN);
 				here_doc(in, i);
+				// in->is_hdoc = 0;
 				i--;
 			}
 			else
-				error_msg(in, ERR_SYNTAX, -1);
+				error_msg(in, ERR_SYNTAX, -1, 0);
 		}
 		i++;
 	}
@@ -69,9 +67,14 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], "<", 2)) && in->quote_state[i] == 0)
 		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				error_msg(in, ERR_SYNTAX, -1, 0);
+				return ;
+			}
 			in->fd_in = open(in->split_input[i + 1], O_RDONLY);
 			if (in->fd_in == -1)
-				error_msg(in, ERR_FILE, i + 1);
+				error_msg(in, ERR_FILE, i + 1, 0);
 			else
 			{
 				remove_redir(in, i);
@@ -91,9 +94,14 @@ void	check_redirs(t_input *in)
 	{
 		if (!(ft_strncmp(in->split_input[i], ">", 2)) && in->quote_state[i] == 0)
 		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				error_msg(in, ERR_SYNTAX, -1, 0);
+				return ;
+			}
 			in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
 			if (in->fd_out == -1)
-				error_msg(in, ERR_PERM, i + 1);
+				error_msg(in, ERR_PERM, i + 1, 0);
 			if (in->fd_out > 2)
 			{
 				remove_redir(in, i);
@@ -109,9 +117,14 @@ void	check_redirs(t_input *in)
 		}
 		else if (!(ft_strncmp(in->split_input[i], ">>", 3)) && in->quote_state[i] == 0)
 		{
+			if (in->split_input[i + 1] == NULL)
+			{
+				error_msg(in, ERR_SYNTAX, -1, 0);
+				return ;
+			}
 			in->fd_out = open(in->split_input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
 			if (in->fd_out == -1)
-				error_msg(in, ERR_PERM, i + 1);
+				error_msg(in, ERR_PERM, i + 1, 0);
 			if (in->fd_out > 2)
 			{
 				remove_redir(in, i);

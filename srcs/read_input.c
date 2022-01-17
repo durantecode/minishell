@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 12:08:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:03:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	check_errors2(t_input *in)
 			flag = 1;
 		if (in->user_input[i] == '|' && flag == 0)
 		{
-			error_msg(in, ERR_SYNTAX, -1);
+			error_msg(in, ERR_SYNTAX, -1, 0);
 			return (1);
 		}
 		i++;
@@ -93,14 +93,14 @@ int	check_errors(t_input *in)
 		if (in->flags.double_q == 0 && in->flags.single_q == 0)
 		{
 			if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
-				|| in->user_input[in->flags.i] == '|' || in->user_input[in->flags.i] == ' ')
+				|| in->user_input[in->flags.i] == '|' || char_space(in->user_input[in->flags.i]))
 			{
 				if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
 					|| in->user_input[in->flags.i] == '|')
 				{
 					if (in->user_input[in->flags.i] == '|' && special == 1 && flag_diff == 0)
 					{
-						error_msg(in, ERR_SYNTAX, -2);
+						error_msg(in, ERR_SYNTAX, -2, 0);
 						return (1);
 					}
 					else if (in->user_input[in->flags.i] == '|')
@@ -116,12 +116,12 @@ int	check_errors(t_input *in)
 					count++;
 					in->flags.i++;
 				}
-				while (in->user_input[in->flags.i] == ' ')
+				while (char_space(in->user_input[in->flags.i]))
 					in->flags.i++;
 				if (((c == '<' || c == '>') && count > 2) || (c == '|' && count > 1)
 					|| in->user_input[in->flags.i] == c)
 				{
-					error_msg(in, ERR_SYNTAX, -2);
+					error_msg(in, ERR_SYNTAX, -2, 0);
 					return (1);
 				}
 			}
@@ -136,27 +136,26 @@ int	check_errors(t_input *in)
 	}
 	if (flag_diff == 0 && special == 1)
 	{
-		error_msg(in, ERR_SYNTAX, -2);
+		error_msg(in, ERR_SYNTAX, -2, 0);
 		return (1);
 	}
 	return (check_errors2(in));
 }
 
-void	read_input_aux(t_input *in, char *aux)
+void	read_input_aux(t_input *in)
 {
 	if (in->user_input[0] != '\0')
 		add_history(in->user_input);
 	ft_bzero(&in->flags, sizeof(in->flags));
 	if (!check_errors(in))
 	{
-		aux = in->user_input;
-		in->user_input = split_pipes(in);
-		free(aux);
+		split_pipes(in);
 		if (check_args(in))
 		{
-			if (is_builtin(in) && count_pipes(in) == 1)
+			check_hdoc(in);
+			if (is_builtin(in) && count_pipes(in) == 0 && !in->is_hdoc)
 			{
-				find_hdoc(in);
+				// exec_hdoc(in);
 				check_redirs(in);
 				if (!in->is_err)
 					exec_args(in);
@@ -174,12 +173,35 @@ void	read_input_aux(t_input *in, char *aux)
 	}
 }
 
+int		char_space(char c)
+{
+	if (c != '\t' && c != ' ' && c != '\n'
+	&& c != '\f' && c != '\v' && c != '\r')
+		return (0);
+	return (1);
+}
+
+int		is_space(char *str)
+{
+	int i;
+	int c;
+
+	i = 0;
+	while (str[i])
+	{
+		c = str[i];
+		if (c != '\t' && c != ' ' && c != '\n'
+		&& c != '\f' && c != '\v' && c != '\r')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	read_input(t_input *in)
 {
 	char	*user;
-	char	*aux;
 
-	aux = NULL;
 	user = ft_getenv("USER", in);
 	if (!user)
 		user = ft_strdup("guest");
@@ -189,13 +211,13 @@ void	read_input(t_input *in)
 	in->quote_state = malloc(1);
 	if (in->user_input)
 	{
-		if ((ft_strncmp(in->user_input, "", 1)))
+		if (!is_space(in->user_input))
 		{
 			if (pair_quotes(in) == 0)
-				read_input_aux(in, aux);
+				read_input_aux(in);
 			else
 			{
-				error_msg(in, ERR_ARG, -2);
+				error_msg(in, ERR_ARG, -2, 0);
 				add_history(in->user_input);
 			}
 		}
@@ -211,6 +233,9 @@ void	read_input(t_input *in)
 	}
 	else
 	{
+		close(0);
+		close(1);
+		close(2);
 		free(in->quote_state);
 		write(2, "exit\n", 5);
 		ft_lstclear(in->env_list, free);

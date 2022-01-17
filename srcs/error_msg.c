@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 00:18:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:49:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	update_exit_status(char *ERR, int is_abs)
 		return (126);
 	else if (!ft_strcmp(ERR, ERR_PERM))
 	{
-		if (is_abs == 999)
+		if (is_abs == 1)
 			return (126);
 	}
 	else if (!ft_strcmp(ERR, ERR_FILE))
 	{
-		if (is_abs == 999)
+		if (is_abs == 1)
 			return (127);
 	}
 	else if (!ft_strcmp(ERR, ERR_CMD))
@@ -33,29 +33,33 @@ int	update_exit_status(char *ERR, int is_abs)
 	return(1);
 }
 
-int	error_msg(t_input *in, char *MSG, int n)
+int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 {
-	int is_abs;
-
-	is_abs = n;
+	if (in->total_pipes > 0 && in->is_hdoc)
+		in->fd_error = open(".err_tmp", O_CREAT | O_WRONLY | O_APPEND, 0666);
+	else
+		in->fd_error = 2;
 	if (n >= 0)
 	{
-		if (n == 999)
-			n = 0;
-		write(2, SHELL, ft_strlen(SHELL));
-		write(2, in->split_input[n], ft_strlen(in->split_input[n]));
-		write(2, ": ", 2);
-		write(2, MSG, ft_strlen(MSG));
-		write(2, "\n", 1);
+		ft_putstr_fd(SHELL, in->fd_error);
+		ft_putstr_fd(in->split_input[n], in->fd_error);
+		ft_putstr_fd(": ", in->fd_error);
+		ft_putendl_fd(MSG, in->fd_error);
 	}
 	else
 	{
-		write(2, SHELL, ft_strlen(SHELL));
-		write(2, MSG, ft_strlen(MSG));
-		write(2, "\n", 1);
+		ft_putstr_fd(SHELL, in->fd_error);
+		ft_putendl_fd(MSG, in->fd_error);
 	}
+	if (in->fd_error != 2)
+		close(in->fd_error);
 	if (in->split_input && !is_builtin(in) && n != -2)
+	{
+		close(0);
+		close(1);
+		close(2);
 		exit(update_exit_status(MSG, is_abs));
+	}
 	exit_status = update_exit_status(MSG, is_abs);
 	in->is_err = 1;
 	return (0);

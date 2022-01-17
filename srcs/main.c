@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/12 17:51:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/15 20:51:00 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
+	in->fd_error = 2;
 	exit_status = 0;
 }
 
@@ -39,6 +40,13 @@ void	update_level(t_input *in)
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
+	if (level <= 0)
+	{
+		ft_putstr_fd(SHELL, 2);
+		if (level == -1)
+			level++;
+		ft_putendl_fd(ERR_SHLVL, 2);
+	}
 	free(aux);
 	level++;
 	number = ft_itoa(level);
@@ -65,12 +73,13 @@ int	main(int argc, char **argv, char **environ)
 			signal(SIGQUIT, SIG_IGN);
 			read_input(&in);
 			unlink(".hd_tmp");
+			unlink(".err_tmp");
 		}
 	}
 	else
 	{
 		in.split_input = argv;
-		error_msg(&in, ERR_ARG, -1);
+		error_msg(&in, ERR_ARG, -1, 0);
 	}
 	return (0);
 }
