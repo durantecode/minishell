@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:21:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,30 +104,6 @@ void	exec_minishell(t_input *in)
 	}
 	waitpid(pid, NULL, 0);
 	free_matrix(new_env);
-}
-
-void	exec_absolute(t_input *in)
-{
-	DIR	*dir;
-
-	if ((access(in->split_in[0], F_OK)) == 0)
-	{		
-		dir = opendir(in->split_in[0]);
-		if (dir)
-		{
-			error_msg(in, IS_DIR, 0, 0);
-			closedir(dir);
-		}
-		else
-		{
-			if ((access(in->split_in[0], X_OK)) == 0)
-				execve(in->split_in[0], in->split_in, in->dup_env);
-			else
-				error_msg(in, ERR_PERM, 0, 1);
-		}
-	}
-	else
-		error_msg(in, ERR_FILE, 0, 1);
 }
 
 void	exec_cmd(t_input *in)

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:36:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:58:13 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	update_env_var(t_input *in, char *var, char *value)
 
 	aux_in = NULL;
 	if (in->split_in)
-		aux_in = matrix_dup(in->split_in); 
+		aux_in = matrix_dup(in->split_in);
 	tmp = ft_strjoin(var, value);
 	if (in->split_in)
 		free_matrix(in->split_in);

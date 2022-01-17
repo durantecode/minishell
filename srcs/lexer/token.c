@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 18:56:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:18:13 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	count_tokens_aux(t_input *in, char *s, int start)
 		}
 		else if (!char_space(s[in->f.i]))
 			start = 1;
-		if (char_space(s[in->f.i]) && in->f.single_q == 0 && in->f.double_q == 0)
+		if (char_space(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
 		{
 			if (start)
 				in->f.count++;
@@ -51,12 +51,12 @@ void	count_tokens_aux(t_input *in, char *s, int start)
 
 void	count_tokens_aux2(t_input *in, char *s, int start)
 {
-	if (char_space(s[in->f.i]) && in->f.single_q == 0 && in->f.double_q == 0)
+	if (char_space(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
 	{
 		if (start)
 		{
-			in->split_in[in->f.j] =
-				ft_substr(s, in->f.start, in->f.i - in->f.start);
+			in->split_in[in->f.j]
+				= ft_substr(s, in->f.start, in->f.i - in->f.start);
 			in->f.j++;
 		}
 		while (char_space(s[in->f.i]) && s[in->f.i])
@@ -68,15 +68,15 @@ void	count_tokens_aux2(t_input *in, char *s, int start)
 		in->f.i++;
 		if (s[in->f.i] == '\0')
 		{
-			in->split_in[in->f.j] =
-				ft_substr(s, in->f.start, in->f.i - in->f.start);
+			in->split_in[in->f.j]
+				= ft_substr(s, in->f.start, in->f.i - in->f.start);
 		}
 	}
 }
 
 int	count_tokens(char *s, t_input *in, int split)
 {
-	int start;
+	int	start;
 
 	start = 0;
 	if (!split)
