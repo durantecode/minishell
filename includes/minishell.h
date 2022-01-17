@@ -46,6 +46,7 @@
 # define ERR_ID "not a valid identifier"
 # define ERR_ID2 "minishell: `': not a valid identifier"
 # define ERR_ARG "Syntax error near argument"
+# define ERR_ARG2 "too many arguments"
 # define ERR_SHLVL "warning: shell level too high, resetting to 1"
 
 extern int exit_status;

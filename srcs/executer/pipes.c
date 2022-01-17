@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 20:53:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 02:19:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,11 @@ void	pipex(t_input *in, t_list *arg_list)
 		if (WIFEXITED(in->status))
 			exit_status = WEXITSTATUS(in->status);
 		in->total_pipes--;
+	}
+	if (is_builtin(in) && in->is_hdoc)
+	{
+		remove_redir(in, 2);
+		exec_args(in);
 	}
 	if (exit_status != 255 && exit_status != 131)
 		print_err_pipeline();
