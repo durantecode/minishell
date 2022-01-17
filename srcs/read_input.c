@@ -155,15 +155,13 @@ void	read_in_aux(t_input *in)
 			check_hdoc(in);
 			if (is_builtin(in) && count_pipes(in) == 0 && !in->is_hdoc)
 			{
-				// exec_hdoc(in);
 				check_redirs(in);
 				if (!in->is_err)
 					exec_args(in);
 				if (in->is_outfile)
-				{
 					dup2(in->back_stdout, STDOUT_FILENO);
+				if (in->is_outfile)
 					close(in->back_stdout);
-				}
 				if (!in->is_err)
 					g_exit_status = 0;
 			}
@@ -198,6 +196,29 @@ int		is_space(char *str)
 	return (1);
 }
 
+void	input_work(t_input *in, char **user)
+{
+	if (!is_space(in->user_in))
+	{
+		if (pair_quotes(in) == 0)
+			read_in_aux(in);
+		else
+		{
+			error_msg(in, ERR_ARG, -2, 0);
+			add_history(in->user_in);
+		}
+	}
+	if (in->split_in)
+	{	
+		free_matrix(in->split_in);
+		in->split_in = NULL;
+	}
+	free(in->q_state);
+	free(in->user_in);
+	free(in->prompt);
+	free(*user);
+}
+
 void	read_input(t_input *in)
 {
 	char	*user;
@@ -210,27 +231,7 @@ void	read_input(t_input *in)
 	in->is_err = 0;
 	in->q_state = malloc(1);
 	if (in->user_in)
-	{
-		if (!is_space(in->user_in))
-		{
-			if (pair_quotes(in) == 0)
-				read_in_aux(in);
-			else
-			{
-				error_msg(in, ERR_ARG, -2, 0);
-				add_history(in->user_in);
-			}
-		}
-		if (in->split_in)
-		{	
-			free_matrix(in->split_in);
-			in->split_in = NULL;
-		}
-		free(in->q_state);
-		free(in->user_in);
-		free(in->prompt);
-		free(user);
-	}
+		input_work(in, &user);
 	else
 	{
 		close(0);
