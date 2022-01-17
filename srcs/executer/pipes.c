@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 20:27:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:30:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	child(t_input *in, t_list *aux_list, int index)
 	exit (g_exit_status);
 }
 
-void	sub_pipex(t_input *in, t_list *aux_list, int index, int flag)
+void	sub_pipex(t_input *in, t_list *aux_list, int index, int *flag)
 {
 	pid_t	pid;
 
@@ -82,7 +82,7 @@ void	sub_pipex(t_input *in, t_list *aux_list, int index, int flag)
 	{
 		close(in->fd[index % 2][W_END]);
 		close(in->fd[index % 2][R_END]);
-		flag = 1;
+		*flag = 1;
 	}
 	else if (!pid)
 		child(in, aux_list, index);
@@ -137,7 +137,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		in->q_state = aux->quotes;
 		signal(SIGINT, handler2);
 		signal(SIGQUIT, handler2);
-		sub_pipex(in, aux_list, index, flag);
+		sub_pipex(in, aux_list, index, &flag);
 		aux_list = aux_list->next;
 		index++;
 	}
