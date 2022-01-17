@@ -74,7 +74,7 @@ int	check_errors2(t_input *in)
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	check_errors(t_input *in)
@@ -92,11 +92,9 @@ int	check_errors(t_input *in)
 		check_quotes(in);
 		if (in->flags.double_q == 0 && in->flags.single_q == 0)
 		{
-			if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
-				|| in->user_input[in->flags.i] == '|' || char_space(in->user_input[in->flags.i]))
+			if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>' || in->user_input[in->flags.i] == '|' || char_space(in->user_input[in->flags.i]))
 			{
-				if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>'
-					|| in->user_input[in->flags.i] == '|')
+				if (in->user_input[in->flags.i] == '<' || in->user_input[in->flags.i] == '>' || in->user_input[in->flags.i] == '|')
 				{
 					if (in->user_input[in->flags.i] == '|' && special == 1 && flag_diff == 0)
 					{
@@ -111,14 +109,15 @@ int	check_errors(t_input *in)
 					special = 1;
 				}
 				c = in->user_input[in->flags.i];
-				while (c == in->user_input[in->flags.i] && count <= 2)
+				while (c == in->user_input[in->flags.i++] && count <= 2)
 				{
 					count++;
 					in->flags.i++;
 				}
 				while (char_space(in->user_input[in->flags.i]))
 					in->flags.i++;
-				if (((c == '<' || c == '>') && count > 2) || (c == '|' && count > 1)
+				if (((c == '<' || c == '>') && count > 2)
+					|| (c == '|' && count > 1)
 					|| in->user_input[in->flags.i] == c)
 				{
 					error_msg(in, ERR_SYNTAX, -2, 0);
@@ -155,17 +154,15 @@ void	read_input_aux(t_input *in)
 			check_hdoc(in);
 			if (is_builtin(in) && count_pipes(in) == 0 && !in->is_hdoc)
 			{
-				// exec_hdoc(in);
 				check_redirs(in);
 				if (!in->is_err)
 					exec_args(in);
 				if (in->is_outfile)
-				{
 					dup2(in->back_stdout, STDOUT_FILENO);
+				if (in->is_outfile)
 					close(in->back_stdout);
-				}
 				if (!in->is_err)
-					exit_status = 0;
+					g_exit_status = 0;
 			}
 			else
 				init_arg_list(in);
@@ -173,29 +170,52 @@ void	read_input_aux(t_input *in)
 	}
 }
 
-int		char_space(char c)
+int	char_space(char c)
 {
 	if (c != '\t' && c != ' ' && c != '\n'
-	&& c != '\f' && c != '\v' && c != '\r')
+		&& c != '\f' && c != '\v' && c != '\r')
 		return (0);
 	return (1);
 }
 
-int		is_space(char *str)
+int	is_space(char *str)
 {
-	int i;
-	int c;
+	int	i;
+	int	c;
 
 	i = 0;
 	while (str[i])
 	{
 		c = str[i];
 		if (c != '\t' && c != ' ' && c != '\n'
-		&& c != '\f' && c != '\v' && c != '\r')
+			&& c != '\f' && c != '\v' && c != '\r')
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+void	input_action(t_input *in, char **user)
+{
+	if (!is_space(in->user_input))
+	{
+		if (pair_quotes(in) == 0)
+			read_input_aux(in);
+		else
+		{
+			error_msg(in, ERR_ARG, -2, 0);
+			add_history(in->user_input);
+		}
+	}
+	if (in->split_input)
+	{	
+		free_matrix(in->split_input);
+		in->split_input = NULL;
+	}
+	free(in->quote_state);
+	free(in->user_input);
+	free(in->prompt);
+	free(*user);
 }
 
 void	read_input(t_input *in)
@@ -210,27 +230,7 @@ void	read_input(t_input *in)
 	in->is_err = 0;
 	in->quote_state = malloc(1);
 	if (in->user_input)
-	{
-		if (!is_space(in->user_input))
-		{
-			if (pair_quotes(in) == 0)
-				read_input_aux(in);
-			else
-			{
-				error_msg(in, ERR_ARG, -2, 0);
-				add_history(in->user_input);
-			}
-		}
-		if (in->split_input)
-		{	
-			free_matrix(in->split_input);
-			in->split_input = NULL;
-		}
-		free(in->quote_state);
-		free(in->user_input);
-		free(in->prompt);
-		free(user);
-	}
+		input_action(in, &user);
 	else
 	{
 		close(0);
@@ -244,5 +244,3 @@ void	read_input(t_input *in)
 		exit(0);
 	}
 }
-
-

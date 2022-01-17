@@ -17,7 +17,7 @@ char	*del_str_pos(char *str, int n)
 	int		i;
 	int		j;
 	char	*aux;
-	
+
 	i = 0;
 	j = 0;
 	aux = malloc(ft_strlen(str));
@@ -30,5 +30,5 @@ char	*del_str_pos(char *str, int n)
 		j++;
 	}
 	aux[j] = '\0';
-	return(aux);
+	return (aux);
 }

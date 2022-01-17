@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 20:51:00 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:54:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int exit_status;
+int	g_exit_status;
 
 void	leaks(void)
 {
@@ -29,7 +29,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->fd_in = 0;
 	in->fd_out = 0;
 	in->fd_error = 2;
-	exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	update_level(t_input *in)
@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **environ)
 	t_input	in;
 	t_list	*envp;
 
-	// atexit(leaks);
 	envp = NULL;
 	if (argc == 1)
 	{
@@ -83,3 +82,7 @@ int	main(int argc, char **argv, char **environ)
 	}
 	return (0);
 }
+
+/*
+	Mirar que se inicializan correctamente todas las variables al iniciar el programa.
+*/

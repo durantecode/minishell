@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 03:16:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:55:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		str_is_digit(char *str)
 int		check_exit_args(t_input *in)
 {
 	if (str_is_digit(in->split_input[1]) && !in->split_input[2])
-		exit_status = (ft_atoi(in->split_input[1]));
+		g_exit_status = (ft_atoi(in->split_input[1]));
 	else if (!str_is_digit(in->split_input[1]) && !in->split_input[2])
 	{
 		ft_putstr_fd(SHELL, 2);
@@ -51,7 +51,7 @@ int		check_exit_args(t_input *in)
 		ft_putstr_fd(in->split_input[1], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd("numeric argument requiered", 2);
-		exit_status = 1;
+		g_exit_status = 1;
 	}	
 	else if (str_is_digit(in->split_input[1]) && in->split_input[2])
 	{
@@ -77,5 +77,5 @@ void	my_exit(t_input *in)
 	close(0);
 	close(1);
 	close(2);
-	exit(exit_status);
+	exit(g_exit_status);
 }
