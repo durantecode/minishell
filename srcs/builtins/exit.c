@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 11:55:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:01:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@ int		str_is_digit(char *str)
 
 int		check_exit_args(t_input *in)
 {
-	if (str_is_digit(in->split_input[1]) && !in->split_input[2])
-		g_exit_status = (ft_atoi(in->split_input[1]));
-	else if (!str_is_digit(in->split_input[1]) && !in->split_input[2])
+	if (str_is_digit(in->split_in[1]) && !in->split_in[2])
+		g_exit_status = (ft_atoi(in->split_in[1]));
+	else if (!str_is_digit(in->split_in[1]) && !in->split_in[2])
 	{
 		ft_putstr_fd(SHELL, 2);
 		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(in->split_input[1], 2);
+		ft_putstr_fd(in->split_in[1], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd("numeric argument requiered", 2);
 		g_exit_status = 1;
 	}	
-	else if (str_is_digit(in->split_input[1]) && in->split_input[2])
+	else if (str_is_digit(in->split_in[1]) && in->split_in[2])
 	{
 		error_msg(in, ERR_ARG2, 0, 0);
 		return (1);
@@ -65,13 +65,13 @@ void	my_exit(t_input *in)
 {
 	if (!in->total_pipes)
 		ft_putendl_fd("exit", 2);
-	if (in->split_input[1])
+	if (in->split_in[1])
 	{
 		if (check_exit_args(in))
 			return ;
 	}
-	free_matrix(in->split_input);
-	free(in->quote_state);
+	free_matrix(in->split_in);
+	free(in->q_state);
 	ft_lstclear(in->env_list, free);
 	free(in->prompt);
 	close(0);

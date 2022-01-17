@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 11:55:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:01:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	count_pipes(t_input *in)
 
 	i = 0;
 	pipes = 0;
-	while (in->split_input[i] != NULL)
+	while (in->split_in[i] != NULL)
 	{
-		if (!(ft_strncmp(in->split_input[i], "|", 2)) && in->quote_state[i] == 0)
+		if (!(ft_strncmp(in->split_in[i], "|", 2)) && in->q_state[i] == 0)
 			pipes++;
 		i++;
 	}
@@ -72,8 +72,8 @@ void	pipex(t_input *in, t_list *arg_list)
 		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1, 0);
 		aux = (t_arg *)aux_list->content;
-		in->split_input = aux->arg;
-		in->quote_state = aux->quotes;
+		in->split_in = aux->arg;
+		in->q_state = aux->quotes;
 		signal(SIGINT, handler2);
 		signal(SIGQUIT, handler2);
 		pid = fork();
@@ -105,7 +105,7 @@ void	pipex(t_input *in, t_list *arg_list)
 				close(in->fd[(index + 1) % 2][R_END]);
 			}
 			close(in->fd[index % 2][R_END]);
-			if (in->split_input[0])
+			if (in->split_in[0])
 				exec_args(in);
 			close(0);
 			close(1);
@@ -171,8 +171,8 @@ void	init_arg_list(t_input *in)
 	{
 		i[3] = 0;
 		i[2] = 0;
-		while (in->split_input[i[0]] != NULL && ((ft_strncmp(in->split_input[i[0]], "|", 2))
-			|| in->quote_state[i[0]] == 1))
+		while (in->split_in[i[0]] != NULL && ((ft_strncmp(in->split_in[i[0]], "|", 2))
+			|| in->q_state[i[0]] == 1))
 		{
 			i[0]++;
 			i[2]++;
@@ -181,11 +181,11 @@ void	init_arg_list(t_input *in)
 		args->arg = malloc(sizeof(char *) * (i[2] + 1));
 		args->quotes = malloc(sizeof(int) * (i[2]));
 		i[0] = i[0] - i[2];
-		while (in->split_input[i[0]] != NULL && ((ft_strncmp(in->split_input[i[0]], "|", 2))
-			|| in->quote_state[i[0]] == 1))
+		while (in->split_in[i[0]] != NULL && ((ft_strncmp(in->split_in[i[0]], "|", 2))
+			|| in->q_state[i[0]] == 1))
 		{
-			args->arg[i[3]] = ft_strdup(in->split_input[i[0]]);
-			if (in->quote_state[i[0]] == 1)
+			args->arg[i[3]] = ft_strdup(in->split_in[i[0]]);
+			if (in->q_state[i[0]] == 1)
 				args->quotes[i[3]] = 1;
 			else
 				args->quotes[i[3]] = 0;
@@ -197,10 +197,10 @@ void	init_arg_list(t_input *in)
 		i[1]++;
 		i[0]++;
 	}
-	free(in->quote_state);
-	free_matrix(in->split_input);
+	free(in->q_state);
+	free_matrix(in->split_in);
 	pipex(in, arg_list);
 	free_list(arg_list);
-	in->quote_state = NULL;
-	in->split_input = NULL;
+	in->q_state = NULL;
+	in->split_in = NULL;
 }

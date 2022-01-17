@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 02:20:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:01:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ void	remove_redir(t_input *in, int i)
 	char **aux;
 
 	j = 0;
-	aux = malloc(sizeof(char *) * (matrix_len(in->split_input) - 1));
-	while(in->split_input[j] && j < i)
+	aux = malloc(sizeof(char *) * (matrix_len(in->split_in) - 1));
+	while(in->split_in[j] && j < i)
 	{
-		aux[j] = ft_strdup(in->split_input[j]);
+		aux[j] = ft_strdup(in->split_in[j]);
 		j++;
 	}
 	i += 2; 
-	while(in->split_input[i])
+	while(in->split_in[i])
 	{
-		aux[j] = ft_strdup(in->split_input[i]);
-		in->quote_state[j] = in->quote_state[i];
+		aux[j] = ft_strdup(in->split_in[i]);
+		in->q_state[j] = in->q_state[i];
 		j++;
 		i++;
 	}
 	aux[j] = NULL;
-	free_matrix(in->split_input);
-	in->split_input = NULL;
-	in->split_input = aux;
+	free_matrix(in->split_in);
+	in->split_in = NULL;
+	in->split_in = aux;
 }
 
 void	here_doc(t_input *in, int i)
@@ -47,7 +47,7 @@ void	here_doc(t_input *in, int i)
 	fd = open(".hd_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd == -1)
 		error_msg(in, ERR_FILE, -1, 0);
-	eof = ft_strdup(in->split_input[i + 1]);
+	eof = ft_strdup(in->split_in[i + 1]);
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
 	while (1)
@@ -64,7 +64,7 @@ void	here_doc(t_input *in, int i)
 	remove_redir(in, i);
 	exec_hdoc(in);
 	free(eof);
-	if (!in->split_input[0])
+	if (!in->split_in[0])
 		return ;
 	fd = open(".hd_tmp", O_RDONLY);
 	if (!is_builtin(in))

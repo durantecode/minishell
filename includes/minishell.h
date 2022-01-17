@@ -86,15 +86,15 @@ typedef struct s_input
 	int		path_unset;
 	int		total_pipes;
 	int		q_state_size;
+	int		*q_state;
 	char	*prompt;
-	char	*user_input;
+	char	*user_in;
 	char	*cmd_path;
 	char	**split_path;
-	char	**split_input;
-	int		*quote_state;
+	char	**split_in;
 	char	**dup_env;
 	t_list	**env_list;
-	t_flags	flags;
+	t_flags	f;
 }	t_input;
 
 int		main(int argc, char **argv, char **environ);
@@ -108,9 +108,11 @@ void	update_env_var(t_input *in, char *var, char *value);
 void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
-void	split_pipes(t_input *in);
+int		check_errors(t_input *in);
 int		check_args(t_input *in);
 void	check_redirs(t_input *in);
+void	split_args(t_input *in);
+
 void	remove_redir(t_input *in, int i);
 
 int		count_tokens(char *s, t_input *in, int split);

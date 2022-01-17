@@ -6,11 +6,19 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 18:04:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:36:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	char_space(char c)
+{
+	if (c != '\t' && c != ' ' && c != '\n'
+		&& c != '\f' && c != '\v' && c != '\r')
+		return (0);
+	return (1);
+}
 
 int	count_tokens(char *s, t_input *in, int split)
 {
@@ -19,72 +27,70 @@ int	count_tokens(char *s, t_input *in, int split)
 	start = 0;
 	if (!split)
 	{
-		while (s[in->flags.i] != '\0')
+		while (s[in->f.i] != '\0')
 		{
 			quotes_state(in, s);
-			if (char_space(s[in->flags.i]) && !start)
+			if (char_space(s[in->f.i]) && !start)
 			{
-				while (char_space(s[in->flags.i]) && s[in->flags.i])
-					in->flags.i++;
+				while (char_space(s[in->f.i]) && s[in->f.i])
+					in->f.i++;
 				start = 1;
 			}
-			else if (!char_space(s[in->flags.i]))
+			else if (!char_space(s[in->f.i]))
 				start = 1;
-			if (char_space(s[in->flags.i]) && in->flags.single_q == 0 && in->flags.double_q == 0)
+			if (char_space(s[in->f.i]) && in->f.single_q == 0 && in->f.double_q == 0)
 			{
 				if (start)
-					in->flags.count++;
-				while (char_space(s[in->flags.i]) && s[in->flags.i])
-					in->flags.i++;
+					in->f.count++;
+				while (char_space(s[in->f.i]) && s[in->f.i])
+					in->f.i++;
 			}
-			else if (s[in->flags.i] != '\0')
+			else if (s[in->f.i] != '\0')
 			{
-				in->flags.i++;
-				if (s[in->flags.i] == '\0')
-					in->flags.count++;
+				in->f.i++;
+				if (s[in->f.i] == '\0')
+					in->f.count++;
 			}
 		}
 	}	
 	if (split)
 	{
-		in->flags.i = 0;
-		in->flags.start = 0;
-		while (s[in->flags.i] != '\0')
+		in->f.i = 0;
+		in->f.start = 0;
+		while (s[in->f.i] != '\0')
 		{
 			quotes_state(in, s);
-			if (char_space(s[in->flags.i]) && !start)
+			if (char_space(s[in->f.i]) && !start)
 			{
-				while (char_space(s[in->flags.i]) && s[in->flags.i])
-					in->flags.i++;
-				in->flags.start = in->flags.i;
+				while (char_space(s[in->f.i]) && s[in->f.i])
+					in->f.i++;
+				in->f.start = in->f.i;
 				start = 1;
 			}
-			else if (!char_space(s[in->flags.i]))
+			else if (!char_space(s[in->f.i]))
 				start = 1;
-			if (char_space(s[in->flags.i]) && in->flags.single_q == 0 && in->flags.double_q == 0)
+			if (char_space(s[in->f.i]) && in->f.single_q == 0 && in->f.double_q == 0)
 			{
 				if (start)
 				{
-					in->split_input[in->flags.j] =
-						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
-					in->flags.j++;
+					in->split_in[in->f.j] =
+						ft_substr(s, in->f.start, in->f.i - in->f.start);
+					in->f.j++;
 				}
-				while (char_space(s[in->flags.i]) && s[in->flags.i])
-					in->flags.i++;
-				in->flags.start = in->flags.i;
+				while (char_space(s[in->f.i]) && s[in->f.i])
+					in->f.i++;
+				in->f.start = in->f.i;
 			}
-			else if (s[in->flags.i] != '\0')
+			else if (s[in->f.i] != '\0')
 			{
-				in->flags.i++;
-				if (s[in->flags.i] == '\0')
+				in->f.i++;
+				if (s[in->f.i] == '\0')
 				{
-					in->split_input[in->flags.j] =
-						ft_substr(s, in->flags.start, in->flags.i - in->flags.start);
-					// in->flags.start = in->flags.i;
-					// in->flags.j++;
+					in->split_in[in->f.j] =
+						ft_substr(s, in->f.start, in->f.i - in->f.start);
 				}
 			}
 		}
 	}
-	return (in->flags.count);
+	return (in->f.count);
 }

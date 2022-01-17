@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/14 15:30:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	get_cmd_path(t_input *in)
 	while (in->split_path[++i])
 	{
 		aux = ft_strjoin(in->split_path[i], "/");
-		path = ft_strjoin(aux, in->split_input[0]);
+		path = ft_strjoin(aux, in->split_in[0]);
 		if ((access(path, F_OK)) == 0 && !ft_strncmp(path, "/", 1))
 		{
 			in->cmd_path = ft_strdup(path);
@@ -99,7 +99,7 @@ void	exec_minishell(t_input *in)
 		error_msg(in, ERR_FORK, -1, 0);
 	if (pid == 0)
 	{
-		if (execve(in->split_input[0], in->split_input, new_env) == -1)
+		if (execve(in->split_in[0], in->split_in, new_env) == -1)
 			error_msg(in, ERR_CMD, 0, 0);
 	}
 	waitpid(pid, NULL, 0);
@@ -110,9 +110,9 @@ void	exec_absolute(t_input *in)
 {
 	DIR	*dir;
 
-	if ((access(in->split_input[0], F_OK)) == 0)
+	if ((access(in->split_in[0], F_OK)) == 0)
 	{		
-		dir = opendir(in->split_input[0]);
+		dir = opendir(in->split_in[0]);
 		if (dir)
 		{
 			error_msg(in, IS_DIR, 0, 0);
@@ -120,8 +120,8 @@ void	exec_absolute(t_input *in)
 		}
 		else
 		{
-			if ((access(in->split_input[0], X_OK)) == 0)
-				execve(in->split_input[0], in->split_input, in->dup_env);
+			if ((access(in->split_in[0], X_OK)) == 0)
+				execve(in->split_in[0], in->split_in, in->dup_env);
 			else
 				error_msg(in, ERR_PERM, 0, 1);
 		}
@@ -135,7 +135,7 @@ void	exec_cmd(t_input *in)
 	get_path(in);
 	in->cmd_path = NULL;
 	if (get_cmd_path(in))
-		execve(in->cmd_path, in->split_input, in->dup_env);
+		execve(in->cmd_path, in->split_in, in->dup_env);
 	else
 	{
 		if (in->path_unset == 0)

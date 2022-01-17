@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 18:05:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:36:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	check_args(t_input *in)
 {
 	int		input_size;
 
-	if (!in->user_input)
+	if (!in->user_in)
 		return (0);
-	ft_bzero(&in->flags, sizeof(in->flags));
-	input_size = count_tokens(in->user_input, in, 0);
-	in->split_input = malloc(sizeof(char *) * (input_size + 1));
+	ft_bzero(&in->f, sizeof(in->f));
+	input_size = count_tokens(in->user_in, in, 0);
+	in->split_in = malloc(sizeof(char *) * (input_size + 1));
 	in->q_state_size = input_size;
-	free(in->quote_state);
-	in->quote_state = malloc(sizeof(int) * in->q_state_size);
-	if (!in->split_input)
+	free(in->q_state);
+	in->q_state = malloc(sizeof(int) * in->q_state_size);
+	if (!in->split_in)
 		return (0);
-	ft_bzero(&in->flags, sizeof(in->flags));
-	count_tokens(in->user_input, in, 1);
-	in->split_input[input_size] = NULL;
+	ft_bzero(&in->f, sizeof(in->f));
+	count_tokens(in->user_in, in, 1);
+	in->split_in[input_size] = NULL;
 	expand_vars(in);
 	return (input_size);
 }

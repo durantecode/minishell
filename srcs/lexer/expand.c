@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 11:56:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:36:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 
 	len1 = ft_strlen(*aux);
 	len2 = ft_strlen(*var);
-	len3 = ft_strlen(in->split_input[j]);
-	last = ft_substr(in->split_input[j], len1 + len2 + 1, len3 - len2 - len1);
+	len3 = ft_strlen(in->split_in[j]);
+	last = ft_substr(in->split_in[j], len1 + len2 + 1, len3 - len2 - len1);
 	if (!(ft_strncmp(*var, "?", 2)))
 		expanded = ft_itoa(g_exit_status);
-	else if (j > 1 && !(ft_strncmp(in->split_input[j - 1], "<<", 3)))
-		expanded = ft_strdup(in->split_input[j]);
+	else if (j > 1 && !(ft_strncmp(in->split_in[j - 1], "<<", 3)))
+		expanded = ft_strdup(in->split_in[j]);
 	else
 		expanded = ft_getenv(*var, in);
 	free(*var);
 	if (!expanded)
 		expanded = ft_strdup("");
-	in->flags.count = len1 + ft_strlen(expanded);
-	free(in->split_input[j]);
-	in->split_input[j] = ft_strjoin3(*aux, expanded, last);
+	in->f.count = len1 + ft_strlen(expanded);
+	free(in->split_in[j]);
+	in->split_in[j] = ft_strjoin3(*aux, expanded, last);
 	free(*aux);
 	free(expanded);
 	free(last);
@@ -43,45 +43,45 @@ void	insert_var(t_input *in, char **var, char **aux, int j)
 
 int		check_var(t_input *in)
 {
-	in->flags.i++;
-	if(!ft_isalnum(in->split_input[in->flags.j][in->flags.i]))
+	in->f.i++;
+	if(!ft_isalnum(in->split_in[in->f.j][in->f.i]))
 	{
-		if (in->split_input[in->flags.j][in->flags.i] == '\0')
+		if (in->split_in[in->f.j][in->f.i] == '\0')
 		{
-			in->flags.i--;
+			in->f.i--;
 			return (2);
 		}
-		if (in->split_input[in->flags.j][in->flags.i] == '$')
+		if (in->split_in[in->f.j][in->f.i] == '$')
 		{
-			if (ft_isalnum(in->split_input[in->flags.j][in->flags.i + 1])
-				&& in->split_input[in->flags.j][in->flags.i + 1] != '\0')
+			if (ft_isalnum(in->split_in[in->f.j][in->f.i + 1])
+				&& in->split_in[in->f.j][in->f.i + 1] != '\0')
 				return (0);
 			return (2);
 		}
-		if (in->flags.i > 1 && in->split_input[in->flags.j][in->flags.i] == '"'
-			&& in->split_input[in->flags.j][in->flags.i - 2] == '"')
+		if (in->f.i > 1 && in->split_in[in->f.j][in->f.i] == '"'
+			&& in->split_in[in->f.j][in->f.i - 2] == '"')
 			return (2);
-		if (in->split_input[in->flags.j][in->flags.i] == '"' && !in->flags.double_q)
+		if (in->split_in[in->f.j][in->f.i] == '"' && !in->f.double_q)
 			return (1);
-		if (in->split_input[in->flags.j][in->flags.i] == '"' && in->flags.double_q)
+		if (in->split_in[in->f.j][in->f.i] == '"' && in->f.double_q)
 			return (2);
-		if (in->split_input[in->flags.j][in->flags.i] == '\'' && !in->flags.single_q
-			&& !in->flags.double_q)
+		if (in->split_in[in->f.j][in->f.i] == '\'' && !in->f.single_q
+			&& !in->f.double_q)
 			return (1);
-		if (in->split_input[in->flags.j][in->flags.i] == '?')
+		if (in->split_in[in->f.j][in->f.i] == '?')
 		{
-			in->flags.i--;
+			in->f.i--;
 			return (0);
 		}
-		if (in->split_input[in->flags.j][in->flags.i] == '_')
+		if (in->split_in[in->f.j][in->f.i] == '_')
 		{
-			in->flags.i--;
+			in->f.i--;
 			return (0);
 		}
 		else
 			return(2);
 	}
-	in->flags.i--;
+	in->f.i--;
 	return (0);
 }
 
@@ -107,34 +107,34 @@ void	expand_vars(t_input *in)
 	char 	*aux;
 	int 	check;
 
-	ft_bzero(&in->flags, sizeof(in->flags));
-	while (in->split_input[in->flags.j] != NULL)
+	ft_bzero(&in->f, sizeof(in->f));
+	while (in->split_in[in->f.j] != NULL)
 	{
-		in->flags.i = 0;
-		while (in->split_input[in->flags.j][in->flags.i] != '\0')
+		in->f.i = 0;
+		while (in->split_in[in->f.j][in->f.i] != '\0')
 		{
-			quotes_state(in, in->split_input[in->flags.j]);
-			if (in->split_input[in->flags.j][in->flags.i] == '$' && !in->flags.single_q)
+			quotes_state(in, in->split_in[in->f.j]);
+			if (in->split_in[in->f.j][in->f.i] == '$' && !in->f.single_q)
 			{
 				check = check_var(in);
 				if (check == 1)
 				{
-					aux = del_str_pos(in->split_input[in->flags.j], in->flags.i - 1);
-					free(in->split_input[in->flags.j]);
-					in->split_input[in->flags.j] = ft_strdup(aux);
+					aux = del_str_pos(in->split_in[in->f.j], in->f.i - 1);
+					free(in->split_in[in->f.j]);
+					in->split_in[in->f.j] = ft_strdup(aux);
 					free(aux);
 				}
 				else if (check == 0)
 				{
-					aux = ft_substr(in->split_input[in->flags.j], 0, in->flags.i);
-					var = get_var(in->split_input[in->flags.j], in->flags.i + 1);
-					insert_var(in, &var, &aux, in->flags.j);
-					in->flags.i = in->flags.count - 1;
+					aux = ft_substr(in->split_in[in->f.j], 0, in->f.i);
+					var = get_var(in->split_in[in->f.j], in->f.i + 1);
+					insert_var(in, &var, &aux, in->f.j);
+					in->f.i = in->f.count - 1;
 				}
 			}
-			in->flags.i++;
+			in->f.i++;
 		}
-		in->flags.j++;
+		in->f.j++;
 	}
-	in->split_input = quotes(in);
+	in->split_in = quotes(in);
 }

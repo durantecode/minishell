@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 17:12:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ void	unset(t_input *in, int j)
 	int		size_var;
 	char	*tmp_env;
 
-	if (in->split_input[1] == NULL)
+	if (in->split_in[1] == NULL)
 		return ;
-	while (in->split_input[j])
+	while (in->split_in[j])
 	{
-		if (!valid_id2(in->split_input[j]))
+		if (!valid_id2(in->split_in[j]))
 			error_msg(in, ERR_ID, j, 0);
 		else
 		{
-			var = ft_strdup(in->split_input[j]);
+			var = ft_strdup(in->split_in[j]);
 			tmp_env = ft_getenv(var, in);
 			if (tmp_env)
 			{

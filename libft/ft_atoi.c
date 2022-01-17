@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 16:02:27 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/15 02:18:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:21:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_atoi(const char *str)
 		if (number * negative > 2147483647)
 			return (-1);
 		if (number * negative < -2147483648)
-			return (0);
+			return (-1);
 		number = number * 10 + *str - 48;
 		str++;
 	}

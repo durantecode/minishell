@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 17:30:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void	export(t_input *in)
 	char	**aux;
 	char	*var;
 
-	if (in->split_input[1] == NULL)
+	if (in->split_in[1] == NULL)
 	{
 		env(in, 1);
 		return ;
 	}
 	j = 1;
-	while (in->split_input[j])
+	while (in->split_in[j])
 	{
-		if (ft_strlen(in->split_input[j]) != 0)
+		if (ft_strlen(in->split_in[j]) != 0)
 		{	
-			aux = ft_split(in->split_input[j], '=');
+			aux = ft_split(in->split_in[j], '=');
 			if (aux)
 			{
 				if (!valid_id(aux[0]))
@@ -56,16 +56,16 @@ void	export(t_input *in)
 						var = ft_strdup(aux[0]);
 						unset_aux(in, var, ft_strlen(var));
 						ft_lstadd_back(in->env_list,
-							ft_new_node((void *) in->split_input[j],
-							ft_strlen(in->split_input[j]) + 1));
+							ft_new_node((void *) in->split_in[j],
+							ft_strlen(in->split_in[j]) + 1));
 						free(env_value);
 						free(var);
 					}
 					else
 					{
 						ft_lstadd_back(in->env_list,
-							ft_new_node((void *) in->split_input[j],
-							ft_strlen(in->split_input[j]) + 1));
+							ft_new_node((void *) in->split_in[j],
+							ft_strlen(in->split_in[j]) + 1));
 					}
 				}
 			}

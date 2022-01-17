@@ -6,11 +6,15 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 11:54:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:21:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+	Mirar que se inicializan correctamente todas las variables al iniciar el programa.
+*/
 
 int	g_exit_status;
 
@@ -22,8 +26,8 @@ void	leaks(void)
 void	init_structs(t_input *in, t_list **envp)
 {
 	in->env_list = envp;
-	in->user_input = NULL;
-	in->split_input = NULL;
+	in->user_in = NULL;
+	in->split_in = NULL;
 	in->cmd_path = NULL;
 	in->is_infile = 0;
 	in->fd_in = 0;
@@ -40,7 +44,7 @@ void	update_level(t_input *in)
 
 	aux = ft_getenv("SHLVL", in);
 	level = ft_atoi(aux);
-	if (level <= 0)
+	if (level < 0)
 	{
 		ft_putstr_fd(SHELL, 2);
 		if (level == -1)
@@ -77,12 +81,8 @@ int	main(int argc, char **argv, char **environ)
 	}
 	else
 	{
-		in.split_input = argv;
+		in.split_in = argv;
 		error_msg(&in, ERR_ARG, -1, 0);
 	}
 	return (0);
 }
-
-/*
-	Mirar que se inicializan correctamente todas las variables al iniciar el programa.
-*/

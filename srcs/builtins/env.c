@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/13 14:37:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:23:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	env(t_input *in, int type)
 {
 	t_list	*aux;
 
-	if (in->split_input[1] != NULL)
+	if (in->split_in[1] != NULL)
 	{
 		error_msg(in, ERR_FILE, 0, 0);
 		return ;

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/15 19:49:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 	if (n >= 0)
 	{
 		ft_putstr_fd(SHELL, in->fd_error);
-		ft_putstr_fd(in->split_input[n], in->fd_error);
+		ft_putstr_fd(in->split_in[n], in->fd_error);
 		ft_putstr_fd(": ", in->fd_error);
 		ft_putendl_fd(MSG, in->fd_error);
 	}
@@ -53,7 +53,7 @@ int	error_msg(t_input *in, char *MSG, int n, int is_abs)
 	}
 	if (in->fd_error != 2)
 		close(in->fd_error);
-	if (in->split_input && !is_builtin(in) && n != -2)
+	if (in->split_in && !is_builtin(in) && n != -2)
 	{
 		close(0);
 		close(1);

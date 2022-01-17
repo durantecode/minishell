@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/04 21:52:11 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/17 12:40:31 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,9 +49,10 @@ SRCS =	srcs/main.c \
 		srcs/executer/pipes.c \
 		srcs/executer/here_doc.c \
 		srcs/lexer/check_args.c \
+		srcs/lexer/check_errors.c \
 		srcs/lexer/expand.c \
 		srcs/lexer/quotes.c \
-		srcs/lexer/split_pipes.c \
+		srcs/lexer/split_args.c \
 		srcs/lexer/token.c \
 
 OBJS = $(SRCS:.c=.o)
