@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 16:40:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:14:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_valid_id(char *str)
 	return (1);
 }
 
-// void	unset_aux2(t_input *in, char **var, int size_var)
+// void	unset_aux2(t_input *in, char *var, int size_var)
 // {
 // 	size_var = ft_strlen(var);
 // 	unset_aux(in, var, size_var);
@@ -83,6 +83,7 @@ void	unset(t_input *in, int j)
 			tmp_env = ft_getenv(var, in);
 			if (tmp_env)
 			{
+				// unset_aux2(in, var, size_var);
 				size_var = ft_strlen(var);
 				unset_from_list(in, var, size_var);
 				if (!(ft_strncmp(var, "PATH=", size_var)))
