@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 18:07:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:54:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	delete_head(t_input *in)
 {
-	ft_lstdelone((*in->env_list), free);
+	t_list	*tmp;
+
+	tmp = *in->env_list;
 	*in->env_list = (*in->env_list)->next;
+	ft_lstdelone(tmp, free);
 }
 
 void	unset_from_list(t_input *in, char **var, int size_var)
