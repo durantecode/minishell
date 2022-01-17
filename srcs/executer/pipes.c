@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 13:01:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:48:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,100 +29,61 @@ int	count_pipes(t_input *in)
 	return (pipes);
 }
 
-int		print_err_pipeline()
+void	child(t_input *in, t_list *aux_list, int index)
 {
-	char	*line;
-	int		ret;
-	int		fd;
-
-	fd = open(".err_tmp", O_RDONLY);
-	if (fd == -1)
-		return (0);
-	if (fd > 2)
+	exec_hdoc(in);
+	check_redirs(in);
+	if (aux_list->next != NULL)
 	{
-		ret = get_next_line(fd, &line);
-		while (ret > 0)
-		{
-			ft_putendl_fd(line, 2);
-			free(line);
-			line = NULL;
-			ret = get_next_line(fd, &line);
-		}
-		free(line);
+		if (!in->is_outfile)
+			dup2(in->fd[index % 2][W_END], STDOUT_FILENO);
 	}
-	close(fd);
-	return (0);
+	close(in->fd[index % 2][W_END]);
+	if (index > 0)
+	{
+		close(in->fd[index % 2][W_END]);
+		if (!in->is_infile && !in->is_hdoc)
+			dup2(in->fd[(index + 1) % 2][R_END], STDIN_FILENO);
+		close(in->fd[(index + 1) % 2][R_END]);
+	}
+	close(in->fd[index % 2][R_END]);
+	if (in->split_in[0])
+		exec_args(in);
+	close(0);
+	close(1);
+	close(2);
+	exit (g_exit_status);	
 }
 
-void	pipex(t_input *in, t_list *arg_list)
+void	sub_pipex(t_input *in, t_list *aux_list, int index, int flag)
 {
-	t_arg	*aux;
-	t_list	*aux_list;
 	pid_t	pid;
-	int		index;
-	int 	flag;
 
-	in->status = 0;
-	index = 0;
-	flag = 0;
-	aux_list = arg_list;
-	g_exit_status = 0;
-	while (aux_list && g_exit_status != 130)
+	pid = fork();
+	if (pid < 0)
 	{
-		if (pipe(in->fd[index % 2]) == -1)
-			error_msg(in, ERR_PIPE, -1, 0);
-		aux = (t_arg *)aux_list->content;
-		in->split_in = aux->arg;
-		in->q_state = aux->quotes;
-		signal(SIGINT, handler2);
-		signal(SIGQUIT, handler2);
-		pid = fork();
-		if (pid < 0)
-		{
-			close(in->fd[index % 2][W_END]);
-			close(in->fd[index % 2][R_END]);
-			flag = 1;
-		}
-		else if (pid == 0)
-		{
-			exec_hdoc(in);
-			check_redirs(in);
-			if (aux_list->next != NULL)
-			{
-				if (!in->is_outfile)
-					dup2(in->fd[index % 2][W_END], STDOUT_FILENO);
-			}
-			close(in->fd[index % 2][W_END]);
-			if (index > 0)
-			{
-				close(in->fd[index % 2][W_END]);
-				if (!in->is_infile && !in->is_hdoc)
-					dup2(in->fd[(index + 1) % 2][R_END], STDIN_FILENO);
-				close(in->fd[(index + 1) % 2][R_END]);
-			}
-			close(in->fd[index % 2][R_END]);
-			if (in->split_in[0])
-				exec_args(in);
-			close(0);
-			close(1);
-			close(2);
-			exit (g_exit_status);
-		}
-		if (in->is_hdoc)
-			waitpid(pid, &in->status, 0);
 		close(in->fd[index % 2][W_END]);
-		if (index == 0 && aux_list->next == NULL)
-			close(in->fd[index % 2][R_END]);
-		if (index > 0 && aux_list->next != NULL)
-			close(in->fd[(index + 1) % 2][R_END]);
-		if (index > 0 && aux_list->next == NULL)
-		{
-			close(in->fd[index % 2][R_END]);
-			close(in->fd[(index + 1) % 2][R_END]);
-		}
-		aux_list = aux_list->next;
-		index++;
+		close(in->fd[index % 2][R_END]);
+		flag = 1;
 	}
+	else if (!pid)
+		child(in, aux_list, index);
+	if (in->is_hdoc)
+		waitpid(pid, &in->status, 0);
+	close(in->fd[index % 2][W_END]);
+	if (index == 0 && aux_list->next == NULL)
+		close(in->fd[index % 2][R_END]);
+	if (index > 0 && aux_list->next != NULL)
+		close(in->fd[(index + 1) % 2][R_END]);
+	if (index > 0 && aux_list->next == NULL)
+	{
+		close(in->fd[index % 2][R_END]);
+		close(in->fd[(index + 1) % 2][R_END]);
+	}
+}
+
+void	kill_last_process(t_input *in, int flag)
+{
 	if (flag)
 		error_msg(in, ERR_FORK, -2, 0);
 	while (in->total_pipes >= 0)
@@ -136,6 +97,33 @@ void	pipex(t_input *in, t_list *arg_list)
 		print_err_pipeline();
 	if (g_exit_status == 255)
 		g_exit_status = 1;
+}
+
+void	pipex(t_input *in, t_list *arg_list)
+{
+	t_arg	*aux;
+	t_list	*aux_list;
+	int		index;
+	int 	flag;
+
+	index = 0;
+	flag = 0;
+	aux_list = arg_list;
+	g_exit_status = 0;
+	while (aux_list && g_exit_status != 130)
+	{
+		if (pipe(in->fd[index % 2]) == -1)
+			error_msg(in, ERR_PIPE, -1, 0);
+		aux = (t_arg *)aux_list->content;
+		in->split_in = aux->arg;
+		in->q_state = aux->quotes;
+		signal(SIGINT, handler2);
+		signal(SIGQUIT, handler2);
+		sub_pipex(in, aux_list, index, flag);
+		aux_list = aux_list->next;
+		index++;
+	}
+	kill_last_process(in, flag);
 }
 
 void	free_list(t_list *arg_list)

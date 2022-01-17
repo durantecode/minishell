@@ -100,6 +100,7 @@ typedef struct s_input
 
 int		main(int argc, char **argv, char **environ);
 int		error_msg(t_input *in, char *MSG, int n, int is_abs);
+int		print_err_pipeline();
 int		char_space(char c);
 
 void	init_env_list(t_input *in, t_list **envp, char **environ);

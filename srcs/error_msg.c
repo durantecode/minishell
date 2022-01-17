@@ -6,11 +6,36 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:31:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		print_err_pipeline()
+{
+	char	*line;
+	int		ret;
+	int		fd;
+
+	fd = open(".err_tmp", O_RDONLY);
+	if (fd == -1)
+		return (0);
+	if (fd > 2)
+	{
+		ret = get_next_line(fd, &line);
+		while (ret > 0)
+		{
+			ft_putendl_fd(line, 2);
+			free(line);
+			line = NULL;
+			ret = get_next_line(fd, &line);
+		}
+		free(line);
+	}
+	close(fd);
+	return (0);
+}
 
 int	update_g_exit_status(char *ERR, int is_abs)
 {
