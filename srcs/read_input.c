@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:40:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 13:15:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	read_input_aux(t_input *in)
 {
 	if (in->user_in[0] != '\0')
 		add_history(in->user_in);
-	ft_bzero(&in->f, sizeof(in->f));
 	if (!check_errors(in))
 	{
 		split_args(in);
