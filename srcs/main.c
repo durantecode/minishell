@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:21:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:11:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int argc, char **argv, char **environ)
 	t_list	*envp;
 
 	envp = NULL;
+	environ = NULL;
 	if (argc == 1)
 	{
 		init_env_list(&in, &envp, environ);
