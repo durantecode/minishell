@@ -6,32 +6,18 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:01:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 15:44:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		str_is_char(char *str)
+int	str_is_digit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
-	{
-		if (!ft_isalpha(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int		str_is_digit(char *str)
-{
-	int i;
-
-	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
@@ -40,7 +26,7 @@ int		str_is_digit(char *str)
 	return (1);
 }
 
-int		check_exit_args(t_input *in)
+int	check_exit_args(t_input *in)
 {
 	if (str_is_digit(in->split_in[1]) && !in->split_in[2])
 		g_exit_status = (ft_atoi(in->split_in[1]));
@@ -51,7 +37,7 @@ int		check_exit_args(t_input *in)
 		ft_putstr_fd(in->split_in[1], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd("numeric argument requiered", 2);
-		g_exit_status = 1;
+		g_exit_status = 255;
 	}	
 	else if (str_is_digit(in->split_in[1]) && in->split_in[2])
 	{

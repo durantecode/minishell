@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:46 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:00:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:40:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	unset_aux(t_input *in, char *var, int size_var)
+void	unset_from_list(t_input *in, char *var, int size_var)
 {
 	t_list *aux;
 	t_list *tmp;
@@ -40,7 +40,7 @@ void	unset_aux(t_input *in, char *var, int size_var)
 	}
 }
 
-int	valid_id2(char *str)
+int	is_valid_id(char *str)
 {
 	int	i;
 
@@ -54,6 +54,17 @@ int	valid_id2(char *str)
 	return (1);
 }
 
+// void	unset_aux2(t_input *in, char **var, int size_var)
+// {
+// 	size_var = ft_strlen(var);
+// 	unset_aux(in, var, size_var);
+// 	if (!(ft_strncmp(var, "PATH=", size_var)))
+// 		in->path_unset = 1;
+// 	free_matrix(in->dup_env);
+// 	in->dup_env = list_to_matrix(*in->env_list);
+// 	// free(tmp_env);
+// }
+
 void	unset(t_input *in, int j)
 {
 	char	*var;
@@ -64,7 +75,7 @@ void	unset(t_input *in, int j)
 		return ;
 	while (in->split_in[j])
 	{
-		if (!valid_id2(in->split_in[j]))
+		if (!is_valid_id(in->split_in[j]))
 			error_msg(in, ERR_ID, j, 0);
 		else
 		{
@@ -73,7 +84,7 @@ void	unset(t_input *in, int j)
 			if (tmp_env)
 			{
 				size_var = ft_strlen(var);
-				unset_aux(in, var, size_var);
+				unset_from_list(in, var, size_var);
 				if (!(ft_strncmp(var, "PATH=", size_var)))
 					in->path_unset = 1;
 				free_matrix(in->dup_env);

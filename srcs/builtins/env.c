@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:23:08 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:37:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_getenv(const char *str, t_input *in)
 void	check_basic_vars(t_input *in)
 {
 	char	*aux;
-	char	*pwd;
 	
 	aux = ft_getenv("PATH", in);
 	if (!aux)
@@ -98,9 +97,9 @@ void	check_basic_vars(t_input *in)
 	aux = ft_getenv("PWD", in);
 	if (!aux)
 	{
-		pwd = getcwd(NULL, 0);
-		update_env_var(in, "PWD=", pwd);
-		free(pwd);
+		aux = getcwd(NULL, 0);
+		update_env_var(in, "PWD=", aux);
+		free(aux);
 	}
 	else
 		free(aux);
@@ -109,6 +108,17 @@ void	check_basic_vars(t_input *in)
 		update_env_var(in, "_=", "env");
 	else
 		free(aux);
+}
+
+void	init_basic_env(t_input *in, char **pwd)
+{
+	in->dup_env = malloc(sizeof(char *) * 5);
+	in->dup_env[0]
+		= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	in->dup_env[1] = ft_strjoin("PWD=", (*pwd));
+	in->dup_env[2] = ft_strdup("SHLVL=0");
+	in->dup_env[3] = ft_strdup("_=./minishell");
+	in->dup_env[4] = NULL;
 }
 
 void	dup_env(t_input *in, char **environ)
@@ -121,6 +131,7 @@ void	dup_env(t_input *in, char **environ)
 	pwd = getcwd(NULL, 0);
 	if (!(*environ))
 	{
+		// init_basic_env(in, &pwd);
 		in->dup_env = malloc(sizeof(char *) * 5);
 		in->dup_env[0]
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");

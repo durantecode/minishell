@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 12:21:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 15:45:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_structs(t_input *in, t_list **envp)
 	in->fd_in = 0;
 	in->fd_out = 0;
 	in->fd_error = 2;
+	in->status = 0;
 	g_exit_status = 0;
 }
 
