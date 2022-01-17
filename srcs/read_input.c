@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 13:58:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:42:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,14 +169,6 @@ void	read_in_aux(t_input *in)
 				init_arg_list(in);
 		}
 	}
-}
-
-int		char_space(char c)
-{
-	if (c != '\t' && c != ' ' && c != '\n'
-	&& c != '\f' && c != '\v' && c != '\r')
-		return (0);
-	return (1);
 }
 
 int		is_space(char *str)

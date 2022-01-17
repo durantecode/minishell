@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:30:13 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 16:10:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:51:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	export_aux(t_input *in, char **aux, int j)
 		if (env_value)
 		{
 			var = ft_strdup(aux[0]);
-			unset_from_list(in, var, ft_strlen(var));
+			unset_from_list(in, &var, ft_strlen(var));
 			ft_lstadd_back(in->env_list,
 				ft_new_node((void *) in->split_in[j],
 					ft_strlen(in->split_in[j]) + 1));

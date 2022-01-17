@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 17:15:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:42:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,50 @@ void	leaks(void)
 	system("leaks -q minishell");
 }
 
+void	check_basic_vars2(t_input *in)
+{
+	char	*aux;
+
+	aux = ft_getenv("PWD", in);
+	if (!aux)
+	{
+		aux = getcwd(NULL, 0);
+		update_env_var(in, "PWD=", aux);
+		free(aux);
+	}
+	else
+		free(aux);
+	aux = ft_getenv("_", in);
+	if (!aux)
+		update_env_var(in, "_=", "env");
+	else
+		free(aux);
+}
+
+void	check_basic_vars(t_input *in)
+{
+	char	*aux;
+	
+	aux = ft_getenv("PATH", in);
+	if (!aux)
+		update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	else
+		free(aux);
+	aux = ft_getenv("SHLVL", in);
+	if (!aux)
+		update_env_var(in, "SHLVL=", "0");
+	else
+		free(aux);
+	check_basic_vars2(in);
+}
+
 void	init_structs(t_input *in, t_list **envp)
 {
 	in->env_list = envp;
 	in->user_in = NULL;
 	in->split_in = NULL;
 	in->cmd_path = NULL;
+	in->total_pipes = 0;
 	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
@@ -65,7 +103,6 @@ int	main(int argc, char **argv, char **environ)
 	t_list	*envp;
 
 	envp = NULL;
-	environ = NULL;
 	if (argc == 1)
 	{
 		init_env_list(&in, &envp, environ);

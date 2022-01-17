@@ -141,7 +141,7 @@ void	here_doc(t_input *in, int i);
 void	check_hdoc(t_input *in);
 void	exec_hdoc(t_input *in);
 
-void	unset_from_list(t_input *in, char *var, int size_var);
+void	unset_from_list(t_input *in, char **var, int size_var);
 
 int		count_pipes(t_input *in);
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 17:15:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:23:13 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	env(t_input *in, int type)
 		while (aux)
 		{
 			if (ft_strchr(aux->content, '='))
-				printf("%s\n", (char *)aux->content);
+				ft_putendl_fd((char *)aux->content, 1);
 			aux = aux->next;
 		}
 	}
@@ -41,73 +41,50 @@ void	env(t_input *in, int type)
 	}
 }
 
+char	*ft_getenv_aux(t_list *aux, char **var, int size_var)
+{
+	int	total_size;
+
+	while (aux)
+	{
+		size_var = ft_strlen(*var);
+		total_size = ft_strlen(aux->content);
+		if (!(ft_strncmp(*var, aux->content, size_var)))
+		{
+			free(*var);
+			return (ft_substr(aux->content, size_var, total_size - size_var));
+		}
+		aux = aux->next;
+	}
+	free(*var);
+	return (NULL);
+}
+
 char	*ft_getenv(const char *str, t_input *in)
 {
 	t_list	*aux;
 	char	*var;
 	int		size_var;
-	int		total_size;
 
 	aux = *in->env_list;
 	var = NULL;
 	while (aux)
 	{
 		size_var = ft_strlen(str);
-		if (!(ft_strncmp(str, aux->content, size_var)) && ((char *)aux->content)[size_var] == '\0')
+		if (!(ft_strncmp(str, aux->content, size_var))
+			&& ((char *)aux->content)[size_var] == '\0')
 		{
 			var = ft_strdup(aux->content);
 			free(aux->content);
 			aux->content = ft_strjoin(var, "=");
 			free(var);
-			return(ft_getenv(str, in));
+			return (ft_getenv(str, in));
 		}
 		aux = aux->next;
 	}
 	aux = *in->env_list;
 	var = ft_strjoin(str, "=");
-	while (aux)
-	{
-		size_var = ft_strlen(var);
-		total_size = ft_strlen(aux->content);
-		if (!(ft_strncmp(var, aux->content, size_var)))
-		{
-			free(var);
-			return (ft_substr(aux->content, size_var, total_size - size_var));
-		}
-		aux = aux->next;
-	}
-	free(var);
-	return (NULL);
-}
-
-void	check_basic_vars(t_input *in)
-{
-	char	*aux;
-	
-	aux = ft_getenv("PATH", in);
-	if (!aux)
-		update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	else
-		free(aux);
-	aux = ft_getenv("SHLVL", in);
-	if (!aux)
-		update_env_var(in, "SHLVL=", "0");
-	else
-		free(aux);
-	aux = ft_getenv("PWD", in);
-	if (!aux)
-	{
-		aux = getcwd(NULL, 0);
-		update_env_var(in, "PWD=", aux);
-		free(aux);
-	}
-	else
-		free(aux);
-	aux = ft_getenv("_", in);
-	if (!aux)
-		update_env_var(in, "_=", "env");
-	else
-		free(aux);
+	return (ft_getenv_aux(aux, &var, size_var));
 }
 
 void	init_basic_env(t_input *in, char **pwd)
@@ -130,16 +107,7 @@ void	dup_env(t_input *in, char **environ)
 	in->dup_env = NULL;
 	pwd = getcwd(NULL, 0);
 	if (!(*environ))
-	{
-		// init_basic_env(in, &pwd);
-		in->dup_env = malloc(sizeof(char *) * 5);
-		in->dup_env[0]
-			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-		in->dup_env[1] = ft_strjoin("PWD=", pwd);
-		in->dup_env[2] = ft_strdup("SHLVL=0");
-		in->dup_env[3] = ft_strdup("_=./minishell");
-		in->dup_env[4] = NULL;
-	}
+		init_basic_env(in, &pwd);
 	else
 	{
 		while (environ[i] != NULL)
