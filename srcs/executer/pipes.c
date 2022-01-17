@@ -6,11 +6,29 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 19:48:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:27:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_list(t_input *in, t_list *arg_list)
+{
+	t_arg	*aux;
+	t_list	*aux_list;
+
+	aux_list = arg_list;
+	while (aux_list)
+	{
+		aux = (t_arg *)aux_list->content;
+		free_matrix(aux->arg);
+		free(aux->quotes);
+		aux_list = aux_list->next;
+	}
+	ft_lstclear(&arg_list, free);
+	in->q_state = NULL;
+	in->split_in = NULL;
+}
 
 int	count_pipes(t_input *in)
 {
@@ -52,7 +70,7 @@ void	child(t_input *in, t_list *aux_list, int index)
 	close(0);
 	close(1);
 	close(2);
-	exit (g_exit_status);	
+	exit (g_exit_status);
 }
 
 void	sub_pipex(t_input *in, t_list *aux_list, int index, int flag)
@@ -104,7 +122,7 @@ void	pipex(t_input *in, t_list *arg_list)
 	t_arg	*aux;
 	t_list	*aux_list;
 	int		index;
-	int 	flag;
+	int		flag;
 
 	index = 0;
 	flag = 0;
@@ -124,27 +142,35 @@ void	pipex(t_input *in, t_list *arg_list)
 		index++;
 	}
 	kill_last_process(in, flag);
+	free_list(in, arg_list);
 }
 
-void	free_list(t_list *arg_list)
+void	init_arg_list_aux(t_input *in, t_list **arg_list, int i[4])
 {
-	t_arg	*aux;
-	t_list	*aux_list;
+	t_arg	*args;
 
-	aux_list = arg_list;
- 	while (aux_list)
-    {
-		aux = (t_arg *)aux_list->content;
-		free_matrix(aux->arg);
-    	free(aux->quotes);
-		aux_list = aux_list->next;
-    }
-	ft_lstclear(&arg_list, free);
+	args = malloc(sizeof(t_arg));
+	args->arg = malloc(sizeof(char *) * (i[2] + 1));
+	args->quotes = malloc(sizeof(int) * (i[2]));
+	i[0] = i[0] - i[2];
+	while (in->split_in[i[0]] != NULL
+		&& ((ft_strncmp(in->split_in[i[0]], "|", 2))
+			|| in->q_state[i[0]] == 1))
+	{
+		args->arg[i[3]] = ft_strdup(in->split_in[i[0]]);
+		if (in->q_state[i[0]] == 1)
+			args->quotes[i[3]] = 1;
+		else
+			args->quotes[i[3]] = 0;
+		i[0]++;
+		i[3]++;
+	}
+	args->arg[i[3]] = NULL;
+	ft_lstadd_back(arg_list, ft_lstnew((void *) args));
 }
 
 void	init_arg_list(t_input *in)
 {
-	t_arg	*args;
 	t_list	*arg_list;
 	int		i[4];
 
@@ -155,36 +181,18 @@ void	init_arg_list(t_input *in)
 	{
 		i[3] = 0;
 		i[2] = 0;
-		while (in->split_in[i[0]] != NULL && ((ft_strncmp(in->split_in[i[0]], "|", 2))
-			|| in->q_state[i[0]] == 1))
+		while (in->split_in[i[0]] != NULL
+			&& ((ft_strncmp(in->split_in[i[0]], "|", 2))
+				|| in->q_state[i[0]] == 1))
 		{
 			i[0]++;
 			i[2]++;
 		}
-		args = malloc(sizeof(t_arg));
-		args->arg = malloc(sizeof(char *) * (i[2] + 1));
-		args->quotes = malloc(sizeof(int) * (i[2]));
-		i[0] = i[0] - i[2];
-		while (in->split_in[i[0]] != NULL && ((ft_strncmp(in->split_in[i[0]], "|", 2))
-			|| in->q_state[i[0]] == 1))
-		{
-			args->arg[i[3]] = ft_strdup(in->split_in[i[0]]);
-			if (in->q_state[i[0]] == 1)
-				args->quotes[i[3]] = 1;
-			else
-				args->quotes[i[3]] = 0;
-			i[0]++;
-			i[3]++;
-		}
-		args->arg[i[3]] = NULL;
-		ft_lstadd_back(&arg_list, ft_lstnew((void *) args));
+		init_arg_list_aux(in, &arg_list, i);
 		i[1]++;
 		i[0]++;
 	}
 	free(in->q_state);
 	free_matrix(in->split_in);
 	pipex(in, arg_list);
-	free_list(arg_list);
-	in->q_state = NULL;
-	in->split_in = NULL;
 }
