@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 18:58:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:21:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_errors2(t_input *in)
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	check_errors(t_input *in)
@@ -152,8 +152,7 @@ void	read_in_aux(t_input *in)
 		split_args(in);
 		if (check_args(in))
 		{
-			check_hdoc(in);
-			if (in->is_hdoc)
+			if (check_hdoc(in))
 				exec_hdoc(in);
 			count_pipes(in);
 			if (is_builtin(in) && !in->total_pipes && !in->is_hdoc)
@@ -174,17 +173,17 @@ void	read_in_aux(t_input *in)
 	}
 }
 
-int		is_space(char *str)
+int	is_space(char *str)
 {
-	int i;
-	int c;
+	int	i;
+	int	c;
 
 	i = 0;
 	while (str[i])
 	{
 		c = str[i];
 		if (c != '\t' && c != ' ' && c != '\n'
-		&& c != '\f' && c != '\v' && c != '\r')
+			&& c != '\f' && c != '\v' && c != '\r')
 			return (0);
 		i++;
 	}

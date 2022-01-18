@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 17:30:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:08:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	expand_vars(t_input *in)
 		while (in->split_in[in->f.j][in->f.i] != '\0')
 		{
 			quotes_state(in, in->split_in[in->f.j]);
-			// printf("%d : %c\n", in->f.single_q, in->split_in[in->f.j][in->f.i]);
 			if (in->split_in[in->f.j][in->f.i] == '$' && !in->f.single_q)
 				expand_vars_aux(in);
 			in->f.i++;

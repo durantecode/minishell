@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 18:47:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:25:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define ERR_SHLVL "warning: shell level too high, resetting to 1"
 # define ERR_TOOLONG "File name too long"
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 typedef struct s_arg
 {
@@ -73,7 +73,7 @@ typedef struct s_flags
 
 typedef struct s_input
 {
-	int		fd[2][2]; 
+	int		fd[2][2];
 	int		status;
 	int		fd_in;
 	int		fd_out;
@@ -98,8 +98,9 @@ typedef struct s_input
 
 int		main(int argc, char **argv, char **environ);
 int		error_msg(t_input *in, char *MSG, int n, int is_abs);
-int		print_err_pipeline(void);
+void	free_list(t_input *in, t_list *arg_list);
 int		char_space(char c);
+char	*ft_getenv(const char *str, t_input *in);
 
 void	init_env_list(t_input *in, t_list **envp, char **environ);
 void	init_flags(t_input *in);
@@ -109,17 +110,14 @@ void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
 int		check_errors(t_input *in);
-int		check_args(t_input *in);
-void	check_redirs(t_input *in);
 void	split_args(t_input *in);
-
-void	remove_redir(t_input *in, int i);
-
 int		count_tokens(char *s, t_input *in, int split);
+int		check_args(t_input *in);
+void	expand_vars(t_input *in);
+void	check_quotes(t_input *in);
+int		count_pipes(t_input *in);
 char	**quotes(t_input *in);
 int		quotes_state(t_input *in, char *str);
-void	expand_vars(t_input *in);
-char	*ft_getenv(const char *str, t_input *in);
 
 int		is_builtin(t_input *in);
 void	cd(t_input *in);
@@ -130,32 +128,20 @@ void	export(t_input *in);
 void	pwd(t_input *in);
 void	unset(t_input *in, int j);
 void	exec_minishell(t_input *in);
-
-void	check_quotes(t_input *in);
+void	exec_absolute(t_input *in);
 
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
-void	exec_absolute(t_input *in);
-void	here_doc(t_input *in, int i);
-void	check_hdoc(t_input *in);
+void	check_redirs(t_input *in);
+int		check_hdoc(t_input *in);
 void	exec_hdoc(t_input *in);
-
+void	here_doc(t_input *in, int i);
+void	remove_redir(t_input *in, int i);
 void	unset_from_list(t_input *in, char **var, int size_var);
 
-int		count_pipes(t_input *in);
-
-void	handler(int	code);
+void	handler(int code);
 void	handler2(int code);
 void	handler3(int code);
 void	handler4(int code);
 
-
-
 #endif
-
-/*
-	TO DO:
-
-	Leaks
-	Norma
-*/ 

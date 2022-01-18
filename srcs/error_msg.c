@@ -6,35 +6,28 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 18:47:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:13:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	print_err_pipeline(void)
+void	free_list(t_input *in, t_list *arg_list)
 {
-	char	*line;
-	int		ret;
-	int		fd;
+	t_arg	*aux;
+	t_list	*aux_list;
 
-	fd = open(".err_tmp", O_RDONLY);
-	if (fd == -1)
-		return (0);
-	if (fd > 2)
+	aux_list = arg_list;
+	while (aux_list)
 	{
-		ret = get_next_line(fd, &line);
-		while (ret > 0)
-		{
-			ft_putendl_fd(line, 2);
-			free(line);
-			line = NULL;
-			ret = get_next_line(fd, &line);
-		}
-		free(line);
+		aux = (t_arg *)aux_list->content;
+		free_matrix(aux->arg);
+		free(aux->quotes);
+		aux_list = aux_list->next;
 	}
-	close(fd);
-	return (0);
+	ft_lstclear(&arg_list, free);
+	in->q_state = NULL;
+	in->split_in = NULL;
 }
 
 int	update_g_exit_status(char *ERR, int is_abs)

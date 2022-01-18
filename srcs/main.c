@@ -6,21 +6,21 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 18:42:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:28:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-	Mirar que se inicializan correctamente todas las variables al iniciar el programa.
-*/
-
 int	g_exit_status;
 
-void	leaks(void)
+void	ft_leaks(char *str)
 {
-	system("leaks -q minishell");
+	char	*full_name;
+
+	full_name = ft_strjoin("leaks -q ", str);
+	system(full_name);
+	free(full_name);
 }
 
 void	check_basic_vars2(t_input *in)
@@ -46,10 +46,11 @@ void	check_basic_vars2(t_input *in)
 void	check_basic_vars(t_input *in)
 {
 	char	*aux;
-	
+
 	aux = ft_getenv("PATH", in);
 	if (!aux)
-		update_env_var(in, "PATH=", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		update_env_var(in, "PATH=",
+			"/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	else
 		free(aux);
 	aux = ft_getenv("SHLVL", in);
@@ -67,10 +68,8 @@ void	init_structs(t_input *in, t_list **envp)
 	in->split_in = NULL;
 	in->cmd_path = NULL;
 	in->total_pipes = 0;
-	in->is_infile = 0;
 	in->fd_in = 0;
 	in->fd_out = 0;
-	in->fd_error = 2;
 	in->status = 0;
 	g_exit_status = 0;
 }
@@ -115,7 +114,6 @@ int	main(int argc, char **argv, char **environ)
 			signal(SIGQUIT, SIG_IGN);
 			read_input(&in);
 			unlink(".hd_tmp");
-			unlink(".err_tmp");
 		}
 	}
 	else

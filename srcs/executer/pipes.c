@@ -6,29 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 18:55:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:12:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_list(t_input *in, t_list *arg_list)
-{
-	t_arg	*aux;
-	t_list	*aux_list;
-
-	aux_list = arg_list;
-	while (aux_list)
-	{
-		aux = (t_arg *)aux_list->content;
-		free_matrix(aux->arg);
-		free(aux->quotes);
-		aux_list = aux_list->next;
-	}
-	ft_lstclear(&arg_list, free);
-	in->q_state = NULL;
-	in->split_in = NULL;
-}
 
 int	count_pipes(t_input *in)
 {
@@ -105,7 +87,7 @@ void	kill_last_process(t_input *in, int flag)
 			g_exit_status = WEXITSTATUS(in->status);
 		in->total_pipes--;
 	}
-	if (g_exit_status == 250)
+	if (g_exit_status == 130)
 		g_exit_status = 1;
 }
 
@@ -119,7 +101,6 @@ void	pipex(t_input *in, t_list *arg_list)
 	index = 0;
 	flag = 0;
 	aux_list = arg_list;
-	g_exit_status = 0;
 	while (aux_list && g_exit_status != 130)
 	{
 		if (pipe(in->fd[index % 2]) == -1)

@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 17:16:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:36:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		infile(t_input *in, int i)
+int	infile(t_input *in, int i)
 {
 	if (!(ft_strncmp(in->split_in[i], "<", 2)) && in->q_state[i] == 0)
 		in->fd_in = open(in->split_in[i + 1], O_RDONLY);
@@ -53,12 +53,14 @@ void	outfile_aux(t_input *in, int i)
 	in->is_outfile = 1;
 }
 
-int		outfile(t_input *in, int i)
+int	outfile(t_input *in, int i)
 {
 	if (!(ft_strncmp(in->split_in[i], ">", 2)) && in->q_state[i] == 0)
-		in->fd_out = open(in->split_in[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		in->fd_out = open(in->split_in[i + 1],
+				O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	else if (!(ft_strncmp(in->split_in[i], ">>", 3)) && in->q_state[i] == 0)
-		in->fd_out = open(in->split_in[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0666);
+		in->fd_out = open(in->split_in[i + 1],
+				O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if (in->fd_out == -1)
 	{
 		if (errno == EACCES)
@@ -70,38 +72,34 @@ int		outfile(t_input *in, int i)
 		return (1);
 	}
 	if (in->fd_out > 2)
-	{
 		outfile_aux(in, i);
-	}
 	return (0);
 }
 
 void	check_redirs(t_input *in)
 {
-	int i;
+	int	i;
 
-	i = 0;
+	i = -1;
 	in->is_infile = 0;
 	in->is_outfile = 0;
-	while (in->split_in[i])
+	while (in->split_in[++i])
 	{
 		if (!(ft_strncmp(in->split_in[i], "<", 1)) && in->q_state[i] == 0)
 		{
 			if (infile(in, i))
-				return ;	
+				return ;
 			i--;
 		}
-		i++;
 	}
-	i = 0;
-	while (in->split_in[i])
+	i = -1;
+	while (in->split_in[++i])
 	{
 		if (!(ft_strncmp(in->split_in[i], ">", 1)) && in->q_state[i] == 0)
 		{
 			if (outfile(in, i))
-				return ;	
+				return ;
 			i--;
 		}
-		i++;
 	}
 }

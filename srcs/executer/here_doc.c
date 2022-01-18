@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 18:55:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:17:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_hdoc(t_input *in)
+int	check_hdoc(t_input *in)
 {
 	int	i;
 
@@ -29,6 +29,7 @@ void	check_hdoc(t_input *in)
 		}
 		i++;
 	}
+	return (in->is_hdoc);
 }
 
 void	remove_redir(t_input *in, int i)
@@ -62,7 +63,6 @@ void	here_doc(t_input *in, int i)
 	char	*eof;
 	int		fd;
 	char	*here_doc;
-	pid_t	pid;
 
 	here_doc = NULL;
 	fd = open(".hd_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
@@ -71,21 +71,15 @@ void	here_doc(t_input *in, int i)
 	eof = ft_strdup(in->split_in[i + 1]);
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
-	pid = fork();
-	if (!pid)
+	while (1)
 	{
-		signal(SIGINT, handler4);
-		while (1)
-		{
-			here_doc = readline(in->prompt);
-			if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
-				break ;
-			write(fd, here_doc, ft_strlen(here_doc));
-			write(fd, "\n", 1);
-			free(here_doc);
-		}
+		here_doc = readline(in->prompt);
+		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
+			break ;
+		write(fd, here_doc, ft_strlen(here_doc));
+		write(fd, "\n", 1);
+		free(here_doc);
 	}
-	waitpid(pid, NULL, 0);
 	close(fd);
 	free(here_doc);
 	free(eof);
@@ -93,22 +87,29 @@ void	here_doc(t_input *in, int i)
 
 void	exec_hdoc(t_input *in)
 {
-	int	i;
+	int		i;
+	pid_t	pid;
 
-	i = 0;
-	while (in->split_in[i])
+	i = -1;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	pid = fork();
+	if (!pid)
 	{
-		if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
+		signal(SIGINT, handler4);
+		while (in->split_in[++i])
 		{
-			if (in->split_in[i + 1] != NULL)
+			if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
 			{
-				signal(SIGINT, SIG_IGN);
-				signal(SIGQUIT, SIG_IGN);
-				here_doc(in, i);
+				if (in->split_in[i + 1] != NULL)
+					here_doc(in, i);
+				else
+					error_msg(in, ERR_SYNTAX, -1, 0);
 			}
-			else
-				error_msg(in, ERR_SYNTAX, -1, 0);
 		}
-		i++;
+		exit (0);
 	}
+	waitpid(pid, &in->status, 0);
+	if (WIFEXITED(in->status))
+		g_exit_status = WEXITSTATUS(in->status);
 }
