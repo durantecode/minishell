@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 01:49:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:43:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	here_doc_aux(t_input *in, int fd)
 	if (!is_builtin(in))
 		dup2(fd, STDIN_FILENO);
 	close(fd);
-	// in->is_hdoc = 1;
 }
 
 void	here_doc(t_input *in, int i)

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:33:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 15:27:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:33:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void	cd(t_input *in)
 		if (chdir(home_path) == -1)
 			error_msg(in, ERR_HOME, 0, 0);
 	}
-	else if (chdir(in->split_in[1]) != 0)
+	else if (chdir(in->split_in[1]) == -1)
 	{
 		if (errno == EACCES)
 			error_msg(in, ERR_PERM, 0, 0);
+		if (errno == ENAMETOOLONG)
+			error_msg(in, ERR_TOOLONG, 1, 0);
 		else
 			error_msg(in, ERR_FILE, 1, 0);
 	}

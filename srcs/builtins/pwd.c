@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:37:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 13:20:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:43:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	pwd(t_input *in)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		pwd = ft_getenv("PWD", in);
-	// (void)in;
-		// pwd = getcwd(NULL, 0);
 	ft_putendl_fd(pwd, 1);
 	free(pwd);
 }
