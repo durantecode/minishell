@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 22:03:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:16:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int		infile(t_input *in, int i)
 {
-	in->fd_in = open(in->split_in[i + 1], O_RDONLY);
+	if (!(ft_strncmp(in->split_in[i], "<", 2)) && in->q_state[i] == 0)
+		in->fd_in = open(in->split_in[i + 1], O_RDONLY);
+	if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
+		in->fd_in = open(".hd_tmp", O_RDONLY);
 	if (in->fd_in == -1)
 	{
 		if (errno == EACCES)
@@ -30,7 +33,7 @@ int		infile(t_input *in, int i)
 		remove_redir(in, i);
 		if (!in->split_in[0])
 			exit(0);
-		if (!is_builtin(in) && !in->is_hdoc)
+		if (!is_builtin(in))
 			dup2(in->fd_in, STDIN_FILENO);
 		close(in->fd_in);
 		in->is_infile = 1;
@@ -82,7 +85,7 @@ void	check_redirs(t_input *in)
 	in->is_outfile = 0;
 	while (in->split_in[i])
 	{
-		if (!(ft_strncmp(in->split_in[i], "<", 2)) && in->q_state[i] == 0)
+		if (!(ft_strncmp(in->split_in[i], "<", 1)) && in->q_state[i] == 0)
 		{
 			if (infile(in, i))
 				return ;	

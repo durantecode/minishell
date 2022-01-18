@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 16:19:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:55:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,43 +57,38 @@ void	remove_redir(t_input *in, int i)
 	in->split_in = aux;
 }
 
-void	here_doc_aux(t_input *in, int fd)
-{
-	if (!in->split_in[0])
-		return ;
-	fd = open(".hd_tmp", O_RDONLY);
-	if (!is_builtin(in))
-		dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
 void	here_doc(t_input *in, int i)
 {
 	char	*eof;
 	int		fd;
 	char	*here_doc;
+	pid_t	pid;
 
+	here_doc = NULL;
 	fd = open(".hd_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd == -1)
 		error_msg(in, ERR_FILE, -1, 0);
 	eof = ft_strdup(in->split_in[i + 1]);
 	free(in->prompt);
 	in->prompt = ft_strdup("> ");
-	while (1)
+	pid = fork();
+	if (!pid)
 	{
-		here_doc = readline(in->prompt);
-		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
-			break ;
-		write(fd, here_doc, ft_strlen(here_doc));
-		write(fd, "\n", 1);
-		free(here_doc);
+		signal(SIGINT, handler4);
+		while (1)
+		{
+			here_doc = readline(in->prompt);
+			if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
+				break ;
+			write(fd, here_doc, ft_strlen(here_doc));
+			write(fd, "\n", 1);
+			free(here_doc);
+		}
 	}
+	waitpid(pid, NULL, 0);
 	close(fd);
 	free(here_doc);
-	remove_redir(in, i);
-	exec_hdoc(in);
 	free(eof);
-	here_doc_aux(in, fd);
 }
 
 void	exec_hdoc(t_input *in)
@@ -107,10 +102,9 @@ void	exec_hdoc(t_input *in)
 		{
 			if (in->split_in[i + 1] != NULL)
 			{
-				signal(SIGINT, handler4);
-				signal(SIGQUIT, handler3);
+				signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, SIG_IGN);
 				here_doc(in, i);
-				i--;
 			}
 			else
 				error_msg(in, ERR_SYNTAX, -1, 0);

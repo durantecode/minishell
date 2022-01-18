@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 15:34:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:47:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct s_flags
 typedef struct s_input
 {
 	int		fd[2][2]; 
-	int		fd_error;
 	int		status;
 	int		fd_in;
 	int		fd_out;

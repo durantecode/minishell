@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 01:47:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:58:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void	read_in_aux(t_input *in)
 		if (check_args(in))
 		{
 			check_hdoc(in);
+			if (in->is_hdoc)
+				exec_hdoc(in);
 			count_pipes(in);
 			if (is_builtin(in) && !in->total_pipes && !in->is_hdoc)
 			{
