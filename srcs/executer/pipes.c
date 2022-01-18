@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 15:57:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 16:07:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void	sub_pipex(t_input *in, t_list *aux_list, int index, int *flag)
 	}
 	if (!pid)
 		child(in, aux_list, index);
-	// if (in->is_hdoc)
-	// 	waitpid(pid, &in->status, 0);
+	if (in->is_hdoc)
+		waitpid(pid, &in->status, 0);
 	close(in->fd[index % 2][W_END]);
 	if (index == 0 && aux_list->next == NULL)
 		close(in->fd[index % 2][R_END]);
