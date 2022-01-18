@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/18 19:07:43 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/18 21:39:15 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,14 @@ test: all
 	@cd tests && ./test.sh && cd ..
 
 normi:
-	norminette -R CheckForbiddenSourceHeaders srcs/*.c includes/*.h
+	norminette -R CheckForbiddenSourceHeaders \
+	libft/*.c \
+	libft/*.h \
+	includes/*.h \
+	srcs/*.c \
+	srcs/builtins/*.c \
+	srcs/lexer/*.c \
+	srcs/executer/*.c \
 
 clean:
 	@clear

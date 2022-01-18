@@ -6,22 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:03:38 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:28:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:35:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status;
-
-void	ft_leaks(char *str)
-{
-	char	*full_name;
-
-	full_name = ft_strjoin("leaks -q ", str);
-	system(full_name);
-	free(full_name);
-}
 
 void	check_basic_vars2(t_input *in)
 {
