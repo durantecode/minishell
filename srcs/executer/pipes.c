@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 23:50:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 01:50:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,15 @@ int	count_pipes(t_input *in)
 {
 	int	i;
 	int	pipes;
-	int	pos_hdoc;
 
 	i = 0;
 	pipes = 0;
-	in->is_hdoc = 0;
 	while (in->split_in[i] != NULL)
 	{
-		if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
-			pos_hdoc = pipes;
 		if (!(ft_strncmp(in->split_in[i], "|", 2)) && in->q_state[i] == 0)
 			pipes++;
 		i++;
 	}
-	// in->is_hdoc = (pipes + 1) - pos_hdoc;
 	in->total_pipes = pipes;
 	return (pipes);
 }
@@ -107,7 +102,6 @@ void	sub_pipex(t_input *in, t_list *aux_list, int index, int *flag)
 	}
 	if (!pid)
 		child(in, aux_list, index);
-	// in->is_hdoc = mini_getpid(in);
 	if (in->is_hdoc)
 		waitpid(pid, &in->status, 0);
 	close(in->fd[index % 2][W_END]);
@@ -126,10 +120,8 @@ void	kill_last_process(t_input *in, int flag)
 {
 	if (flag)
 		error_msg(in, ERR_FORK, -2, 0);
-	// waitpid(in->is_hdoc, &in->status, 0);
 	while (in->total_pipes >= 0)
 	{
-		// printf("%d\n", mini_getpid(in));
 		waitpid(-1, &in->status, 0);
 		if (WIFEXITED(in->status))
 			g_exit_status = WEXITSTATUS(in->status);
