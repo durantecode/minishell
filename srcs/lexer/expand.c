@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 00:23:56 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 19:14:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 14:35:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ int	check_var_aux(t_input *in)
 		&& in->split_in[in->f.j][in->f.i - 2] == '"')
 		return (2);
 	if (in->split_in[in->f.j][in->f.i] == '"' && !in->f.double_q)
-		return (1);
-	if (in->split_in[in->f.j][in->f.i] == '"' && in->f.double_q)
 		return (2);
+	if (in->split_in[in->f.j][in->f.i] == '"' && in->f.double_q)
+		return (1);
 	if (in->split_in[in->f.j][in->f.i] == '\'' && !in->f.single_q
+		&& !in->f.double_q)
+		return (1);
+	if (in->split_in[in->f.j][in->f.i] == '\'' && in->f.single_q
 		&& !in->f.double_q)
 		return (1);
 	if (in->split_in[in->f.j][in->f.i] == '?')
@@ -70,6 +73,7 @@ int	check_var_aux(t_input *in)
 int	check_var(t_input *in)
 {
 	in->f.i++;
+	quotes_state(in, in->split_in[in->f.j]);
 	if (!ft_isalnum(in->split_in[in->f.j][in->f.i]))
 	{
 		if (in->split_in[in->f.j][in->f.i] == '\0')
@@ -138,6 +142,7 @@ void	expand_vars(t_input *in)
 		while (in->split_in[in->f.j][in->f.i] != '\0')
 		{
 			quotes_state(in, in->split_in[in->f.j]);
+			// printf("%d : %c\n", in->f.single_q, in->split_in[in->f.j][in->f.i]);
 			if (in->split_in[in->f.j][in->f.i] == '$' && !in->f.single_q)
 				expand_vars_aux(in);
 			in->f.i++;

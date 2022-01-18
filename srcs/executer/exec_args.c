@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:08:50 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 19:21:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 12:57:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	is_builtin(t_input *in)
 void	exec_args(t_input *in)
 {
 	if (!(ft_strncmp(in->split_in[0], "pwd", 4)))
-		pwd();
+		pwd(in);
 	else if (!(ft_strncmp(in->split_in[0], "env", 4)))
 		env(in, 0);
 	else if (!(ft_strncmp(in->split_in[0], "cd", 3)))
