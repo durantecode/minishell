@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 03:24:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:36:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 int	count_pipes(t_input *in)
 {
 	int	i;
-	int	pipes;
 
 	i = 0;
-	pipes = 0;
 	while (in->split_in[i] != NULL)
 	{
 		if (!(ft_strncmp(in->split_in[i], "|", 2)) && in->q_state[i] == 0)
-			pipes++;
+			in->total_pipes++;
 		i++;
 	}
-	in->total_pipes = pipes;
-	return (pipes);
+	return (in->total_pipes);
 }
 
 void	child(t_input *in, t_list *aux_list, int index)

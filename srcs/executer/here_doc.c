@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 12:14:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:33:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int	check_hdoc(t_input *in)
 		}
 		i++;
 	}
-	return (in->is_hdoc);
+	if (in->is_hdoc)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		exec_hdoc(in);
+	}
+	return (0);
 }
 
 void	remove_redir(t_input *in, int i)
@@ -91,8 +97,6 @@ void	exec_hdoc(t_input *in)
 	pid_t	pid;
 
 	i = -1;
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		error_msg(in, ERR_FORK, -1, 0);

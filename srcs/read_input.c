@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 22:09:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:37:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,17 @@ int	check_errors2(t_input *in)
 	return (0);
 }
 
+int	istoken(char c)
+{
+	if (c == '<')
+		return (1);
+	if (c == '>')
+		return (1);
+	if (c == '|')
+		return (1);
+	return (0);
+}
+
 int	check_errors(t_input *in)
 {
 	char	c;
@@ -92,13 +103,11 @@ int	check_errors(t_input *in)
 		check_quotes(in);
 		if (in->f.double_q == 0 && in->f.single_q == 0)
 		{
-			if (in->user_in[in->f.i] == '<' || in->user_in[in->f.i] == '>'
-				|| in->user_in[in->f.i] == '|' || char_space(in->user_in[in->f.i]))
+			if (istoken(in->user_in[in->f.i]) || char_sp(in->user_in[in->f.i]))
 			{
-				if (in->user_in[in->f.i] == '<' || in->user_in[in->f.i] == '>'
-					|| in->user_in[in->f.i] == '|')
+				if (istoken(in->user_in[in->f.i]))
 				{
-					if (in->user_in[in->f.i] == '|' && special == 1 && flag_diff == 0)
+					if (in->user_in[in->f.i] == '|' && special == 1 && !flag_diff)
 					{
 						error_msg(in, ERR_SYNTAX, -2, 0);
 						return (1);
@@ -116,7 +125,7 @@ int	check_errors(t_input *in)
 					count++;
 					in->f.i++;
 				}
-				while (char_space(in->user_in[in->f.i]))
+				while (char_sp(in->user_in[in->f.i]))
 					in->f.i++;
 				if (((c == '<' || c == '>') && count > 2) || (c == '|' && count > 1)
 					|| in->user_in[in->f.i] == c)
@@ -152,10 +161,8 @@ void	read_in_aux(t_input *in)
 		split_args(in);
 		if (check_args(in))
 		{
-			if (check_hdoc(in))
-				exec_hdoc(in);
-			count_pipes(in);
-			if (is_builtin(in) && !in->total_pipes && !in->is_hdoc)
+			check_hdoc(in);
+			if (is_builtin(in) && !count_pipes(in) && !in->is_hdoc)
 			{
 				check_redirs(in);
 				if (!in->is_err)
