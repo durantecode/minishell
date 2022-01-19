@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 15:31:58 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 00:51:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**dup_new_env(char **matrix, int size)
 
 void	exec_minishell(t_input *in)
 {
-	pid_t	pid;
 	char	**new_env;
 	int		size;
 	int		i;
@@ -92,17 +91,10 @@ void	exec_minishell(t_input *in)
 			size++;
 	}
 	new_env = dup_new_env(in->dup_env, size);
-	pid = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	if (pid < 0)
-		error_msg(in, ERR_FORK, -1, 0);
-	if (pid == 0)
-	{
-		if (execve(in->split_in[0], in->split_in, new_env) == -1)
-			error_msg(in, ERR_CMD, 0, 0);
-	}
-	waitpid(pid, NULL, 0);
+	if (execve(in->split_in[0], in->split_in, new_env) == -1)
+		error_msg(in, ERR_CMD, 0, 0);
 	free_matrix(new_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:25:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 03:10:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ char	**quotes(t_input *in);
 int		quotes_state(t_input *in, char *str);
 
 int		is_builtin(t_input *in);
+int		is_builtin2(t_input *in);
 void	cd(t_input *in);
 void	echo(t_input *in);
 void	env(t_input *in, int type);

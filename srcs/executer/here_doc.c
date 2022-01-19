@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:56:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 02:35:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	exec_hdoc(t_input *in)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
+	if (pid < 0)
+		error_msg(in, ERR_FORK, -1, 0);
 	if (!pid)
 	{
 		signal(SIGINT, handler4);
@@ -110,6 +112,5 @@ void	exec_hdoc(t_input *in)
 		exit (0);
 	}
 	waitpid(pid, &in->status, 0);
-	if (WIFEXITED(in->status))
-		g_exit_status = WEXITSTATUS(in->status);
+	g_exit_status = WEXITSTATUS(in->status);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:55:57 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 03:24:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ void	child(t_input *in, t_list *aux_list, int index)
 	}
 	close(in->fd[index % 2][R_END]);
 	if (in->split_in[0])
-		exec_args(in);
+	{
+		if (is_builtin(in) && !in->total_pipes)
+			exit (g_exit_status);
+		else
+			exec_args(in);
+	}
 	exit (g_exit_status);
 }
 
@@ -91,6 +96,35 @@ void	kill_last_process(t_input *in, int flag)
 		g_exit_status = 1;
 }
 
+void	exec_builtin_hdoc(t_input *in, t_list *arg_list)
+{
+	t_arg	*aux;
+	int		i;
+
+	i = 0;
+	aux = (t_arg *)arg_list->content;
+	in->split_in = matrix_dup(aux->arg);
+	in->q_state = aux->quotes;
+	if (ft_lstsize(arg_list) == 1 && in->is_hdoc)
+	{
+		if (in->split_in && (is_builtin(in) || is_builtin2(in)))
+		{
+			while (in->split_in[i])
+			{
+				if (!(ft_strncmp(in->split_in[i], "<<", 3))
+					&& in->q_state[i] == 0)
+				{
+					remove_redir(in, i);
+					i--;
+				}
+				i++;
+			}		
+			exec_args(in);
+		}
+	}
+	free_matrix(in->split_in);
+}
+
 void	pipex(t_input *in, t_list *arg_list)
 {
 	t_arg	*aux;
@@ -115,6 +149,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		index++;
 	}
 	kill_last_process(in, flag);
+	exec_builtin_hdoc(in, arg_list);
 	free_list(in, arg_list);
 }
 

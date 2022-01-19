@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 15:44:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/18 23:48:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	str_is_digit(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[0] == '-')
+			i++;
 		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
