@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 18:36:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 22:52:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	count_pipes(t_input *in)
 	int	i;
 
 	i = 0;
+	in->total_pipes = 0;
 	while (in->split_in[i] != NULL)
 	{
 		if (!(ft_strncmp(in->split_in[i], "|", 2)) && in->q_state[i] == 0)
@@ -115,7 +116,7 @@ void	exec_builtin_hdoc(t_input *in, t_list *arg_list)
 					i--;
 				}
 				i++;
-			}		
+			}
 			exec_args(in);
 		}
 	}

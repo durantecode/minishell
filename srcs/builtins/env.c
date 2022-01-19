@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 17:38:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:55:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,36 @@ void	print_export(t_list **lst)
 			ft_putchar_fd(str[i], 1);
 			i++;
 		}
-		ft_putstr_fd("=\"", 1);
-		i++;
-		while (str[i] != '\0')
+		if (str[i] != '\0')
 		{
-			ft_putchar_fd(str[i], 1);
+			ft_putstr_fd("=\"", 1);
 			i++;
+			while (str[i] != '\0') 
+			{
+				ft_putchar_fd(str[i], 1);
+				i++;
+			}
+			ft_putendl_fd("\"", 1);
 		}
-		ft_putendl_fd("\"", 1);
+		else
+			write(1, "\n", 1);
 		aux = aux->next;
 	}
 }
 
-void	env(t_input *in, int type)
+void	env(t_input *in, int is_export)
 {
 	t_list	*aux;
+	t_list	*export;
 
 	if (in->split_in[1] != NULL)
 	{
 		error_msg(in, ERR_FILE, 0, 0);
 		return ;
 	}
-	aux = *in->env_list;
-	if (!type)
+	if (!is_export)
 	{
+		aux = (*in->env_list);
 		while (aux)
 		{
 			if (ft_strchr(aux->content, '='))
@@ -62,9 +68,10 @@ void	env(t_input *in, int type)
 	}
 	else
 	{
-		ft_lst_sort(in->env_list, ft_strcmp);
-		print_export(in->env_list);
-		*in->env_list = aux;
+		export = ft_lstdup(*in->env_list);
+		ft_lst_sort(&export, ft_strcmp);
+		print_export(&export);
+		// ft_lstclear(&export, free);
 	}
 }
 
