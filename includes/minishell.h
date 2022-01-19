@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 03:10:40 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:51:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define ERR_ARG2 "too many arguments"
 # define ERR_SHLVL "warning: shell level too high, resetting to 1"
 # define ERR_TOOLONG "File name too long"
+# define ERR_HDOC "here_doc: could not find here_doc file"
 
 extern int	g_exit_status;
 
