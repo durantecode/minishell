@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:29:09 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 00:51:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:17:31 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	exec_minishell(t_input *in)
 	int		size;
 	int		i;
 
+	if (in->total_pipes)
+		exit (0);
 	size = 0;
 	i = -1;
 	while (in->dup_env[++i])

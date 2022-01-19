@@ -6,11 +6,40 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 18:23:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:38:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	print_export(t_list **lst)
+{
+	t_list	*aux;
+	char	*str;
+	int		i;
+
+	aux = *lst;
+	while (aux)
+	{
+		i = 0;
+		str = (char *)aux->content;
+		ft_putstr_fd("export ", 1);
+		while (str[i] != '=' && str[i] != '\0')
+		{
+			ft_putchar_fd(str[i], 1);
+			i++;
+		}
+		ft_putstr_fd("=\"", 1);
+		i++;
+		while (str[i] != '\0')
+		{
+			ft_putchar_fd(str[i], 1);
+			i++;
+		}
+		ft_putendl_fd("\"", 1);
+		aux = aux->next;
+	}
+}
 
 void	env(t_input *in, int type)
 {
@@ -33,11 +62,9 @@ void	env(t_input *in, int type)
 	}
 	else
 	{
-		while (aux)
-		{
-			printf("declare -x %s\n", (char *)aux->content);
-			aux = aux->next;
-		}
+		ft_lst_sort(in->env_list, ft_strcmp);
+		print_export(in->env_list);
+		*in->env_list = aux;
 	}
 }
 
