@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/14 12:46:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:18:52 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	print_matrix(char **matrix)
 
 	i = 0;
 	if (!matrix)
-		printf("(null)\n");
+		ft_printf("(null)\n");
 	else
 	{
 		while (matrix[i])
 		{
-			printf("[%d]: |%s|\n", i, matrix[i]);
+			ft_printf("%s\n", matrix[i]);
 			i++;
 		}
 	}
