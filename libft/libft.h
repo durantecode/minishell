@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:06:51 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:36:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:33:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ char	**matrix_add_back(char **matrix, char *str);
 char	**list_to_matrix(t_list *lst);
 char	*del_str_pos(char *str, int n);
 char	**del_matrix_pos(char **matrix, int pos);
-void	ft_leaks(char *str);
 
 #endif
