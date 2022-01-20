@@ -1,22 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_leaks.c                                         :+:      :+:    :+:   */
+/*   ft_lst_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 21:35:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 21:35:35 by ldurante         ###   ########.fr       */
+/*   Created: 2022/01/19 16:37:17 by ldurante          #+#    #+#             */
+/*   Updated: 2022/01/19 23:24:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_leaks(char *str)
+void	ft_lst_swap(t_list *list)
 {
-	char	*full_name;
+	void	*content;
 
-	full_name = ft_strjoin("leaks -q ", str);
-	system(full_name);
-	free(full_name);
+	content = list->content;
+	list->content = list->next->content;
+	list->next->content = content;
+}
+
+void	ft_lst_sort(t_list **lst, int (*cmp)())
+{
+	t_list	*a;
+	t_list	*b;
+
+	a = *lst;
+	while (a != NULL)
+	{
+		b = *lst;
+		while (b->next != NULL)
+		{
+			if ((*cmp)(b->content, b->next->content) > 0)
+				ft_lst_swap(b);
+			b = b->next;
+		}
+		a = a->next;
+	}
 }

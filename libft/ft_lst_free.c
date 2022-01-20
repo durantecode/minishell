@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_matrix.c                                     :+:      :+:    :+:   */
+/*   ft_lst_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 11:18:52 by ldurante         ###   ########.fr       */
+/*   Created: 2022/01/20 02:34:48 by ldurante          #+#    #+#             */
+/*   Updated: 2022/01/20 02:39:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	print_matrix(char **matrix)
+void	ft_lst_free(t_list *lst)
 {
-	int	i;
+	t_list	*tmp;
 
-	i = 0;
-	if (!matrix)
-		ft_printf("(null)\n");
-	else
+	while (lst != NULL)
 	{
-		while (matrix[i])
-		{
-			ft_printf("%s\n", matrix[i]);
-			i++;
-		}
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
 	}
 }

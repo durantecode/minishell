@@ -6,13 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:43:03 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/17 19:18:13 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:15:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	char_space(char c)
+int	char_sp(char c)
 {
 	if (c != '\t' && c != ' ' && c != '\n'
 		&& c != '\f' && c != '\v' && c != '\r')
@@ -25,19 +25,19 @@ void	count_tokens_aux(t_input *in, char *s, int start)
 	while (s[in->f.i] != '\0')
 	{
 		quotes_state(in, s);
-		if (char_space(s[in->f.i]) && !start)
+		if (char_sp(s[in->f.i]) && !start)
 		{
-			while (char_space(s[in->f.i]) && s[in->f.i])
+			while (char_sp(s[in->f.i]) && s[in->f.i])
 				in->f.i++;
 			start = 1;
 		}
-		else if (!char_space(s[in->f.i]))
+		else if (!char_sp(s[in->f.i]))
 			start = 1;
-		if (char_space(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
+		if (char_sp(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
 		{
 			if (start)
 				in->f.count++;
-			while (char_space(s[in->f.i]) && s[in->f.i])
+			while (char_sp(s[in->f.i]) && s[in->f.i])
 				in->f.i++;
 		}
 		else if (s[in->f.i] != '\0')
@@ -51,7 +51,7 @@ void	count_tokens_aux(t_input *in, char *s, int start)
 
 void	count_tokens_aux2(t_input *in, char *s, int start)
 {
-	if (char_space(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
+	if (char_sp(s[in->f.i]) && !in->f.single_q && !in->f.double_q)
 	{
 		if (start)
 		{
@@ -59,7 +59,7 @@ void	count_tokens_aux2(t_input *in, char *s, int start)
 				= ft_substr(s, in->f.start, in->f.i - in->f.start);
 			in->f.j++;
 		}
-		while (char_space(s[in->f.i]) && s[in->f.i])
+		while (char_sp(s[in->f.i]) && s[in->f.i])
 			in->f.i++;
 		in->f.start = in->f.i;
 	}
@@ -88,14 +88,14 @@ int	count_tokens(char *s, t_input *in, int split)
 		while (s[in->f.i] != '\0')
 		{
 			quotes_state(in, s);
-			if (char_space(s[in->f.i]) && !start)
+			if (char_sp(s[in->f.i]) && !start)
 			{
-				while (char_space(s[in->f.i]) && s[in->f.i])
+				while (char_sp(s[in->f.i]) && s[in->f.i])
 					in->f.i++;
 				in->f.start = in->f.i;
 				start = 1;
 			}
-			else if (!char_space(s[in->f.i]))
+			else if (!char_sp(s[in->f.i]))
 				start = 1;
 			count_tokens_aux2(in, s, start);
 		}

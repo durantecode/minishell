@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:58:27 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 20:13:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:00:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int	update_g_exit_status(char *ERR, int is_abs)
 	else if (!ft_strcmp(ERR, ERR_CMD))
 		return (127);
 	else if (!ft_strcmp(ERR, ERR_SYNTAX))
+		return (258);
+	else if (!ft_strcmp(ERR, ERR_SYNTAX_PIPE))
+		return (258);
+	else if (!ft_strcmp(ERR, ERR_SYNTAX_IN))
+		return (258);
+	else if (!ft_strcmp(ERR, ERR_SYNTAX_OUT))
 		return (258);
 	return (1);
 }

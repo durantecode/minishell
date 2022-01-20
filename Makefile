@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/18 21:39:15 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/20 10:32:33 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,18 +41,22 @@ SRCS =	srcs/main.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/env.c \
+		srcs/builtins/env_list.c \
 		srcs/builtins/export.c \
 		srcs/builtins/unset.c \
 		srcs/builtins/exit.c \
 		srcs/executer/exec_args.c \
 		srcs/executer/exec_cmd.c \
 		srcs/executer/pipes.c \
+		srcs/executer/args_list.c \
 		srcs/executer/here_doc.c \
 		srcs/lexer/check_args.c \
 		srcs/lexer/expand.c \
+		srcs/lexer/expand_aux.c \
 		srcs/lexer/quotes.c \
 		srcs/lexer/split_args.c \
 		srcs/lexer/token.c \
+		srcs/lexer/check_error_pipes.c \
 
 OBJS = $(SRCS:.c=.o)
 

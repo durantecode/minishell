@@ -6,11 +6,37 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/18 20:36:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:27:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	remove_redir(t_input *in, int i)
+{
+	char	**aux;
+	int		j;
+
+	j = 0;
+	aux = malloc(sizeof(char *) * (matrix_len(in->split_in) - 1));
+	while (in->split_in[j] && j < i)
+	{
+		aux[j] = ft_strdup(in->split_in[j]);
+		j++;
+	}
+	i += 2;
+	while (in->split_in[i])
+	{
+		aux[j] = ft_strdup(in->split_in[i]);
+		in->q_state[j] = in->q_state[i];
+		j++;
+		i++;
+	}
+	aux[j] = NULL;
+	free_matrix(in->split_in);
+	in->split_in = NULL;
+	in->split_in = aux;
+}
 
 int	infile(t_input *in, int i)
 {
@@ -22,8 +48,8 @@ int	infile(t_input *in, int i)
 	{
 		if (errno == EACCES)
 			error_msg(in, ERR_PERM, i + 1, 0);
-		else if (in->split_in[i + 1] == NULL)
-			error_msg(in, ERR_SYNTAX, -1, 0);
+		else if (!(ft_strncmp(in->split_in[i], "<<", 3)) && errno == 2)
+			error_msg(in, ERR_HDOC, -1, 0);
 		else
 			error_msg(in, ERR_FILE, i + 1, 0);
 		return (1);
@@ -31,8 +57,6 @@ int	infile(t_input *in, int i)
 	else
 	{
 		remove_redir(in, i);
-		if (!in->split_in[0])
-			exit(0);
 		if (!is_builtin(in))
 			dup2(in->fd_in, STDIN_FILENO);
 		close(in->fd_in);
@@ -41,11 +65,8 @@ int	infile(t_input *in, int i)
 	return (0);
 }
 
-void	outfile_aux(t_input *in, int i)
+void	outfile_aux(t_input *in)
 {
-	remove_redir(in, i);
-	if (!in->split_in[0])
-		exit(0);
 	if (!in->is_outfile)
 		in->back_stdout = dup(STDOUT_FILENO);
 	dup2(in->fd_out, STDOUT_FILENO);
@@ -65,14 +86,15 @@ int	outfile(t_input *in, int i)
 	{
 		if (errno == EACCES)
 			error_msg(in, ERR_PERM, i + 1, 0);
-		else if (in->split_in[i + 1] == NULL)
-			error_msg(in, ERR_SYNTAX, -1, 0);
 		else
 			error_msg(in, ERR_FILE, i + 1, 0);
 		return (1);
 	}
-	if (in->fd_out > 2)
-		outfile_aux(in, i);
+	else
+	{
+		remove_redir(in, i);
+		outfile_aux(in);
+	}
 	return (0);
 }
 
@@ -91,11 +113,7 @@ void	check_redirs(t_input *in)
 				return ;
 			i--;
 		}
-	}
-	i = -1;
-	while (in->split_in[++i])
-	{
-		if (!(ft_strncmp(in->split_in[i], ">", 1)) && in->q_state[i] == 0)
+		else if (!(ft_strncmp(in->split_in[i], ">", 1)) && in->q_state[i] == 0)
 		{
 			if (outfile(in, i))
 				return ;
