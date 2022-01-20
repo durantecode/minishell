@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 00:06:25 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:30:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,99 +56,50 @@ void	check_quotes(t_input *in)
 		in->f.single_q = 0;
 }
 
-int	check_errors2(t_input *in)
+int	check_errors_pipes_aux(t_input *in)
 {
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (in->user_in[i])
-	{
-		if (in->user_in[i] != ' ' && in->user_in[i] != '|')
-			flag = 1;
-		if (in->user_in[i] == '|' && flag == 0)
-		{
-			error_msg(in, ERR_SYNTAX, -1, 0);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	istoken(char c)
-{
-	if (c == '<')
-		return (1);
-	if (c == '>')
-		return (1);
-	if (c == '|')
-		return (1);
-	return (0);
-}
-
-int	check_errors(t_input *in)
-{
-	char	c;
 	int		count;
-	int		flag_diff;
-	int		special;
+	char	c;
+	
+	count = 0;
+	c = '\0';
+	if (!in->f.double_q && !in->f.single_q)
+		c = in->user_in[in->f.i];
+	else
+		in->f.i++;
+	while ((in->user_in[in->f.i] == c || in->user_in[in->f.i] == ' ')
+		&& count < 2 && in->user_in[in->f.i])
+	{
+		if (in->user_in[in->f.i] == c)
+			count++;
+		in->f.i++;
+	}
+	if (count >= 2)
+		error_msg(in, ERR_SYNTAX_PIPE, -2, 0);
+	if (count >= 2)
+		return (1);
+	return (0);
+}
 
-	special = 0;
-	flag_diff = 0;
+int	check_error_pipes(t_input *in)
+{
 	while (in->user_in[in->f.i])
 	{
-		count = 0;
 		check_quotes(in);
-		if (in->f.double_q == 0 && in->f.single_q == 0)
+		if (in->user_in[in->f.i] == '|')
 		{
-			if (istoken(in->user_in[in->f.i]) || char_sp(in->user_in[in->f.i]))
-			{
-				if (istoken(in->user_in[in->f.i]))
-				{
-					if (in->user_in[in->f.i] == '|' && special == 1 && !flag_diff)
-					{
-						error_msg(in, ERR_SYNTAX, -2, 0);
-						return (1);
-					}
-					else if (in->user_in[in->f.i] == '|')
-					{
-						count = 0;
-						flag_diff = 0;
-					}
-					special = 1;
-				}
-				c = in->user_in[in->f.i];
-				while (c == in->user_in[in->f.i] && count <= 2)
-				{
-					count++;
-					in->f.i++;
-				}
-				while (char_sp(in->user_in[in->f.i]))
-					in->f.i++;
-				if (((c == '<' || c == '>') && count > 2) || (c == '|' && count > 1)
-					|| in->user_in[in->f.i] == c)
-				{
-					error_msg(in, ERR_SYNTAX, -2, 0);
-					return (1);
-				}
-			}
-			else
-			{
-				flag_diff = 1;
-				in->f.i++;
-			}
+			if (check_errors_pipes_aux(in))
+				return (1);
 		}
-		else
+		else 
 			in->f.i++;
 	}
-	if (flag_diff == 0 && special == 1)
+	if (in->user_in[0] == '|' || in->user_in[in->f.i - 1] == '|')
 	{
-		error_msg(in, ERR_SYNTAX, -2, 0);
+		error_msg(in, ERR_SYNTAX_PIPE, -2, 0);
 		return (1);
-	}
-	return (check_errors2(in));
+	}	
+	return (0);
 }
 
 void	read_in_aux(t_input *in)
@@ -156,7 +107,7 @@ void	read_in_aux(t_input *in)
 	if (in->user_in[0] != '\0')
 		add_history(in->user_in);
 	ft_bzero(&in->f, sizeof(in->f));
-	if (!check_errors(in))
+	if (!check_error_pipes(in))
 	{
 		split_args(in);
 		if (check_args(in))

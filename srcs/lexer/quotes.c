@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 11:50:08 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 00:02:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:37:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ char	**quotes(t_input *in)
 	}
 	size = matrix_len(in->split_in);
 	update_env_var(in, "_=", in->split_in[size - 1]);
-	print_matrix(in->split_in);
 	return (in->split_in);
 }

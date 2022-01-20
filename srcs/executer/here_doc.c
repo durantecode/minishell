@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 21:30:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:47:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,7 @@ int	check_hdoc(t_input *in)
 	while (in->split_in[i])
 	{
 		if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
-		{
-			if (in->split_in[i + 1] != NULL)
-				in->is_hdoc = 1;
-			else
-				error_msg(in, ERR_SYNTAX, -1, 0);
-		}
+			in->is_hdoc = 1;
 		i++;
 	}
 	if (in->is_hdoc)
@@ -96,22 +91,18 @@ void	exec_hdoc(t_input *in)
 	int		i;
 	pid_t	pid;
 
-	i = -1;
+	i = 0;
 	pid = fork();
 	if (pid < 0)
 		error_msg(in, ERR_FORK, -1, 0);
 	if (!pid)
 	{
 		signal(SIGINT, handler4);
-		while (in->split_in[++i])
+		while (in->split_in[i])
 		{
 			if (!(ft_strncmp(in->split_in[i], "<<", 3)) && in->q_state[i] == 0)
-			{
-				if (in->split_in[i + 1] != NULL)
-					here_doc(in, i);
-				else
-					error_msg(in, ERR_SYNTAX, -1, 0);
-			}
+				here_doc(in, i);
+			i++;
 		}
 		exit (0);
 	}

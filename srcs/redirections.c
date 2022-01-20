@@ -6,13 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 13:03:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:45:51 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// Error Syntax deberíamos poder quitarlo de estas funciones
 
 int	infile(t_input *in, int i)
 {
@@ -24,8 +22,6 @@ int	infile(t_input *in, int i)
 	{
 		if (errno == EACCES)
 			error_msg(in, ERR_PERM, i + 1, 0);
-		else if (in->split_in[i + 1] == NULL)
-			error_msg(in, ERR_SYNTAX, -1, 0);
 		else if (!(ft_strncmp(in->split_in[i], "<<", 3)) && errno == 2)
 			error_msg(in, ERR_HDOC, -1, 0);
 		else
@@ -69,8 +65,6 @@ int	outfile(t_input *in, int i)
 	{
 		if (errno == EACCES)
 			error_msg(in, ERR_PERM, i + 1, 0);
-		else if (in->split_in[i + 1] == NULL)
-			error_msg(in, ERR_SYNTAX, -1, 0);
 		else
 			error_msg(in, ERR_FILE, i + 1, 0);
 		return (1);

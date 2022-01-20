@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 21:45:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:59:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@
 # define ERR_PIPE "Pipe error"
 # define ERR_FORK "Fork error"
 # define ERR_DUP "Dup error"
-# define ERR_SYNTAX "Syntax error near unexpected token"
+# define ERR_SYNTAX "Syntax error near unexpected token `newLine'"
+# define ERR_SYNTAX_PIPE "Syntax error near unexpected token '|'"
+# define ERR_SYNTAX_IN "Syntax error near unexpected token '<'"
+# define ERR_SYNTAX_OUT "Syntax error near unexpected token '>'"
 # define ERR_CMD "command not found"
 # define ERR_FILE "No such file or directory"
 # define ERR_PERM "Permission denied"
