@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 14:24:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:22:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	pipex(t_input *in, t_list *arg_list)
 	index = 0;
 	flag = 0;
 	aux_list = arg_list;
-	while (aux_list && g_exit_status != 130 && g_exit_status != 250)
+	while (aux_list && WIFEXITED(in->status))
 	{
 		if (pipe(in->fd[index % 2]) == -1)
 			error_msg(in, ERR_PIPE, -1, 0);
