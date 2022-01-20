@@ -58,6 +58,8 @@ void	child(t_input *in, t_list *aux_list, int index)
 		close(in->fd[(index + 1) % 2][R_END]);
 	}
 	close(in->fd[index % 2][R_END]);
+	if (in->is_outfile)
+		close(in->back_stdout);
 	if (in->split_in[0])
 	{
 		if (is_builtin(in) && !in->total_pipes)
@@ -65,7 +67,6 @@ void	child(t_input *in, t_list *aux_list, int index)
 		else
 			exec_args(in);
 	}
-	close(in->back_stdout);
 	exit (g_exit_status);
 }
 
