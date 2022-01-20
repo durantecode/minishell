@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 15:03:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:38:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	here_doc(t_input *in, int i)
 	char	*here_doc;
 
 	here_doc = NULL;
-	fd = open(".hd_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	fd = open(".hd_tmp", O_RDWR | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
 		error_msg(in, ERR_FILE, -1, 0);
 	eof = ft_strdup(in->split_in[i + 1]);

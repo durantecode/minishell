@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 15:49:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:44:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_error_redirs(t_input *in)
 				error_msg(in, ERR_SYNTAX_IN, -2, 0);
 			else if (!(ft_strncmp(in->split_in[i], ">", 1))
 				&& !(ft_strncmp(in->split_in[i + 1], ">", 1)))
-				error_msg(in, ERR_SYNTAX_IN, -2, 0);
+				error_msg(in, ERR_SYNTAX_OUT, -2, 0);
 			if (in->is_err)
 				return (1);
 		}

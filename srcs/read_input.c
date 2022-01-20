@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 10:11:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:49:06 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,6 @@ void	read_input(t_input *in)
 		free(in->q_state);
 		free(in->prompt);
 		free(user);
-		close(0);
-		close(1);
-		close(2);
 		exit(0);
 	}
 }
