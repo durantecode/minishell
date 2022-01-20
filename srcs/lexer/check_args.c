@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:23:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 02:01:31 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:00:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_error_redirs_aux(t_input *in, int i)
 {
 	if ((in->split_in[0][0] == '<' || in->split_in[0][0] == '>')
 		&& in->split_in[1] == NULL)
-			error_msg(in, ERR_SYNTAX, -2, 0);
+		error_msg(in, ERR_SYNTAX, -2, 0);
 	else if (in->split_in[i - 1][0] == '<' || in->split_in[i - 1][0] == '>')
 		error_msg(in, ERR_SYNTAX, -2, 0);
 	if (in->is_err)
@@ -26,8 +26,8 @@ int	check_error_redirs_aux(t_input *in, int i)
 
 int	check_error_redirs(t_input *in)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (in->split_in[i])
 	{
@@ -39,10 +39,10 @@ int	check_error_redirs(t_input *in)
 		{
 			if (!(ft_strncmp(in->split_in[i], "<", 1))
 				&& (in->split_in[i + 1][0] == '|'))
-				error_msg(in, ERR_SYNTAX_IN, -2, 0);
+				error_msg(in, ERR_SYNTAX_PIPE, -2, 0);
 			if (!(ft_strncmp(in->split_in[i], ">", 1))
 				&& (in->split_in[i + 1][0] == '|'))
-				error_msg(in, ERR_SYNTAX_OUT, -2, 0);
+				error_msg(in, ERR_SYNTAX_PIPE, -2, 0);
 		}
 		i++;
 	}

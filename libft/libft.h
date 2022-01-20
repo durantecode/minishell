@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:06:51 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 23:55:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 02:38:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_new_node(void *content, size_t size);
 t_list	*ft_lstdup(t_list *lst);
+void	ft_lst_free(t_list *lst);
 void	ft_lst_sort(t_list **lst, int (*cmp)());
 
 int		get_next_line(int fd, char **line);

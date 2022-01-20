@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:55:39 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 00:30:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 02:42:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_errors_pipes_aux(t_input *in)
 {
 	int		count;
 	char	c;
-	
+
 	count = 0;
 	c = '\0';
 	if (!in->f.double_q && !in->f.single_q)
@@ -91,7 +91,7 @@ int	check_error_pipes(t_input *in)
 			if (check_errors_pipes_aux(in))
 				return (1);
 		}
-		else 
+		else
 			in->f.i++;
 	}
 	if (in->user_in[0] == '|' || in->user_in[in->f.i - 1] == '|')

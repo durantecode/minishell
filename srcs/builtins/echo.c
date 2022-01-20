@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:33:35 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 00:05:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:37:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	print_echo(t_input *in, int i)
 		if (in->split_in[i + 1] != NULL)
 		{
 			write(1, in->split_in[i], ft_strlen(in->split_in[i]));
-			write(1, " ", 1);
+			if (ft_strncmp(in->split_in[i], "", 1))
+				write(1, " ", 1);
 		}
 		else
 			write(1, in->split_in[i], ft_strlen(in->split_in[i]));

@@ -6,17 +6,16 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:02:43 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/19 23:55:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:15:57 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_export(t_list **lst)
+void	print_export(t_list **lst, int i)
 {
 	t_list	*aux;
 	char	*str;
-	int		i;
 
 	aux = *lst;
 	while (aux)
@@ -32,12 +31,8 @@ void	print_export(t_list **lst)
 		if (str[i] != '\0')
 		{
 			ft_putstr_fd("=\"", 1);
-			i++;
-			while (str[i] != '\0') 
-			{
+			while (str[++i] != '\0')
 				ft_putchar_fd(str[i], 1);
-				i++;
-			}
 			ft_putendl_fd("\"", 1);
 		}
 		else
@@ -49,7 +44,6 @@ void	print_export(t_list **lst)
 void	env(t_input *in, int is_export)
 {
 	t_list	*aux;
-	t_list	*export;
 
 	if (in->split_in[1] != NULL)
 	{
@@ -68,10 +62,10 @@ void	env(t_input *in, int is_export)
 	}
 	else
 	{
-		export = ft_lstdup(*in->env_list);
-		ft_lst_sort(&export, ft_strcmp);
-		print_export(&export);
-		// ft_lstclear(&export, free);
+		aux = ft_lstdup(*in->env_list);
+		ft_lst_sort(&aux, ft_strcmp);
+		print_export(&aux, is_export);
+		ft_lst_free(aux);
 	}
 }
 
