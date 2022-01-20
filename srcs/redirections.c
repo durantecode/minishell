@@ -58,11 +58,15 @@ int	infile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
-			exit(0);
+		{
+			close(in->fd_in);
+			return (1);
+		}
 		if (!is_builtin(in))
 			dup2(in->fd_in, STDIN_FILENO);
 		close(in->fd_in);
 		in->is_infile = 1;
+
 	}
 	return (0);
 }
@@ -96,7 +100,10 @@ int	outfile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
-			exit(0);
+		{
+			close(in->fd_out);
+			return(1);
+		}
 		outfile_aux(in);
 	}
 	return (0);
