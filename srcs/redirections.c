@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 13:52:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 14:29:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	infile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
-			exit(0);
+			return (1);
 		if (!is_builtin(in))
 			dup2(in->fd_in, STDIN_FILENO);
 		close(in->fd_in);
@@ -96,7 +96,7 @@ int	outfile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
-			exit(0);
+			return (1);
 		outfile_aux(in);
 	}
 	return (0);

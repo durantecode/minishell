@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 10:23:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 14:24:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	child(t_input *in, t_list *aux_list, int index)
 		else
 			exec_args(in);
 	}
+	close(in->back_stdout);
 	exit (g_exit_status);
 }
 
