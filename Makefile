@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/20 10:32:33 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/20 20:46:44 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,12 +68,6 @@ $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
 	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a $(READLINE) -o $(NAME)
 	@echo "$(GREY) Minishell compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
-
-compare: all
-	@cd tests && ./compare.sh && cd ..
-
-test: all
-	@cd tests && ./test.sh && cd ..
 
 normi:
 	norminette -R CheckForbiddenSourceHeaders \

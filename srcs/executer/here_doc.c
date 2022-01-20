@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 16:38:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:46:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	here_doc(t_input *in, int i)
 	while (1)
 	{
 		here_doc = readline(in->prompt);
-		if (!here_doc || !(ft_strncmp(here_doc, eof, ft_strlen(eof))))
+		if (!here_doc || !(ft_strcmp(here_doc, eof)))
 			break ;
 		write(fd, here_doc, ft_strlen(here_doc));
 		write(fd, "\n", 1);
