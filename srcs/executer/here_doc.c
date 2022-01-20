@@ -6,11 +6,37 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:05:11 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 10:28:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:03:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	remove_redir(t_input *in, int i)
+{
+	char	**aux;
+	int		j;
+
+	j = 0;
+	aux = malloc(sizeof(char *) * (matrix_len(in->split_in) - 1));
+	while (in->split_in[j] && j < i)
+	{
+		aux[j] = ft_strdup(in->split_in[j]);
+		j++;
+	}
+	i += 2;
+	while (in->split_in[i])
+	{
+		aux[j] = ft_strdup(in->split_in[i]);
+		in->q_state[j] = in->q_state[i];
+		j++;
+		i++;
+	}
+	aux[j] = NULL;
+	free_matrix(in->split_in);
+	in->split_in = NULL;
+	in->split_in = aux;
+}
 
 void	here_doc(t_input *in, int i)
 {

@@ -6,36 +6,18 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 14:29:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:03:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	remove_redir(t_input *in, int i)
+void	infile_aux(t_input *in)
 {
-	char	**aux;
-	int		j;
-
-	j = 0;
-	aux = malloc(sizeof(char *) * (matrix_len(in->split_in) - 1));
-	while (in->split_in[j] && j < i)
-	{
-		aux[j] = ft_strdup(in->split_in[j]);
-		j++;
-	}
-	i += 2;
-	while (in->split_in[i])
-	{
-		aux[j] = ft_strdup(in->split_in[i]);
-		in->q_state[j] = in->q_state[i];
-		j++;
-		i++;
-	}
-	aux[j] = NULL;
-	free_matrix(in->split_in);
-	in->split_in = NULL;
-	in->split_in = aux;
+	if (!is_builtin(in))
+		dup2(in->fd_in, STDIN_FILENO);
+	close(in->fd_in);
+	in->is_infile = 1;
 }
 
 int	infile(t_input *in, int i)
@@ -58,11 +40,11 @@ int	infile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
+		{
+			close(in->fd_in);
 			return (1);
-		if (!is_builtin(in))
-			dup2(in->fd_in, STDIN_FILENO);
-		close(in->fd_in);
-		in->is_infile = 1;
+		}
+		infile_aux(in);
 	}
 	return (0);
 }
@@ -96,7 +78,10 @@ int	outfile(t_input *in, int i)
 	{
 		remove_redir(in, i);
 		if (!in->split_in[0])
+		{
+			close(in->fd_out);
 			return (1);
+		}
 		outfile_aux(in);
 	}
 	return (0);
