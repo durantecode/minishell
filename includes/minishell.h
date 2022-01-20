@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 02:24:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/20 10:35:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,13 @@ void	update_env_var(t_input *in, char *var, char *value);
 void	check_basic_vars(t_input *in);
 
 void	read_input(t_input *in);
-int		check_errors(t_input *in);
+int		check_error_pipes(t_input *in);
 void	split_args(t_input *in);
 int		count_tokens(char *s, t_input *in, int split);
 int		check_args(t_input *in);
 void	expand_vars(t_input *in);
+char	*get_expanded_var(char *str, int i);
+void	insert_exp_var(t_input *in, char **var, char **aux, int j);
 void	check_quotes(t_input *in);
 int		count_pipes(t_input *in);
 char	**quotes(t_input *in);
@@ -137,6 +139,7 @@ void	exec_absolute(t_input *in);
 
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
+void	pipex(t_input *in, t_list *arg_list);
 void	check_redirs(t_input *in);
 int		check_hdoc(t_input *in);
 void	exec_hdoc(t_input *in);
