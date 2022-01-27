@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 03:03:21 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 16:49:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:15:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	infile_aux(t_input *in)
 {
 	if (!is_builtin(in))
-		dup2(in->fd_in, STDIN_FILENO);
+	{
+		if (dup2(in->fd_in, STDIN_FILENO) == -1)
+			error_msg(in, ERR_DUP, -2, 0);
+	}
 	close(in->fd_in);
 	in->is_infile = 1;
 }
@@ -53,7 +56,8 @@ void	outfile_aux(t_input *in)
 {
 	if (!in->is_outfile)
 		in->back_stdout = dup(STDOUT_FILENO);
-	dup2(in->fd_out, STDOUT_FILENO);
+	if (dup2(in->fd_out, STDOUT_FILENO) == -1)
+		error_msg(in, ERR_DUP, -2, 0);
 	close(in->fd_out);
 	in->is_outfile = 1;
 }
