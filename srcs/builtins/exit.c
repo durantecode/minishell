@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 16:17:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/27 16:40:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/31 19:32:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	str_is_digit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[0] == '-' && str[1] != '\0')
+		if (str[0] == '-' && str[1] != '\0' && ft_isdigit(str[1]))
 			i++;
 		else if (!ft_isdigit(str[i]))
 			return (0);
@@ -52,6 +52,7 @@ int	check_exit_args(t_input *in)
 
 void	my_exit(t_input *in)
 {
+	g_exit_status = 0;
 	if (!in->total_pipes)
 		ft_putendl_fd("exit", 2);
 	if (in->split_in[1])
