@@ -6,11 +6,25 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 16:22:06 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/31 19:38:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	if_minishell(t_input *in)
+{
+	if (ft_strcmp(in->split_in[0], "./minishell"))
+	{
+		signal(SIGINT, handler2);
+		signal(SIGQUIT, handler2);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+}
 
 void	handler(int code)
 {

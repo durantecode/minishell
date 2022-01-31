@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:01:32 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/20 10:35:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/31 19:38:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	exec_absolute(t_input *in);
 void	exec_args(t_input *in);
 void	exec_cmd(t_input *in);
 void	pipex(t_input *in, t_list *arg_list);
+void	if_minishell(t_input *in);
 void	check_redirs(t_input *in);
 int		check_hdoc(t_input *in);
 void	exec_hdoc(t_input *in);

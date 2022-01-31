@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 11:04:12 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/27 17:13:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/01/31 19:38:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,7 @@ void	pipex(t_input *in, t_list *arg_list)
 		aux = (t_arg *)aux_list->content;
 		in->split_in = aux->arg;
 		in->q_state = aux->quotes;
-		if (ft_strcmp(in->split_in[0], "./minishell"))
-		{
-			signal(SIGINT, handler2);
-			signal(SIGQUIT, handler2);
-		}
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-		}
+		if_minishell(in);
 		sub_pipex(in, aux_list, index, &flag);
 		aux_list = aux_list->next;
 		index++;
