@@ -93,8 +93,7 @@ void	exec_minishell(t_input *in)
 			size++;
 	}
 	new_env = dup_new_env(in->dup_env, size);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+
 	if (execve(in->split_in[0], in->split_in, new_env) == -1)
 		error_msg(in, ERR_CMD, 0, 0);
 	free_matrix(new_env);

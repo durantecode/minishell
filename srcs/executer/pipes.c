@@ -127,8 +127,16 @@ void	pipex(t_input *in, t_list *arg_list)
 		aux = (t_arg *)aux_list->content;
 		in->split_in = aux->arg;
 		in->q_state = aux->quotes;
-		signal(SIGINT, handler2);
-		signal(SIGQUIT, handler2);
+		if (ft_strcmp(in->split_in[0], "./minishell"))
+		{
+			signal(SIGINT, handler2);
+			signal(SIGQUIT, handler2);
+		}
+		else
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+		}
 		sub_pipex(in, aux_list, index, &flag);
 		aux_list = aux_list->next;
 		index++;
