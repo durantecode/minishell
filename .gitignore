@@ -1,3 +1,4 @@
+./README.md
 ### C ###
 # Prerequisites
 *.d
@@ -45,7 +46,6 @@ Mkfile.old
 dkms.conf
 ### OSX ###
 # General
-README.md
 .DS_Store
 .AppleDouble
 .LSOverride
