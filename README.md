@@ -1,7 +1,5 @@
 # minishell
 
-About the project:
-
 The aim of this project is to program a "simple" shell using C language.
 We had to do this project in groups, so it was me & [dpavon](https://github.com/dpavon-g).
 
