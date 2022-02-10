@@ -17,7 +17,7 @@ We also had to handle redirections (<, <<, >, >>), multiple pipes (working in pa
 
 ## What we learned:
 
-It deepened my understanding of the terminal which is my our working tool.
+It deepened our understanding of the terminal which is our working tool.
 We learned a lot about file descriptors, forking processes and interprocess communication which were kinda obscur to us.
 It was the first "big project" we had to do for both of us, it took us around a 2 months and a half, but in the end I think we ended up with a pretty solid shell that handles a lot of stuff, runs external programs and replicates bash in a lot of things.
 
