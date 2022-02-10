@@ -15,7 +15,7 @@ We had to implement 7 built-ins like in bash:
 
 We also had to handle redirections (<, <<, >, >>), multiple pipes (working in parallel), environment variables and some signals.
 
-What we learned:
+##What we learned:##
 
 It deepened my understanding of the terminal which is my our working tool.
 We learned a lot about file descriptors, forking processes and interprocess communication which were kinda obscur to us.
