@@ -14,6 +14,9 @@ We had to implement 7 built-ins like in bash:
 - exit
 
 We also had to handle redirections (<, <<, >, >>), multiple pipes (working in parallel), environment variables and some signals.
+This is how it looks:
+
+ ![preview](https://github.com/durantecode/minishell/blob/master/minishell_preview.gif)
 
 ## What we learned:
 
